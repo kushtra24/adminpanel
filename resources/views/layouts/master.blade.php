@@ -98,19 +98,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
 
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Starter Pages
+                Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <p>Active Page</p>
-                </a>
+                <router-link to="/users" tag="a" active-class="active" class="nav-link active">
+                  <p>Users</p>
+                </router-link>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
