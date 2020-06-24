@@ -17,10 +17,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Admin Panel Starter</title>
 
     <link rel="stylesheet" href="/css/app.css">
-    
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -140,6 +140,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content">
       <div class="container-fluid">
         <router-view></router-view>
+        <!-- set progressbar -->
+        <vue-progress-bar></vue-progress-bar>
       </div>
     </div>
     <!-- /.content-header -->

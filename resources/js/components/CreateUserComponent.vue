@@ -77,8 +77,17 @@
       },
       methods: {
         createUser() {
-          this.form.post('api/user')
-          .then(({data}) => { console.log(data)})
+            this.$Progress.start();
+            this.form.post('api/user')
+            .then(({data}) => {
+                this.$Progress.finish();
+                console.log(data);
+                // navigate to user
+                this.$router.push('users');
+            })
+            .catch(
+                console.log('you have an error on creating an user')
+            )
         }
       },
         mounted() {

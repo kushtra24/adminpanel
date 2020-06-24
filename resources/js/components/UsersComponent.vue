@@ -24,7 +24,7 @@
             <div class="box-header">
 
               <div class="box-tools">
-                
+
               </div>
             </div>
             <!-- /.box-header -->
@@ -35,16 +35,18 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Type</th>
+                  <th>Create at</th>
                   <th>Modify</th>
                 </tr>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-success">Approved</span></td>
+                <tr v-for="user in users" :key="user.id">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.type | upText }}</td>
+                  <td> {{ user.created_at | euDate }}</td>
                   <td>
                     <a href="#">Edit <i class="fa fa-edit"></i></a>
-                    <a href="#">Trash <i class="fa fa-trash"></i></a>
+                    <a href="#" @click="deleteUser(user.id)">Trash <i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
               </tbody></table>
@@ -59,8 +61,65 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data() {
+            return {
+                users : {},
+                form: new Form({
+                    name: '',
+                    email: '',
+                    password: '',
+                    type: '',
+                    created_at: '',
+                    bio: '',
+                    photo: ''
+                })
+            }
+        },
+        methods: {
+            /**
+             * get all user from database
+             */
+            getAllUsers() {
+                axios.get("api/user").then(
+                    ({data}) => (this.users = data));
+            },
+
+            /**
+             * delete the selected user
+             * @param id user
+             */
+            deleteUser(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    // send request to server
+                    axios.delete('api/user/' + id).then( () => {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    ).catch( () => {
+                        Swal.fire(
+                            'Failed!',
+                            'Nothing was deleted',
+                            'warning'
+                        )
+                    });
+                })
+            },
+
+            
+        },
+        created() {
+            this.getAllUsers();
         }
     }
 </script>
