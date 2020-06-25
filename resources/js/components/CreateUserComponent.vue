@@ -19,7 +19,10 @@
 
     <div class="container">
 
-      <form @submit.prevent="createUser">
+        <!-- loading spinner-->
+        <div v-if="loading" class="lds-ring spinner-color-black spinner-center"><div></div><div></div><div></div><div></div></div>
+
+      <form @submit.prevent="updateUser" v-if="!loading">
         <div class="form-group">
           <input placeholder="Name" v-model="form.name" type="text" name="name"
             class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
@@ -55,6 +58,7 @@
         </div>
 
         <button :disabled="form.busy" type="submit" class="btn btn-primary">Log In</button>
+        <div v-if="submitLoading" class="lds-ring spinner-color-black spinner-mini"><div></div><div></div><div></div><div></div></div>
       </form>
     </div>
 </div>
@@ -65,33 +69,67 @@
     export default {
       data() {
         return {
-          form: new Form({
-            name: '',
-            email: '',
-            password: '',
-            type: '',
-            bio: '',
-            photo: ''
-          })
+            users : {},
+            id: this.$route.params.id,
+            loading: false,
+            submitLoading: false,
+            form: new Form({
+                name: '',
+                email: '',
+                password: '',
+                type: '',
+                bio: '',
+                photo: ''
+            }),
         }
       },
       methods: {
-        createUser() {
-            this.$Progress.start();
-            this.form.post('api/user')
-            .then(({data}) => {
-                this.$Progress.finish();
-                console.log(data);
-                // navigate to user
-                this.$router.push('users');
-            })
-            .catch(
-                console.log('you have an error on creating an user')
-            )
-        }
-      },
-        mounted() {
-            console.log('Component mounted.')
+          /**
+           * get user data
+           */
+          getUserDate() {
+              if (this.id) {
+                  this.loading = true;
+                  axios.get("/api/user/" + this.id).then(
+                      ({data}) => {
+                          this.form.fill(data);
+                          this.users = data
+                          this.loading = false
+                      }
+                  ).catch( () => console.log('can\'t get the user data with this id'));
+              }
+          },
+
+          /**
+           * update or create the user
+           */
+          updateUser() {
+                this.$Progress.start();
+                this.submitLoading = true;
+                if (this.id) {
+                    this.form.put("/api/user/" + this.id)
+                    .then(({data}) => {
+                        this.$Progress.finish();
+                        this.submitLoading = true;
+                        console.log(data);
+                        this.$router.push('/users');
+                    })
+                } else {
+                    this.form.post('api/user')
+                        .then(({data}) => {
+                            this.$Progress.finish();
+                            console.log(data);
+                            // navigate to user
+                            this.$router.push('users');
+                        })
+                        .catch(
+                            console.log('you have an error on creating an user')
+                        )
+                }
+            }
+    },
+        created() {
+            this.getUserDate();
         }
     }
 </script>

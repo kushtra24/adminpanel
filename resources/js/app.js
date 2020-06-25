@@ -27,6 +27,7 @@ let routes = [
     { path: '/profile', component: require('./components/ProfileComponent.vue').default},
     { path: '/users', component: require('./components/UsersComponent.vue').default},
     { path: '/users-create', component: require('./components/CreateUserComponent.vue').default},
+    { path: '/users-edit/:id', component: require('./components/CreateUserComponent.vue').default},
   ]
 
 
