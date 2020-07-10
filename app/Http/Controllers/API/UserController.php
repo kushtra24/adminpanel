@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+        $user = User::orderBy('id', 'DESC')->get();
 
         return response()->json($user, 200);
     }
@@ -46,6 +46,7 @@ class UserController extends Controller
             'type' => $request['type'],
             'bio' => $request['bio'],
             'photo' => $request['photo'],
+            'active' => $request['active']
         ]);
 
         return response()->json($user, 200);
@@ -76,12 +77,13 @@ class UserController extends Controller
         $user = User::findOrfail($id);
 
         $user->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password'], ['rounds' => 12]),
-            'type' => $request['type'],
-            'bio' => $request['bio'],
-            'photo' => $request['photo'],
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => Hash::make(request('password'), ['rounds' => 12]),
+            'type' => request('type'),
+            'bio' => request('bio'),
+            'photo' => request('photo'),
+            'active' => $request['active']
         ]);
 
         return response()->json([ 'id' => $user->id ], 200);

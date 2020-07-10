@@ -26,6 +26,10 @@ $fa-font-path: "../webfonts";
     margin-top: 150px;
 }
 
+.margin-top-small {
+    margin-top: 10px;
+}
+
 // loading spinner
 
 .lds-ring {
@@ -88,3 +92,46 @@ $fa-font-path: "../webfonts";
     }
 }
 // loading spinner end
+
+// user-table
+.user-table {
+    tr:nth-child(n+2) {
+        cursor: pointer;
+    }
+}
+
+.users-cards {
+    display: flex !important;
+    flex-wrap: wrap;
+    .card {
+        margin-right: 22px;
+        order: 5;
+    }
+}
+
+// errors
+.error-messages {
+    padding: 0;
+    li {
+        list-style: none;
+        margin: 5px;
+        background-color: #ffc1c1;
+        display: table;
+        border: 1px solid red;
+        padding: 8px;
+    }
+    span, i {
+        color: #ce0000;
+    }
+    i {
+        margin-right: 3px;
+    }
+}
+
+// input invalid required message, class inherited from boostrap 4 validation classes
+.invalid-feedback {
+    display: block;
+    margin-left: 7px;
+}
+
+

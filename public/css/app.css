@@ -48201,6 +48201,10 @@ readers do not read off random characters that represent icons */
   margin-top: 150px;
 }
 
+.margin-top-small {
+  margin-top: 10px;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -48279,5 +48283,46 @@ readers do not read off random characters that represent icons */
   100% {
     transform: rotate(360deg);
   }
+}
+
+.user-table tr:nth-child(n+2) {
+  cursor: pointer;
+}
+
+.users-cards {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.users-cards .card {
+  margin-right: 22px;
+  order: 5;
+}
+
+.error-messages {
+  padding: 0;
+}
+
+.error-messages li {
+  list-style: none;
+  margin: 5px;
+  background-color: #ffc1c1;
+  display: table;
+  border: 1px solid red;
+  padding: 8px;
+}
+
+.error-messages span,
+.error-messages i {
+  color: #ce0000;
+}
+
+.error-messages i {
+  margin-right: 3px;
+}
+
+.invalid-feedback {
+  display: block;
+  margin-left: 7px;
 }
 
