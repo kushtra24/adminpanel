@@ -1,8 +1,3 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import axios from 'axios';
-
-Vue.use(Vuex);
 
 function initialState () {
     return {
@@ -18,8 +13,7 @@ function initialState () {
     }
 }
 
-export const store = new Vuex.Store({
-    namespaced: true,
+export default {
     state: { ...initialState(),
         users: [],
         UserStateChanged: false,
@@ -35,7 +29,7 @@ export const store = new Vuex.Store({
                 this.state.UserStateChanged = false;
                 return this.state.users;
             } else {
-                const user  = await axios.get("api/user/");
+                const user  = await axios.get("/api/user/");
                 context.commit('SET_ALL_USERS', user.data);
             }
         },
@@ -44,25 +38,27 @@ export const store = new Vuex.Store({
          * update or create the user
          */
         async CREATE_USER({state}) {
-            await axios.post('api/user', state.user);
+            await axios.post('/api/user', state.user);
             this.state.UserStateChanged = true;
-            console.log('new user? create ->', this.state.UserStateChanged);
+            // commit('USER_CHANGED');
         },
 
         /**
          * create a new user
          */
-       async UPDATE_USER({state}) {
-            await axios.put("api/user/" + state.user.id, state.user);
+        async UPDATE_USER({state}) {
+            await axios.put("/api/user/" + state.user.id, state.user);
+            this.state.UserStateChanged = true;
+            // commit('USER_CHANGED');
         },
 
         /**
          * create a new user
          */
-       async DELETE_USER({state}) {
-            await axios.delete("api/user/" + state.user.id);
+        async DELETE_USER({state}) {
+            await axios.delete("/api/user/" + state.user.id);
             this.state.UserStateChanged = true;
-            console.log('new user? delete ->', this.state.UserStateChanged);
+            // commit('USER_CHANGED');
         },
 
         /**
@@ -73,20 +69,10 @@ export const store = new Vuex.Store({
          * @constructor
          */
         async FETCH_SELECTED_USER(context, id) {
-            console.log('here -> ', id);
             const user  = await axios.get("/api/user/" + id);
             context.commit('SET_SELECTED_USER', user.data);
         },
 
-        /**
-         *
-         * @param context
-         * @constructor
-         */
-        FETCH_EXISTING_USER(context) {
-            console.log('fetch existing user data');
-            context.commit('SET_EXISTING_USER');
-        },
 
         /**
          * reset state
@@ -132,26 +118,20 @@ export const store = new Vuex.Store({
          * @param state
          * @constructor
          */
-        SET_CREATED_USER: (state) => {
+        USER_CHANGED: (state) => {
             state.UserStateChanged = true;
+            console.log('new user? delete ->', this.state.UserStateChanged);
         },
 
-        /**
-         * return existing user
-         * @param state
-         * @returns {*}
-         * @constructor
-         */
-        SET_EXISTING_USER: (state) => {
-            console.log('user? => ', state.user);
-            return state.user
-        }
+
 
     },
     getters: {
         user(state) {
             return state.user;
+        },
+        users(state) {
+            return state.users;
         }
     }
-
-})
+};

@@ -59,17 +59,6 @@ $fa-font-path: "../webfonts";
     }
 }
 
-.spinner-mini {
-    width: 15px;
-    height: 15px;
-    div {
-        width: 20px;
-        height: 20px;
-        margin: 2px;
-        border: 2px solid #fff;
-    }
-}
-
 .spinner-color-black div{
     border-color: #000 transparent transparent transparent;
 }
@@ -81,6 +70,17 @@ $fa-font-path: "../webfonts";
 .spinner-center {
     margin: 0 auto;
     display: block;
+}
+
+.spinner-mini {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    div {
+        width: 20px;
+        height: 20px;
+        margin: 2px;
+    }
 }
 
 @keyframes lds-ring {

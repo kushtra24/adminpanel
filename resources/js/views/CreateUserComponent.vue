@@ -22,10 +22,8 @@
 
     <div class="container">
 
-        <!-- loading spinner-->
-        <Spinner v-if="loading" />
 
-      <form @submit.prevent="onSubmit" v-if="!loading" ref="form">
+      <form @submit.prevent="onSubmit" ref="form">
         <div class="form-group">
           <input placeholder="Name" v-model="user.name" type="text" name="name" class="form-control">
             <span class="invalid-feedback" v-if="errors.name">{{ errors.name }}</span>
@@ -59,9 +57,9 @@
               <label class="form-check-label" for="isActive">Active</label>
           </div>
 
-        <button :disabled="inProgress" type="submit" class="btn btn-primary">Submit</button>
-          <Spinner v-if="inProgress" class="lds-ring spinner-color-black spinner-mini" />
-
+        <button :disabled="inProgress" type="submit" class="btn btn-primary">Submit
+            <Spinner v-if="inProgress" class="spinner-mini spinner-color-white" />
+        </button>
           <ErrorsList :errors="errors" />
       </form>
     </div>
@@ -69,7 +67,7 @@
 </template>
 
 <script>
-
+import store from "../store";
 import {mapActions, mapGetters, mapState} from "vuex";
 import ErrorsList from "../components/ErrorsList";
 import Spinner from "../components/Spinner";
@@ -81,22 +79,18 @@ export default {
             Spinner
         },
         computed: {
-            ...mapState([
-                'users',
-                'submitLoading'
-                ]),
+            // get user from store
             ...mapGetters(["user"])
         },
       data() {
         return {
             id: this.$route.params.id,
             inProgress: false,
-            loading: false,
             errors: {}
         }
       },
       methods: {
-          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'FETCH_EXISTING_USER']),
+          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE']),
 
           /**
            * on submitting the form  update or crete a user
@@ -108,26 +102,19 @@ export default {
                   .dispatch(action)
                   .then(() => {
                       this.inProgress = false;
-                      console.log('navigate?');
                       // navigate to user
                       this.$router.push('/users');
                   })
                   .catch( ({ response }) => {
                       this.inProgress = false;
-                      this.errors = response.data.errors;
+                      this.errors = response?.data?.errors
                       console.log('you have an error on creating an user')
                     });
             },
 
           fetchExistingUser() {
                // if the id exists in the url parameters get the selected user data
-              if(this.id){
-                  this.$store.dispatch("FETCH_EXISTING_USER", this.id).then(
-                      () => {
-                          this.loading = false;
-                      }
-                  ).catch( () => console.log('can\'t get the user data with this id'));
-              } else {
+              if(!this.id){
                   // reset state of user
                   this.$store.dispatch("RESET_STATE");
               }

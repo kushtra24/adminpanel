@@ -48,26 +48,35 @@
 </template>
 
 <script>
-
-    import {mapState} from "vuex";
-    import Spinner from "../components/Spinner";
+import store from "../store";
+import {mapGetters, mapState} from "vuex";
+import Spinner from "../components/Spinner";
 
     export default {
         components: {
             Spinner,
         },
+        data() {
+            return {
+                id: this.$route.params.id,
+                inProgress: false,
+                loading: false,
+                errors: {}
+            }
+        },
         computed: {
-            ...mapState([
-                'users',
-                'loading'
-            ])
+            ...mapState(['users']),
+            ...mapGetters(["users"])
         },
         methods: {
             /**
              * fetch all users
              */
             fetchAllUsers() {
-                this.$store.dispatch('FETCH_ALL_USERS');
+                this.loading = true;
+                this.$store.dispatch('FETCH_ALL_USERS')
+                    .then(() => this.loading = false)
+                    .catch(() => console.log('Fetching all users in users component faild') );
             },
             /**
              * navigate to Edit

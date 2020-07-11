@@ -9,22 +9,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
-import {Form, HasError, AlertError } from 'vform';
 import moment from 'moment';
-import VueProgressBar from 'vue-progressbar';
 import Swal from 'sweetalert2'
-import {store} from "./store/store";
+import store from "./store";
 
-// import axios from 'axios'
-
-// axios.defaults.baseURL = "api/"
-
-window.Form = Form;
 window.Swal = Swal;
-
-Vue.component(HasError.name, HasError)
-Vue.component(AlertError.name, AlertError)
-
 
 Vue.use(VueRouter)
 let routes = [
@@ -41,24 +30,6 @@ let routes = [
     mode: "history",
     routes // short for `routes: routes`
   })
-
-// --------------------------------------------------------------------
-
-const options = {
-    color: '#bffaf3',
-    failedColor: '#874b4b',
-    thickness: '5px',
-    transition: {
-        speed: '0.2s',
-        opacity: '0.6s',
-        termination: 300
-    },
-    autoRevert: true,
-    location: 'top',
-    inverse: false
-}
-
-    Vue.use(VueProgressBar, options)
 
     // this filter makes text to uppercase
     Vue.filter('upText', function(value){

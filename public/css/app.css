@@ -48240,18 +48240,6 @@ readers do not read off random characters that represent icons */
           animation-delay: -0.15s;
 }
 
-.spinner-mini {
-  width: 15px;
-  height: 15px;
-}
-
-.spinner-mini div {
-  width: 20px;
-  height: 20px;
-  margin: 2px;
-  border: 2px solid #fff;
-}
-
 .spinner-color-black div {
   border-color: #000 transparent transparent transparent;
 }
@@ -48263,6 +48251,18 @@ readers do not read off random characters that represent icons */
 .spinner-center {
   margin: 0 auto;
   display: block;
+}
+
+.spinner-mini {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+
+.spinner-mini div {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
 }
 
 @-webkit-keyframes lds-ring {
