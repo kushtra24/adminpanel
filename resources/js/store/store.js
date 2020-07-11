@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
     namespaced: true,
     state: { ...initialState(),
         users: [],
-        newUserCreated: false,
+        UserStateChanged: false,
     },
     actions: {
         /**
@@ -31,8 +31,8 @@ export const store = new Vuex.Store({
         async FETCH_ALL_USERS(context) {
             // check if new user is created and users property has data
             // avoid extronuous network call if article exists
-            if (this.state.newUserCreated === false && this.state.users.length > 0) {
-                this.state.newUserCreated = false;
+            if (this.state.UserStateChanged === false && this.state.users.length > 0) {
+                this.state.UserStateChanged = false;
                 return this.state.users;
             } else {
                 const user  = await axios.get("api/user/");
@@ -45,8 +45,8 @@ export const store = new Vuex.Store({
          */
         async CREATE_USER({state}) {
             await axios.post('api/user', state.user);
-            this.state.newUserCreated = true;
-            console.log('new user? 2 ->', this.state.newUserCreated);
+            this.state.UserStateChanged = true;
+            console.log('new user? create ->', this.state.UserStateChanged);
         },
 
         /**
@@ -54,6 +54,15 @@ export const store = new Vuex.Store({
          */
        async UPDATE_USER({state}) {
             await axios.put("/api/user/" + state.user.id, state.user);
+        },
+
+        /**
+         * create a new user
+         */
+       async DELETE_USER({state}) {
+            await axios.delete("/api/user/" + state.user.id);
+            this.state.UserStateChanged = true;
+            console.log('new user? delete ->', this.state.UserStateChanged);
         },
 
         /**
@@ -96,7 +105,7 @@ export const store = new Vuex.Store({
          */
         SET_ALL_USERS: (state, users) => {
             state.users = users;
-            state.newUserCreated = false;
+            state.UserStateChanged = false;
         },
 
         /**
@@ -124,7 +133,7 @@ export const store = new Vuex.Store({
          * @constructor
          */
         SET_CREATED_USER: (state) => {
-            state.newUserCreated = true;
+            state.UserStateChanged = true;
         },
 
         /**

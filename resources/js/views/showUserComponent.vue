@@ -76,32 +76,8 @@
             ...mapGetters(["user"])
         },
       methods: {
-            ...mapActions(['FETCH_SELECTED_USER']),
+            ...mapActions(['FETCH_SELECTED_USER', 'DELETE_USER']),
 
-          // getUserData() {
-          //   if (this.id){
-          //       this.loading = true;
-          //       this.$store.dispatch("FETCH_SELECTED_USER", this.id)
-          //           .then(() => {
-          //                   this.loading = false;
-          //               }
-          //           ).catch( () => console.log('can\'t get the user data with this id'));
-          //   }
-          // },
-          /**
-           * get user data
-           */
-          // getUserData() {
-          //     if (this.id) {
-          //         this.loading = true;
-          //         axios.get("/api/user/" + this.id).then(
-          //             ({data}) => {
-          //                 this.user = data
-          //                 this.loading = false
-          //             }
-          //         ).catch( () => console.log('can\'t get the user data with this id'));
-          //     }
-          // },
           /**
            * delete the selected user
            * @param id user
@@ -112,14 +88,14 @@
                   text: "You won't be able to revert this!",
                   icon: 'warning',
                   showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
+                  confirmButtonColor: '#d33',
+                  cancelButtonColor: '#3085d6',
                   confirmButtonText: 'Yes, delete it!'
               }).then((result) => {
                   // if user clicked on yes delete it then proceed
                   if (result.value) {
                       // send request to server to delete user
-                      axios.delete('/api/user/' + id)
+                      this.$store.dispatch('DELETE_USER')
                           .then( () => {
                               Swal.fire(
                                   'Deleted!',

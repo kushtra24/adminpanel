@@ -2424,33 +2424,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["user"])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['FETCH_SELECTED_USER'])), {}, {
-    // getUserData() {
-    //   if (this.id){
-    //       this.loading = true;
-    //       this.$store.dispatch("FETCH_SELECTED_USER", this.id)
-    //           .then(() => {
-    //                   this.loading = false;
-    //               }
-    //           ).catch( () => console.log('can\'t get the user data with this id'));
-    //   }
-    // },
-
-    /**
-     * get user data
-     */
-    // getUserData() {
-    //     if (this.id) {
-    //         this.loading = true;
-    //         axios.get("/api/user/" + this.id).then(
-    //             ({data}) => {
-    //                 this.user = data
-    //                 this.loading = false
-    //             }
-    //         ).catch( () => console.log('can\'t get the user data with this id'));
-    //     }
-    // },
-
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['FETCH_SELECTED_USER', 'DELETE_USER'])), {}, {
     /**
      * delete the selected user
      * @param id user
@@ -2463,14 +2437,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         // if user clicked on yes delete it then proceed
         if (result.value) {
           // send request to server to delete user
-          axios["delete"]('/api/user/' + id).then(function () {
+          _this.$store.dispatch('DELETE_USER').then(function () {
             Swal.fire('Deleted!', 'User has been deleted.', 'success');
 
             _this.$router.push('/users'); // catch an error
@@ -81960,7 +81934,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   namespaced: true,
   state: _objectSpread(_objectSpread({}, initialState()), {}, {
     users: [],
-    newUserCreated: false
+    UserStateChanged: false
   }),
   actions: {
     /**
@@ -81975,12 +81949,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.state.newUserCreated === false && _this.state.users.length > 0)) {
+                if (!(_this.state.UserStateChanged === false && _this.state.users.length > 0)) {
                   _context.next = 5;
                   break;
                 }
 
-                _this.state.newUserCreated = false;
+                _this.state.UserStateChanged = false;
                 return _context.abrupt("return", _this.state.users);
 
               case 5:
@@ -82017,8 +81991,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
                 return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('api/user', state.user);
 
               case 3:
-                _this2.state.newUserCreated = true;
-                console.log('new user? 2 ->', _this2.state.newUserCreated);
+                _this2.state.UserStateChanged = true;
+                console.log('new user? create ->', _this2.state.UserStateChanged);
 
               case 5:
               case "end":
@@ -82053,26 +82027,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     },
 
     /**
-     *
-     * @param context
-     * @param id
-     * @returns {Promise<any>}
-     * @constructor
+     * create a new user
      */
-    FETCH_SELECTED_USER: function FETCH_SELECTED_USER(context, id) {
+    DELETE_USER: function DELETE_USER(_ref3) {
+      var _this3 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var user;
+        var state;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('here -> ', id);
+                state = _ref3.state;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/user/" + id);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/api/user/" + state.user.id);
 
               case 3:
-                user = _context4.sent;
-                context.commit('SET_SELECTED_USER', user.data);
+                _this3.state.UserStateChanged = true;
+                console.log('new user? delete ->', _this3.state.UserStateChanged);
 
               case 5:
               case "end":
@@ -82080,6 +82052,37 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
             }
           }
         }, _callee4);
+      }))();
+    },
+
+    /**
+     *
+     * @param context
+     * @param id
+     * @returns {Promise<any>}
+     * @constructor
+     */
+    FETCH_SELECTED_USER: function FETCH_SELECTED_USER(context, id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var user;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                console.log('here -> ', id);
+                _context5.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/user/" + id);
+
+              case 3:
+                user = _context5.sent;
+                context.commit('SET_SELECTED_USER', user.data);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     },
 
@@ -82096,8 +82099,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     /**
      * reset state
      */
-    RESET_STATE: function RESET_STATE(_ref3) {
-      var commit = _ref3.commit;
+    RESET_STATE: function RESET_STATE(_ref4) {
+      var commit = _ref4.commit;
       commit('RESET_STATE');
     }
   },
@@ -82110,7 +82113,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
      */
     SET_ALL_USERS: function SET_ALL_USERS(state, users) {
       state.users = users;
-      state.newUserCreated = false;
+      state.UserStateChanged = false;
     },
 
     /**
@@ -82138,7 +82141,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
      * @constructor
      */
     SET_CREATED_USER: function SET_CREATED_USER(state) {
-      state.newUserCreated = true;
+      state.UserStateChanged = true;
     },
 
     /**
