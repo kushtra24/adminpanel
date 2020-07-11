@@ -96,7 +96,7 @@ export default {
         }
       },
       methods: {
-          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'FETCH_EXISTING_USER_DATA']),
+          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'FETCH_EXISTING_USER']),
 
           /**
            * on submitting the form  update or crete a user
@@ -108,8 +108,9 @@ export default {
                   .dispatch(action)
                   .then(() => {
                       this.inProgress = false;
+                      console.log('navigate?');
                       // navigate to user
-                      this.$router.push('users');
+                      this.$router.push('/users');
                   })
                   .catch( ({ response }) => {
                       this.inProgress = false;
@@ -117,21 +118,23 @@ export default {
                       console.log('you have an error on creating an user')
                     });
             },
+
+          fetchExistingUser() {
+               // if the id exists in the url parameters get the selected user data
+              if(this.id){
+                  this.$store.dispatch("FETCH_EXISTING_USER", this.id).then(
+                      () => {
+                          this.loading = false;
+                      }
+                  ).catch( () => console.log('can\'t get the user data with this id'));
+              } else {
+                  // reset state of user
+                  this.$store.dispatch("RESET_STATE");
+              }
+          }
       },
     created() {
-            /**
-             * if the id exists in the url parameters get the selected user data
-             */
-            if(this.id){
-                this.$store.dispatch("FETCH_EXISTING_USER_DATA", this.id).then(
-                    () => {
-                        this.loading = false;
-                    }
-                ).catch( () => console.log('can\'t get the user data with this id'));
-            } else {
-                // reset state of user
-                this.$store.dispatch("RESET_STATE");
-            }
+           this.fetchExistingUser()
     }
 }
 </script>

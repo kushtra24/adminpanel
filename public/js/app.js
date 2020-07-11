@@ -2089,7 +2089,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errors: {}
     };
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'FETCH_EXISTING_USER_DATA'])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'FETCH_EXISTING_USER'])), {}, {
     /**
      * on submitting the form  update or crete a user
      */
@@ -2099,33 +2099,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
       this.inProgress = true;
       this.$store.dispatch(action).then(function () {
-        _this.inProgress = false; // navigate to user
+        _this.inProgress = false;
+        console.log('navigate?'); // navigate to user
 
-        _this.$router.push('users');
+        _this.$router.push('/users');
       })["catch"](function (_ref) {
         var response = _ref.response;
         _this.inProgress = false;
         _this.errors = response.data.errors;
         console.log('you have an error on creating an user');
       });
+    },
+    fetchExistingUser: function fetchExistingUser() {
+      var _this2 = this;
+
+      // if the id exists in the url parameters get the selected user data
+      if (this.id) {
+        this.$store.dispatch("FETCH_EXISTING_USER", this.id).then(function () {
+          _this2.loading = false;
+        })["catch"](function () {
+          return console.log('can\'t get the user data with this id');
+        });
+      } else {
+        // reset state of user
+        this.$store.dispatch("RESET_STATE");
+      }
     }
   }),
   created: function created() {
-    var _this2 = this;
-
-    /**
-     * if the id exists in the url parameters get the selected user data
-     */
-    if (this.id) {
-      this.$store.dispatch("FETCH_EXISTING_USER_DATA", this.id).then(function () {
-        _this2.loading = false;
-      })["catch"](function () {
-        return console.log('can\'t get the user data with this id');
-      });
-    } else {
-      // reset state of user
-      this.$store.dispatch("RESET_STATE");
-    }
+    this.fetchExistingUser();
   }
 });
 
@@ -2322,6 +2324,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['users', 'loading'])),
   methods: {
+    /**
+     * fetch all users
+     */
+    fetchAllUsers: function fetchAllUsers() {
+      this.$store.dispatch('FETCH_ALL_USERS');
+    },
+
+    /**
+     * navigate to Edit
+     */
     navigateToEdit: function navigateToEdit(id) {
       this.$router.push({
         path: "/users-details/".concat(id)
@@ -2329,7 +2341,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    this.$store.dispatch('FETCH_ALL_USERS');
+    this.fetchAllUsers();
   }
 });
 
@@ -2457,27 +2469,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
+     *  fetch selected user
+     */
+    fetchSelectedUser: function fetchSelectedUser() {
+      var _this2 = this;
+
+      if (this.id) {
+        this.loading = true;
+        this.$store.dispatch("FETCH_SELECTED_USER", this.id).then(function () {
+          _this2.loading = false;
+        })["catch"](function () {
+          return console.log('can\'t get the user data with this id');
+        });
+      }
+    },
+
+    /**
      * navigate to edit page
      * @param id
      */
     navigateToEdit: function navigateToEdit(id) {
-      console.log('id -> ', id);
       this.$router.push({
         path: "/users-edit/".concat(id)
       });
     }
   }),
   created: function created() {
-    var _this2 = this;
-
-    if (this.id) {
-      this.loading = true;
-      this.$store.dispatch("FETCH_SELECTED_USER", this.id).then(function () {
-        _this2.loading = false;
-      })["catch"](function () {
-        return console.log('can\'t get the user data with this id');
-      });
-    }
+    this.fetchSelectedUser();
   }
 });
 
@@ -82015,7 +82033,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               case 0:
                 state = _ref2.state;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("/api/user/" + state.user.id, state.user);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.put("api/user/" + state.user.id, state.user);
 
               case 3:
               case "end":
@@ -82040,7 +82058,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               case 0:
                 state = _ref3.state;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/api/user/" + state.user.id);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("api/user/" + state.user.id);
 
               case 3:
                 _this3.state.UserStateChanged = true;
@@ -82091,7 +82109,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
      * @param context
      * @constructor
      */
-    FETCH_EXISTING_USER_DATA: function FETCH_EXISTING_USER_DATA(context) {
+    FETCH_EXISTING_USER: function FETCH_EXISTING_USER(context) {
       console.log('fetch existing user data');
       context.commit('SET_EXISTING_USER');
     },

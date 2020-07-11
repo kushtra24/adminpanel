@@ -53,14 +53,14 @@ export const store = new Vuex.Store({
          * create a new user
          */
        async UPDATE_USER({state}) {
-            await axios.put("/api/user/" + state.user.id, state.user);
+            await axios.put("api/user/" + state.user.id, state.user);
         },
 
         /**
          * create a new user
          */
        async DELETE_USER({state}) {
-            await axios.delete("/api/user/" + state.user.id);
+            await axios.delete("api/user/" + state.user.id);
             this.state.UserStateChanged = true;
             console.log('new user? delete ->', this.state.UserStateChanged);
         },
@@ -83,7 +83,7 @@ export const store = new Vuex.Store({
          * @param context
          * @constructor
          */
-        FETCH_EXISTING_USER_DATA(context) {
+        FETCH_EXISTING_USER(context) {
             console.log('fetch existing user data');
             context.commit('SET_EXISTING_USER');
         },

@@ -60,7 +60,7 @@
 <script>
 
     import Spinner from "../components/Spinner";
-    import {mapActions, mapGetters, mapState} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         components: {
@@ -114,24 +114,30 @@
                   }
               })
           },
+
+          /**
+           *  fetch selected user
+           */
+          fetchSelectedUser() {
+              if (this.id){
+                  this.loading = true;
+                  this.$store.dispatch("FETCH_SELECTED_USER", this.id)
+                      .then(() => {
+                              this.loading = false;
+                          }
+                      ).catch( () => console.log('can\'t get the user data with this id'));
+              }
+          },
           /**
            * navigate to edit page
            * @param id
            */
           navigateToEdit(id) {
-              console.log('id -> ', id);
               this.$router.push({path: `/users-edit/${id}` });
           },
     },
         created() {
-            if (this.id){
-                this.loading = true;
-                this.$store.dispatch("FETCH_SELECTED_USER", this.id)
-                    .then(() => {
-                            this.loading = false;
-                        }
-                    ).catch( () => console.log('can\'t get the user data with this id'));
-            }
+            this.fetchSelectedUser();
         }
     }
 </script>

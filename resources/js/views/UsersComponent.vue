@@ -63,12 +63,21 @@
             ])
         },
         methods: {
+            /**
+             * fetch all users
+             */
+            fetchAllUsers() {
+                this.$store.dispatch('FETCH_ALL_USERS');
+            },
+            /**
+             * navigate to Edit
+             */
             navigateToEdit(id) {
                 this.$router.push({path: `/users-details/${id}` });
-            },
+            }
         },
         created() {
-            this.$store.dispatch('FETCH_ALL_USERS');
+            this.fetchAllUsers();
         }
     }
 </script>
