@@ -40,6 +40,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {{ Auth::user()->name }}
         </router-link>
       </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <router-link to="/developer" tag="a" class="nav-link"  active-class="active" exact class="nav-link">
+            Developer
+        </router-link>
+      </li>
 
     </ul>
 

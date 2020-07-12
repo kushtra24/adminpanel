@@ -19,4 +19,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::apiResources(['user' => 'API\UserController']);
+Route::middleware('auth:api')->group( function(){
+    Route::apiResources(['user' => 'API\UserController']);
+});
+
+

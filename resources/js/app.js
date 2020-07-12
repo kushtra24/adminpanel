@@ -23,6 +23,7 @@ let routes = [
     { path: '/users-create', component: require('./views/CreateUserComponent.vue').default},
     { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},
     { path: '/users-details/:id', component: require('./views/showUserComponent.vue').default},
+    { path: '/developer', component: require('./views/developerComponent.vue').default},
   ]
 
 
@@ -55,6 +56,21 @@ let routes = [
  *
  * Eg. ./views/ExampleComponent.vue -> <example-component></example-component>
  */
+
+    Vue.component(
+        'passport-clients',
+        require('./components/passport/Clients.vue').default
+    );
+
+    Vue.component(
+        'passport-authorized-clients',
+        require('./components/passport/AuthorizedClients.vue').default
+    );
+
+    Vue.component(
+        'passport-personal-access-tokens',
+        require('./components/passport/PersonalAccessTokens.vue').default
+    );
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
