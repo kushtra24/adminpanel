@@ -30,7 +30,8 @@
                 </div>
                 <div class="card-body">
                     <picture>
-                        <img v-bind:src="user.photo" alt="user photo" class="img-fluid img-thumbnail" width="150px">
+                        <img v-if="!user.photo" :src="'/../img/profile.png'" class="card-img-top" alt="no image">
+                        <img v-if="user.photo" :src="'/../storage/' + user.photo" class="card-img-top" alt="user photo">
                     </picture>
                     <h6 class="text-secondary margin-top-small ">Name</h6>
                     <h5><b>{{ user.name }}</b></h5>
@@ -72,12 +73,20 @@
             loading: false,
         }
       },
-        computed: {
-            ...mapGetters(["user"])
-        },
       methods: {
             ...mapActions(['FETCH_SELECTED_USER', 'DELETE_USER']),
 
+          /**
+           *  fetch selected user
+           */
+          fetchSelectedUser() {
+              if (this.id){
+                  this.loading = true;
+                  this.$store.dispatch("FETCH_SELECTED_USER", this.id)
+                      .then(() => this.loading = false
+                      ).catch( () => console.log('can\'t get the user data with this id'));
+              }
+          },
           /**
            * delete the selected user
            * @param id user
@@ -114,20 +123,6 @@
                   }
               })
           },
-
-          /**
-           *  fetch selected user
-           */
-          fetchSelectedUser() {
-              if (this.id){
-                  this.loading = true;
-                  this.$store.dispatch("FETCH_SELECTED_USER", this.id)
-                      .then(() => {
-                              this.loading = false;
-                          }
-                      ).catch( () => console.log('can\'t get the user data with this id'));
-              }
-          },
           /**
            * navigate to edit page
            * @param id
@@ -136,6 +131,9 @@
               this.$router.push({path: `/users-edit/${id}` });
           },
     },
+        computed: {
+            ...mapGetters(["user"])
+        },
         created() {
             this.fetchSelectedUser();
         }

@@ -21,8 +21,6 @@
     </div>
 
     <div class="container">
-
-
       <form @submit.prevent="onSubmit" ref="form">
         <div class="form-group">
           <input placeholder="Name" v-model="user.name" type="text" name="name" class="form-control">
@@ -52,6 +50,11 @@
           </select>
         </div>
 
+          <div class="form-group">
+              <label for="FormControlProfilePhoto">Add profile Photo</label>
+              <input type="file" class="form-control-file" id="FormControlProfilePhoto" @change="updateProfilePhoto">
+          </div>
+
           <div class="form-check" style="margin-bottom: 15px" v-if="id">
               <input type="checkbox" class="form-check-input" id="isActive" name="active" v-model="user.active">
               <label class="form-check-label" for="isActive">Active</label>
@@ -67,7 +70,6 @@
 </template>
 
 <script>
-import store from "../store";
 import {mapActions, mapGetters, mapState} from "vuex";
 import ErrorsList from "../components/ErrorsList";
 import Spinner from "../components/Spinner";
@@ -78,10 +80,6 @@ export default {
             ErrorsList,
             Spinner
         },
-        computed: {
-            // get user from store
-            ...mapGetters(["user"])
-        },
       data() {
         return {
             id: this.$route.params.id,
@@ -90,10 +88,10 @@ export default {
         }
       },
       methods: {
-          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE']),
+          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'UPDATE_PROFILE_PHOTO']),
 
           /**
-           * on submitting the form  update or crete a user
+           * on submitting the form update or crete a user
            */
           onSubmit() {
               let action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
@@ -112,16 +110,46 @@ export default {
                     });
             },
 
-          fetchExistingUser() {
+          /**
+           * reset state if there is not an id in the url
+           */
+          resetState() {
                // if the id exists in the url parameters get the selected user data
               if(!this.id){
                   // reset state of user
                   this.$store.dispatch("RESET_STATE");
               }
+          },
+
+          /**
+           * update profile photo
+           * @param event
+           */
+          updateProfilePhoto(event) {
+              let file = event.target.files[0];
+              let reader = new FileReader();
+              console.log('file => ', file);
+              if (file['size'] < 2111776) {
+                  reader.onloadend = (file) => {
+                      this.$store.dispatch('UPDATE_PROFILE_PHOTO', [reader.result])
+                  }
+                  reader.readAsDataURL(file);
+              } else {
+                  Swal.fire(
+                      'Error!',
+                      'oops... file too big, make sure it is less then 2MB',
+                      'warning'
+                  )
+              }
           }
+
       },
+    computed: {
+        // get user from store
+        ...mapGetters(["user"])
+    },
     created() {
-           this.fetchExistingUser()
+           this.resetState()
     }
 }
 </script>

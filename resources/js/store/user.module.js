@@ -21,6 +21,9 @@ export default {
     actions: {
         /**
          * get all users from database
+         * @param context
+         * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
+         * @constructor
          */
         async FETCH_ALL_USERS(context) {
             // check if new user is created and users property has data

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group( function(){
     Route::apiResources(['user' => 'API\UserController']);
+    Route::get('profile', 'API\UserController@profile');
+    Route::put('profile', 'API\UserController@updateProfile');
 });
 
 

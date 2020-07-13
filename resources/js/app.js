@@ -18,7 +18,7 @@ window.Swal = Swal;
 Vue.use(VueRouter)
 let routes = [
     { path: '/dashboard', component: require('./views/DashboardComponent.vue').default},
-    { path: '/profile', component: require('./views/ProfileComponent.vue').default},
+    { path: '/profile', component: require('./views/profile/ProfileComponent.vue').default},
     { path: '/users', component: require('./views/UsersComponent.vue').default},
     { path: '/users-create', component: require('./views/CreateUserComponent.vue').default},
     { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},

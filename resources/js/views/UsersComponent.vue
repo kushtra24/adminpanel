@@ -28,9 +28,9 @@
 
             <div class="users-cards" v-if="!loading">
                 <div class="card" style="width: 18rem;" v-for="user in users" :key="user.id" @click="navigateToEdit(user.id)" v-bind:class="{ 'border-danger ': !user.active }">
-                    <img v-if="user.photo" v-bind:src="user.photo" class="card-img-top" alt="Card image cap">
-                    <img v-if="!user.photo" v-bind:src="'./img/profile.png'" class="card-img-top" alt="no image">
-                    <div class="card-body" v-bind:class="{ 'text-danger ': !user.active }">
+                    <img v-if="!user.photo" :src="'./img/profile.png'" class="card-img-top" alt="no image">
+                    <img v-if="user.photo" :src="'./storage/' + user.photo" class="card-img-top" alt="user photo">
+                    <div class="card-body" :class="{ 'text-danger ': !user.active }">
                         <h6 class="text-secondary margin-top-small ">Name</h6>
                         <h5><b>{{ user.name }}</b></h5>
 
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import store from "../store";
 import {mapGetters, mapState} from "vuex";
 import Spinner from "../components/Spinner";
 
@@ -63,10 +62,6 @@ import Spinner from "../components/Spinner";
                 loading: false,
                 errors: {}
             }
-        },
-        computed: {
-            ...mapState(['users']),
-            ...mapGetters(["users"])
         },
         methods: {
             /**
@@ -84,6 +79,9 @@ import Spinner from "../components/Spinner";
             navigateToEdit(id) {
                 this.$router.push({path: `/users-details/${id}` });
             }
+        },
+        computed: {
+            ...mapGetters(["users"]),
         },
         created() {
             this.fetchAllUsers();
