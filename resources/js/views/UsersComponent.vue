@@ -27,9 +27,9 @@
             <Spinner v-if="loading" />
 
             <div class="users-cards" v-if="!loading">
-                <div class="card" style="width: 18rem;" v-for="user in users" :key="user.id" @click="navigateToEdit(user.id)" v-bind:class="{ 'border-danger ': !user.active }">
+                <div class="card user-card" v-for="user in users" :key="user.id" @click="navigateToEdit(user.id)" v-bind:class="{ 'border-danger ': !user.active }">
                     <img v-if="!user.photo" :src="'./img/profile.png'" class="card-img-top" alt="no image">
-                    <img v-if="user.photo" :src="'./storage/' + user.photo" class="card-img-top" alt="user photo">
+                    <img v-if="user.photo" :src="'./storage/user/' + user.photo" class="card-img-top" alt="user photo">
                     <div class="card-body" :class="{ 'text-danger ': !user.active }">
                         <h6 class="text-secondary margin-top-small ">Name</h6>
                         <h5><b>{{ user.name }}</b></h5>

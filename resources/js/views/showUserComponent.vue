@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <picture>
                         <img v-if="!user.photo" :src="'/../img/profile.png'" class="card-img-top" alt="no image">
-                        <img v-if="user.photo" :src="'/../storage/' + user.photo" class="card-img-top" alt="user photo">
+                        <img v-if="user.photo" :src="'/../storage/user/' + user.photo" class="card-img-top" alt="user photo">
                     </picture>
                     <h6 class="text-secondary margin-top-small ">Name</h6>
                     <h5><b>{{ user.name }}</b></h5>

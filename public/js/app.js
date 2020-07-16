@@ -2081,8 +2081,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           _this.errors = response === null || response === void 0 ? void 0 : response.data;
         }
-
-        Swal.fire('Failed!', 'Nothing was Updated', 'warning');
       });
     },
 
@@ -3052,17 +3050,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errors: {}
     };
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'UPDATE_PROFILE_PHOTO'])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'UPDATE_USER_PHOTO'])), {}, {
     /**
      * on submitting the form update or crete a user
      */
     onSubmit: function onSubmit() {
       var _this = this;
 
-      var action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
+      var action = '';
+      var actionMessage = '';
+
+      if (this.id) {
+        action = 'UPDATE_USER';
+        actionMessage = 'Updated';
+      } else {
+        action = 'CREATE_USER';
+        actionMessage = 'Created';
+      } // let action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
+      // let actionMessage = this.id ? 'Updated' : 'Created';
+
+
       this.inProgress = true;
       this.$store.dispatch(action).then(function () {
-        _this.inProgress = false; // navigate to user
+        _this.inProgress = false;
+        Swal.fire(actionMessage, 'User has been ' + actionMessage, 'success'); // navigate to user
 
         _this.$router.push('/users');
       })["catch"](function (_ref) {
@@ -3072,6 +3083,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.inProgress = false;
         _this.errors = response === null || response === void 0 ? void 0 : (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.errors;
         console.log('you have an error on creating an user');
+        Swal.fire('Failed!', 'Nothing was Updated', 'warning');
       });
     },
 
@@ -3090,7 +3102,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * update profile photo
      * @param event
      */
-    updateProfilePhoto: function updateProfilePhoto(event) {
+    createUserPhoto: function createUserPhoto(event) {
       var _this2 = this;
 
       var file = event.target.files[0];
@@ -3099,7 +3111,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (file['size'] < 2111776) {
         reader.onloadend = function (file) {
-          _this2.$store.dispatch('UPDATE_PROFILE_PHOTO', [reader.result]);
+          _this2.$store.dispatch('UPDATE_USER_PHOTO', [reader.result]);
         };
 
         reader.readAsDataURL(file);
@@ -3433,6 +3445,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -3443,7 +3456,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   beforeCreate: function beforeCreate() {
     console.log('photo', this.$store.state.profile.photo);
-    this.$store.state.profile.photo = '../storage/' + this.$store.state.profile.photo;
+    this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
   },
   data: function data() {
     return {
@@ -3460,11 +3473,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true;
       this.$store.dispatch('FETCH_PROFILE').then(function () {
-        return _this.loading = false;
+        _this.loading = false;
       })["catch"](function (errors) {
         _this.loading = false;
         _this.errors = errors.errors;
         console.log('error profile could not be fetched');
+        Swal.fire('Failed!', 'User was not created', 'warning');
       });
     }
   }),
@@ -66630,7 +66644,6 @@ var render = function() {
       _c(
         "form",
         {
-          ref: "form",
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -66817,14 +66830,14 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "FormControlProfilePhoto" } }, [
+            _c("label", { attrs: { for: "FormControlUserPhoto" } }, [
               _vm._v("Add profile Photo")
             ]),
             _vm._v(" "),
             _c("input", {
               staticClass: "form-control-file",
-              attrs: { type: "file", id: "FormControlProfilePhoto" },
-              on: { change: _vm.updateProfilePhoto }
+              attrs: { type: "file", id: "FormControlUserPhoto" },
+              on: { change: _vm.createUserPhoto }
             })
           ]),
           _vm._v(" "),
@@ -67100,9 +67113,8 @@ var render = function() {
                     "div",
                     {
                       key: user.id,
-                      staticClass: "card",
+                      staticClass: "card user-card",
                       class: { "border-danger ": !user.active },
-                      staticStyle: { width: "18rem" },
                       on: {
                         click: function($event) {
                           return _vm.navigateToEdit(user.id)
@@ -67121,7 +67133,7 @@ var render = function() {
                         ? _c("img", {
                             staticClass: "card-img-top",
                             attrs: {
-                              src: "./storage/" + user.photo,
+                              src: "./storage/user/" + user.photo,
                               alt: "user photo"
                             }
                           })
@@ -67305,35 +67317,37 @@ var render = function() {
       !_vm.loading
         ? _c("div", { staticClass: "container" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "box box-widget widget-user" }, [
-                  _c("div", { staticStyle: { "text-align": "center" } }, [
-                    _c("picture", [
-                      _c("img", {
-                        staticClass: "img-fluid img-thumbnail",
-                        attrs: {
-                          src: _vm.profile.photo,
-                          alt: "Profile photo",
-                          width: "150px"
-                        }
-                      })
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", {}, [
+                  _c("picture", [
+                    _c("img", {
+                      staticClass: "img-fluid img-thumbnail",
+                      attrs: {
+                        src: _vm.profile.photo,
+                        alt: "Profile photo",
+                        width: "150px"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "widget-user-header bg-aqua-active" },
+                  [
+                    _c("h3", { staticClass: "widget-user-username" }, [
+                      _vm._v(_vm._s(_vm.profile.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "widget-user-desc" }, [
+                      _vm._v(_vm._s(_vm.profile.type))
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "widget-user-header bg-aqua-active" },
-                    [
-                      _c("h3", { staticClass: "widget-user-username" }, [
-                        _vm._v(_vm._s(_vm.profile.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("h5", { staticClass: "widget-user-desc" }, [
-                        _vm._v(_vm._s(_vm.profile.type))
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-5" }, [
+                _c("div", { staticClass: "box box-widget widget-user" }, [
                   _c("div", { staticClass: "card-body" }, [
                     _c(
                       "h6",
@@ -67382,7 +67396,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "col-md-5" }, [
                 _c(
                   "div",
                   { attrs: { id: "settings" } },
@@ -67499,7 +67513,7 @@ var render = function() {
                       ? _c("img", {
                           staticClass: "card-img-top",
                           attrs: {
-                            src: "/../storage/" + _vm.user.photo,
+                            src: "/../storage/user/" + _vm.user.photo,
                             alt: "user photo"
                           }
                         })
@@ -84826,7 +84840,7 @@ function initialState() {
   },
   mutations: {
     SET_PROFILE: function SET_PROFILE(state, profile) {
-      state.profile = profile, state.profile.photo = '../storage/' + state.profile.photo;
+      state.profile = profile, state.profile.photo = '../storage/user/' + state.profile.photo;
     },
     SET_PROFILE_PHOTO: function SET_PROFILE_PHOTO(state, reader) {
       state.profile.photo = reader;
@@ -84855,6 +84869,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _this5 = undefined;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -84983,9 +85009,21 @@ function initialState() {
     },
 
     /**
+     * update photo state
+     * @param state
+     * @constructor
+     */
+    UPDATE_USER_PHOTO: function UPDATE_USER_PHOTO(context, _ref3) {
+      var _ref4 = _slicedToArray(_ref3, 1),
+          reader = _ref4[0];
+
+      context.commit('SET_USER_PHOTO', reader);
+    },
+
+    /**
      * create a new user
      */
-    DELETE_USER: function DELETE_USER(_ref3) {
+    DELETE_USER: function DELETE_USER(_ref5) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
@@ -84994,7 +85032,7 @@ function initialState() {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                state = _ref3.state;
+                state = _ref5.state;
                 _context4.next = 3;
                 return axios["delete"]("/api/user/" + state.user.id);
 
@@ -85043,8 +85081,8 @@ function initialState() {
     /**
      * reset state
      */
-    RESET_STATE: function RESET_STATE(_ref4) {
-      var commit = _ref4.commit;
+    RESET_STATE: function RESET_STATE(_ref6) {
+      var commit = _ref6.commit;
       commit('RESET_STATE');
     }
   },
@@ -85068,6 +85106,9 @@ function initialState() {
      */
     SET_SELECTED_USER: function SET_SELECTED_USER(state, user) {
       state.user = user;
+    },
+    SET_USER_PHOTO: function SET_USER_PHOTO(state, reader) {
+      state.user.photo = reader;
     },
 
     /**

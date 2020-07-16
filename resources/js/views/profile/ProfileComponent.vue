@@ -21,9 +21,8 @@
 
     <div class="container" v-if="!loading">
         <div class="row">
-        <div class="col-md-6">
-            <div class="box box-widget widget-user">
-                <div class="" style="text-align: center">
+            <div class="col-md-2">
+                <div class="">
                     <picture>
                         <img :src="profile.photo" alt="Profile photo" class="img-fluid img-thumbnail" width="150px">
                     </picture>
@@ -33,7 +32,9 @@
                     <h3 class="widget-user-username">{{ profile.name }}</h3>
                     <h5 class="widget-user-desc">{{ profile.type }}</h5>
                 </div>
-
+            </div>
+        <div class="col-md-5">
+            <div class="box box-widget widget-user">
                 <div class="card-body">
                     <h6 class="text-secondary margin-top-small ">Name</h6>
                     <h5><b>{{ profile.name }}</b></h5>
@@ -54,7 +55,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="" id="settings">
                 <EditProfileComponent></EditProfileComponent>
             </div>
@@ -77,7 +78,7 @@ import {mapActions, mapGetters} from "vuex";
         },
         beforeCreate() {
             console.log('photo', this.$store.state.profile.photo );
-            this.$store.state.profile.photo = '../storage/' + this.$store.state.profile.photo;
+            this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
         },
         data() {
           return {
@@ -93,11 +94,19 @@ import {mapActions, mapGetters} from "vuex";
             fetchProfile() {
                 this.loading = true;
                 this.$store.dispatch('FETCH_PROFILE')
-                    .then( () => this.loading = false)
+                    .then( () => {
+                        this.loading = false
+                    })
                     .catch((errors) => {
                         this.loading = false;
                         this.errors = errors.errors;
                         console.log('error profile could not be fetched');
+                        Swal.fire(
+                            'Failed!',
+                            'User was not created',
+                            'warning'
+
+                        )
                     })
             }
         },

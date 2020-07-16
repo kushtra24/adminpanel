@@ -63,7 +63,7 @@ export default {
     mutations: {
         SET_PROFILE: (state, profile) => {
         state.profile = profile,
-        state.profile.photo = '../storage/' + state.profile.photo
+        state.profile.photo = '../storage/user/' + state.profile.photo
         },
         SET_PROFILE_PHOTO: (state, reader) => {
             state.profile.photo = reader;

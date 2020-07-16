@@ -7,20 +7,29 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+
+    // validation rules for user
     private $rules = [
         'name' => 'required|string|max:191',
         'email' => 'required|string|email|max:191|unique:users',
         'password' => 'required|string|min:8'
     ];
 
+    // validation rules for user
+    private $updateUserRules = [
+        'name' => 'required|string|max:191',
+        'email' => 'required|string|email|max:191|',
+    ];
+
+    // validation rules for profile
     private $profileRules = [
         'name' => 'required|string|max:191',
+//        'password' => 'string|min:8'
     ];
 
     /**
@@ -28,10 +37,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
+
+        // get users and order them by id discanding
         $user = User::orderBy('id', 'DESC')->get();
 
+        // return json response with user
         return response()->json($user, 200);
     }
 
@@ -44,28 +55,22 @@ class UserController extends Controller
      */
     public function store(Request $request) {
 
+        // validate user
         $this->validate($request, $this->rules);
 
-        Log::info(var_export('here'. $request->photo, true));
+        // photo request
         $requestedPhoto = $request['photo'];
-
         // check if requested photo is not an empty string and does not contain storage in it
         if ( $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage') ) {
-            Log::info(var_export('here2', true));
-            $image_64 = $request->photo;  // your base64 encoded
-            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
-            $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
-            // find substring fro replace here eg: data:image/png;base64,
-            $image = str_replace($replace, '', $image_64);
-            $image = str_replace(' ', '+', $image);
-            $imageName = Str::random(10) . '.' . $extension;
-            Storage::disk('public')->put($imageName, base64_decode($image));
-            $request->merge(['photo' => $imageName]);
+            $this->updatePhoto($request, $requestedPhoto, 'user');
         }
 
+        // hash password request
         $request->merge(['password' => Hash::make($request['password'])]);
+        // create user
         $user = User::create($request->all());
 
+        // return json response with user
         return response()->json($user, 200);
     }
 
@@ -77,9 +82,11 @@ class UserController extends Controller
      */
     public function show($user) {
 
-        $userDate = User::findOrfail($user);
+        // find the user or fail
+        $user = User::findOrfail($user);
 
-        return response()->json($userDate, 200);
+        // return json response with user
+        return response()->json($user, 200);
     }
 
     /**
@@ -91,20 +98,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, $this->rules);
 
+        // validate user
+        $this->validate($request, $this->updateUserRules);
+
+        // find user or fail
         $user = User::findOrfail($id);
 
-        $user->update([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => Hash::make(request('password'), ['rounds' => 12]),
-            'type' => request('type'),
-            'bio' => request('bio'),
-            'photo' => request('photo'),
-            'active' => request('active')
-        ]);
+        // get current uploaded photo from DB
+        $currentPhoto = $user->photo;
+        $requestedPhoto = $request['photo'];
 
+        // check if requested photo is not the same as the photo on the db, is not an empty string and does not contain storage in it
+        if ($requestedPhoto != $currentPhoto && $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage') ) {
+            $this->updatePhoto($request, $requestedPhoto, 'user', $currentPhoto);
+        }
+        // check if password is empty
+        if (!empty($request->password)) {
+            // hash the password
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+
+        // update user
+        $user->update($request->all());
+
+        // return json response with user id
         return response()->json([ 'id' => $user->id ], 200);
     }
 
@@ -122,6 +140,7 @@ class UserController extends Controller
         // gelete user
         $user->delete();
 
+        // return json response with user
         return response()->json($user, 200);
     }
 
@@ -130,6 +149,7 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function profile() {
+        // return authenticated user
         return auth('api')->user();
     }
 
@@ -146,28 +166,29 @@ class UserController extends Controller
         $authUser = auth('api')->user();
         // get current uploaded photo from DB
         $currentPhoto = $authUser->photo;
+        // photo request
         $requestedPhoto = $request['photo'];
-
         // check if requested photo is not the same as the photo on the db, is not an empty string and does not contain storage in it
-        if ($requestedPhoto != $currentPhoto && $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage') ) {
-            Log::info(var_export('profile', true));
-            $image_64 = $request->photo;  // your base64 encoded
-            $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
-            $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
-            // find substring fro replace here eg: data:image/png;base64,
-            $image = str_replace($replace, '', $image_64);
-            $image = str_replace(' ', '+', $image);
-            $imageName = Str::random(10) . '.' . $extension;
-            Storage::disk('public')->put($imageName, base64_decode($image));
-            $request->merge(['photo' => $imageName]);
+        if ($requestedPhoto != $currentPhoto && $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage')) {
+
+            $this->updatePhoto($request, $requestedPhoto, 'user', $currentPhoto);
         }
 
+        // check if password is empty
         if (!empty($request->password)) {
+            // hash password
             $request->merge(['password' => Hash::make($request['password'])]);
         }
 
-        $authUser->update($request->all());
+        if (Str::contains($requestedPhoto, 'storage')) {
+            // update user profile except the photo
+            $authUser->update($request->except(['photo']));
+        } else {
+            // update user profile
+            $authUser->update($request->all());
+        }
 
+        // return json response with updated profile
         return response()->json($authUser, 200);
 
     }

@@ -55,6 +55,16 @@ export default {
             // commit('USER_CHANGED');
         },
 
+
+        /**
+         * update photo state
+         * @param state
+         * @constructor
+         */
+        UPDATE_USER_PHOTO(context, [reader]) {
+            context.commit('SET_USER_PHOTO', reader);
+        },
+
         /**
          * create a new user
          */
@@ -105,6 +115,10 @@ export default {
          */
         SET_SELECTED_USER: (state, user) => {
             state.user = user;
+        },
+
+        SET_USER_PHOTO: (state, reader) => {
+            state.user.photo = reader
         },
 
         /**

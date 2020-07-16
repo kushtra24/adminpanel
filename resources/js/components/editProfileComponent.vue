@@ -79,11 +79,6 @@ export default {
                     } else {
                         this.errors = response?.data
                     }
-                    Swal.fire(
-                        'Failed!',
-                        'Nothing was Updated',
-                        'warning'
-                    )
             });
         },
 

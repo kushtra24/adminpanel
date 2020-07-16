@@ -1,0 +1,14 @@
+password encryption;
+JWT
+vuex
+namespacing
+base 64 image uploading
+
+
+
+
+vue
+laravel
+bootstrap
+scss
+

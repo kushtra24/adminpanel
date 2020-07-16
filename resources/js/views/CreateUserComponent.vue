@@ -21,7 +21,7 @@
     </div>
 
     <div class="container">
-      <form @submit.prevent="onSubmit" ref="form">
+      <form @submit.prevent="onSubmit">
         <div class="form-group">
           <input placeholder="Name" v-model="user.name" type="text" name="name" class="form-control">
             <span class="invalid-feedback" v-if="errors.name">{{ errors.name }}</span>
@@ -51,8 +51,8 @@
         </div>
 
           <div class="form-group">
-              <label for="FormControlProfilePhoto">Add profile Photo</label>
-              <input type="file" class="form-control-file" id="FormControlProfilePhoto" @change="updateProfilePhoto">
+              <label for="FormControlUserPhoto">Add profile Photo</label>
+              <input type="file" class="form-control-file" id="FormControlUserPhoto" @change="createUserPhoto">
           </div>
 
           <div class="form-check" style="margin-bottom: 15px" v-if="id">
@@ -88,25 +88,46 @@ export default {
         }
       },
       methods: {
-          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'UPDATE_PROFILE_PHOTO']),
+          ...mapActions(['UPDATE_USER', 'CREATE_USER', 'FETCH_SELECTED_USER', 'RESET_STATE', 'UPDATE_USER_PHOTO']),
 
           /**
            * on submitting the form update or crete a user
            */
           onSubmit() {
-              let action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
+              let action = '';
+              let actionMessage = '';
+
+              if (this.id) {
+                  action = 'UPDATE_USER';
+                  actionMessage = 'Updated';
+              } else {
+                  action = 'CREATE_USER';
+                  actionMessage = 'Created';
+              }
+              // let action = this.id ? 'UPDATE_USER' : 'CREATE_USER';
+              // let actionMessage = this.id ? 'Updated' : 'Created';
               this.inProgress = true;
               this.$store
                   .dispatch(action)
                   .then(() => {
                       this.inProgress = false;
+                      Swal.fire(
+                                actionMessage,
+                          'User has been ' + actionMessage,
+                          'success'
+                      );
                       // navigate to user
                       this.$router.push('/users');
                   })
                   .catch( ({ response }) => {
                       this.inProgress = false;
-                      this.errors = response?.data?.errors
-                      console.log('you have an error on creating an user')
+                      this.errors = response?.data?.errors;
+                      console.log('you have an error on creating an user');
+                      Swal.fire(
+                          'Failed!',
+                          'Nothing was Updated',
+                          'warning'
+                      )
                     });
             },
 
@@ -125,13 +146,13 @@ export default {
            * update profile photo
            * @param event
            */
-          updateProfilePhoto(event) {
+          createUserPhoto(event) {
               let file = event.target.files[0];
               let reader = new FileReader();
               console.log('file => ', file);
               if (file['size'] < 2111776) {
                   reader.onloadend = (file) => {
-                      this.$store.dispatch('UPDATE_PROFILE_PHOTO', [reader.result])
+                      this.$store.dispatch('UPDATE_USER_PHOTO', [reader.result])
                   }
                   reader.readAsDataURL(file);
               } else {

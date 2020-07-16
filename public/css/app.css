@@ -48265,6 +48265,10 @@ readers do not read off random characters that represent icons */
   margin: 2px;
 }
 
+.user-card {
+  width: 17rem !important;
+}
+
 @-webkit-keyframes lds-ring {
   0% {
     transform: rotate(0deg);
