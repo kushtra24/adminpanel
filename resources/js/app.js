@@ -12,6 +12,7 @@ import VueRouter from 'vue-router'
 import moment from 'moment';
 import Swal from 'sweetalert2'
 import store from "./store";
+import Gate from "./Gate"
 
 window.Swal = Swal;
 
@@ -26,6 +27,9 @@ let routes = [
     { path: '/developer', component: require('./views/developerComponent.vue').default},
   ]
 
+
+    // gate prototype
+    Vue.prototype.$gate = new Gate(window.user);
 
   const router = new VueRouter({
     mode: "history",

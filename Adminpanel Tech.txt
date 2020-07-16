@@ -3,7 +3,7 @@ JWT
 vuex
 namespacing
 base 64 image uploading
-
+ACL (access-control list)
 
 
 

@@ -40,11 +40,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {{ Auth::user()->name }}
         </router-link>
       </li>
+        @can('isAdmin')
       <li class="nav-item d-none d-sm-inline-block">
         <router-link to="/developer" tag="a" class="nav-link"  active-class="active" exact class="nav-link">
             Developer
         </router-link>
       </li>
+        @endcan
 
     </ul>
 
@@ -151,5 +153,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
   <!-- /.content-wrapper -->
 
+    @auth
+        window.user = @json(auth()->user())
+    @endauth
+
+</div>
 </body>
 </html>
