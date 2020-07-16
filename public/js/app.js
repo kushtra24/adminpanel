@@ -3446,6 +3446,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -67366,12 +67368,16 @@ var render = function() {
                       { attrs: { href: "mailto:" + _vm.profile.email } },
                       [_c("b", [_vm._v(_vm._s(_vm.profile.email))])]
                     ),
-                    _vm._v(" "),
-                    _c("h6", { staticClass: "text-secondary" }, [
-                      _vm._v("Bio")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_c("b", [_vm._v(_vm._s(_vm.profile.bio))])]),
+                    _vm._v("\\\n\n                    "),
+                    _vm.profile.bio
+                      ? _c("div", { staticClass: "bio-wrapper" }, [
+                          _c("h6", { staticClass: "text-secondary" }, [
+                            _vm._v("Bio")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_c("b", [_vm._v(_vm._s(_vm.profile.bio))])])
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("h6", { staticClass: "text-secondary" }, [
                       _vm._v("Type")

@@ -40,10 +40,12 @@
                     <h5><b>{{ profile.name }}</b></h5>
 
                     <h6 class="text-secondary">Email</h6>
-                    <a :href="'mailto:' + profile.email"><b>{{ profile.email }}</b></a>
+                    <a :href="'mailto:' + profile.email"><b>{{ profile.email }}</b></a>\
 
+                    <div class="bio-wrapper" v-if="profile.bio">
                     <h6 class="text-secondary">Bio</h6>
                     <p><b>{{ profile.bio }}</b></p>
+                    </div>
 
                     <h6 class="text-secondary">Type</h6>
                     <p><b>{{ profile.type | upText}}</b></p>
