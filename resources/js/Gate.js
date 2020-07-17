@@ -8,14 +8,14 @@ export default class Gate {
      * if is admin
      */
     isAdmin() {
-        this.user.type === 'admin';
+       return this.user.type === 'admin';
     }
 
     /**
      * if is User
      */
     isUser() {
-        this.user.type === 'user';
+        return this.user.type === 'user';
     }
 
 }

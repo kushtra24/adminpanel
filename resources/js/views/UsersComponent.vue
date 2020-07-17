@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper">
+<div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -84,7 +84,11 @@ import Spinner from "../components/Spinner";
             ...mapGetters(["users"]),
         },
         created() {
-            this.fetchAllUsers();
+            if (this.$gate.isAdmin()) {
+                this.fetchAllUsers();
+            } else {
+                this.$router.push({path: `/dashboard` });
+            }
         }
     }
 </script>

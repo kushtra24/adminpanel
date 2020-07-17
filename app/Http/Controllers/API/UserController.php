@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -39,8 +40,13 @@ class UserController extends Controller
      */
     public function index() {
 
+        if (Gate::denies('isUser') || Gate::denies('isAuthor')) {
+            return response()->json('access denied', 403);
+        }
+
         // get users and order them by id discanding
         $user = User::orderBy('id', 'DESC')->get();
+//        $user = User::latest()->paginate(20);
 
         // return json response with user
         return response()->json($user, 200);
@@ -135,7 +141,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+        if (!Gate::allows('isAdmin') || !Gate::allows('isAuthor')) {
+            return response()->json('access denied', 403);
+        }
+
+//        $this->authorize('isAdmin');
 
         // get the user
         $user = User::findOrfail($id);

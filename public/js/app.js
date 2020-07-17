@@ -3309,7 +3309,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["users"])),
   created: function created() {
-    this.fetchAllUsers();
+    if (this.$gate.isAdmin()) {
+      this.fetchAllUsers();
+    } else {
+      this.$router.push({
+        path: "/dashboard"
+      });
+    }
   }
 });
 
@@ -67053,138 +67059,149 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrapper" }, [
-    _c("div", { staticClass: "content-header" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row mb-2" }, [
-          _c(
-            "div",
-            { staticClass: "col-sm-6" },
-            [
-              _c("h1", { staticClass: "m-0 text-dark inline-block" }, [
-                _vm._v("Users")
-              ]),
-              _vm._v(" "),
+  return _vm.$gate.isAdmin()
+    ? _c("div", { staticClass: "wrapper" }, [
+        _c("div", { staticClass: "content-header" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("div", { staticClass: "row mb-2" }, [
               _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-success margin-small",
-                  attrs: { to: "/users-create", type: "a" }
-                },
-                [_vm._v(" Create User")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-6" }, [
-            _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
-              _c(
-                "li",
-                { staticClass: "breadcrumb-item" },
+                "div",
+                { staticClass: "col-sm-6" },
                 [
-                  _c("router-link", { attrs: { to: "/dashboard" } }, [
-                    _vm._v("Dashboard")
-                  ])
+                  _c("h1", { staticClass: "m-0 text-dark inline-block" }, [
+                    _vm._v("Users")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-success margin-small",
+                      attrs: { to: "/users-create", type: "a" }
+                    },
+                    [_vm._v(" Create User")]
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("li", { staticClass: "breadcrumb-item active" }, [
-                _vm._v("Users")
+              _c("div", { staticClass: "col-sm-6" }, [
+                _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
+                  _c(
+                    "li",
+                    { staticClass: "breadcrumb-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/dashboard" } }, [
+                        _vm._v("Dashboard")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "breadcrumb-item active" }, [
+                    _vm._v("Users")
+                  ])
+                ])
               ])
             ])
           ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container-fluid" }, [
-      _c(
-        "div",
-        { staticClass: "box margin-top-medium" },
-        [
-          _vm.loading ? _c("Spinner") : _vm._e(),
-          _vm._v(" "),
-          !_vm.loading
-            ? _c(
-                "div",
-                { staticClass: "users-cards" },
-                _vm._l(_vm.users, function(user) {
-                  return _c(
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "container-fluid" }, [
+          _c(
+            "div",
+            { staticClass: "box margin-top-medium" },
+            [
+              _vm.loading ? _c("Spinner") : _vm._e(),
+              _vm._v(" "),
+              !_vm.loading
+                ? _c(
                     "div",
-                    {
-                      key: user.id,
-                      staticClass: "card user-card",
-                      class: { "border-danger ": !user.active },
-                      on: {
-                        click: function($event) {
-                          return _vm.navigateToEdit(user.id)
-                        }
-                      }
-                    },
-                    [
-                      !user.photo
-                        ? _c("img", {
-                            staticClass: "card-img-top",
-                            attrs: { src: "./img/profile.png", alt: "no image" }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      user.photo
-                        ? _c("img", {
-                            staticClass: "card-img-top",
-                            attrs: {
-                              src: "./storage/user/" + user.photo,
-                              alt: "user photo"
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
+                    { staticClass: "users-cards" },
+                    _vm._l(_vm.users, function(user) {
+                      return _c(
                         "div",
                         {
-                          staticClass: "card-body",
-                          class: { "text-danger ": !user.active }
+                          key: user.id,
+                          staticClass: "card user-card",
+                          class: { "border-danger ": !user.active },
+                          on: {
+                            click: function($event) {
+                              return _vm.navigateToEdit(user.id)
+                            }
+                          }
                         },
                         [
+                          !user.photo
+                            ? _c("img", {
+                                staticClass: "card-img-top",
+                                attrs: {
+                                  src: "./img/profile.png",
+                                  alt: "no image"
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          user.photo
+                            ? _c("img", {
+                                staticClass: "card-img-top",
+                                attrs: {
+                                  src: "./storage/user/" + user.photo,
+                                  alt: "user photo"
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
-                            "h6",
-                            { staticClass: "text-secondary margin-top-small " },
-                            [_vm._v("Name")]
-                          ),
-                          _vm._v(" "),
-                          _c("h5", [_c("b", [_vm._v(_vm._s(user.name))])]),
-                          _vm._v(" "),
-                          _c("h6", { staticClass: "text-secondary" }, [
-                            _vm._v("Email")
-                          ]),
-                          _vm._v(" "),
-                          _c("a", { attrs: { href: "mailto:" + user.email } }, [
-                            _c("b", [_vm._v(_vm._s(user.email))])
-                          ]),
-                          _vm._v(" "),
-                          !user.active
-                            ? _c("p", [
-                                _c("i", {
-                                  staticClass: "fas fa-exclamation-circle fa-fw"
-                                }),
-                                _vm._v(" User is Disabled")
-                              ])
-                            : _vm._e()
+                            "div",
+                            {
+                              staticClass: "card-body",
+                              class: { "text-danger ": !user.active }
+                            },
+                            [
+                              _c(
+                                "h6",
+                                {
+                                  staticClass:
+                                    "text-secondary margin-top-small "
+                                },
+                                [_vm._v("Name")]
+                              ),
+                              _vm._v(" "),
+                              _c("h5", [_c("b", [_vm._v(_vm._s(user.name))])]),
+                              _vm._v(" "),
+                              _c("h6", { staticClass: "text-secondary" }, [
+                                _vm._v("Email")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                { attrs: { href: "mailto:" + user.email } },
+                                [_c("b", [_vm._v(_vm._s(user.email))])]
+                              ),
+                              _vm._v(" "),
+                              !user.active
+                                ? _c("p", [
+                                    _c("i", {
+                                      staticClass:
+                                        "fas fa-exclamation-circle fa-fw"
+                                    }),
+                                    _vm._v(" User is Disabled")
+                                  ])
+                                : _vm._e()
+                            ]
+                          )
                         ]
                       )
-                    ]
+                    }),
+                    0
                   )
-                }),
-                0
-              )
-            : _vm._e()
-        ],
-        1
-      )
-    ])
-  ])
+                : _vm._e()
+            ],
+            1
+          )
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -84096,7 +84113,7 @@ var Gate = /*#__PURE__*/function () {
   _createClass(Gate, [{
     key: "isAdmin",
     value: function isAdmin() {
-      this.user.type === 'admin';
+      return this.user.type === 'admin';
     }
     /**
      * if is User
@@ -84105,7 +84122,7 @@ var Gate = /*#__PURE__*/function () {
   }, {
     key: "isUser",
     value: function isUser() {
-      this.user.type === 'user';
+      return this.user.type === 'user';
     }
   }]);
 

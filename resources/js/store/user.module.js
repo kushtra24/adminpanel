@@ -14,7 +14,8 @@ function initialState () {
 }
 
 export default {
-    state: { ...initialState(),
+    state: {
+        ...initialState(),
         users: [],
         UserStateChanged: false,
     },

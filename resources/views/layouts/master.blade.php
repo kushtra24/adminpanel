@@ -21,6 +21,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    @auth
+        <script>
+            window.user = @json(auth()->user())
+        </script>
+    @endauth
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -152,10 +158,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-header -->
   </div>
   <!-- /.content-wrapper -->
-
-    @auth
-        window.user = @json(auth()->user())
-    @endauth
 
 </div>
 </body>
