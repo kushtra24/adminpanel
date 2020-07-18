@@ -25,11 +25,14 @@ let routes = [
     { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},
     { path: '/users-details/:id', component: require('./views/showUserComponent.vue').default},
     { path: '/developer', component: require('./views/developerComponent.vue').default},
+    { path: '*', component: require('./views/DashboardComponent.vue').default},
   ]
 
 
     // gate prototype
     Vue.prototype.$gate = new Gate(window.user);
+    // pagination
+    Vue.component('pagination', require('laravel-vue-pagination'));
 
   const router = new VueRouter({
     mode: "history",

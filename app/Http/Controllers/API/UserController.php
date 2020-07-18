@@ -45,8 +45,9 @@ class UserController extends Controller
         }
 
         // get users and order them by id discanding
-        $user = User::orderBy('id', 'DESC')->get();
-//        $user = User::latest()->paginate(20);
+//        $user = User::orderBy('id', 'DESC')->get();
+//        $user = User::orderBy('created_at', 'DESC')->paginate(5);
+        $user = User::paginate(8);
 
         // return json response with user
         return response()->json($user, 200);

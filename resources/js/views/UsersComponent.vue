@@ -26,8 +26,12 @@
             <!-- loading spinner-->
             <Spinner v-if="loading" />
 
+            <pagination :data="users" @pagination-change-page="fetchAllUsers">
+                <span slot="prev-nav">&lt; Previous</span>
+                <span slot="next-nav">Next &gt;</span>
+            </pagination>
             <div class="users-cards" v-if="!loading">
-                <div class="card user-card" v-for="user in users" :key="user.id" @click="navigateToEdit(user.id)" v-bind:class="{ 'border-danger ': !user.active }">
+                <div class="card user-card" v-for="user in users.data" :key="user.id" @click="navigateToEdit(user.id)" v-bind:class="{ 'border-danger ': !user.active }">
                     <img v-if="!user.photo" :src="'./img/profile.png'" class="card-img-top" alt="no image">
                     <img v-if="user.photo" :src="'./storage/user/' + user.photo" class="card-img-top" alt="user photo">
                     <div class="card-body" :class="{ 'text-danger ': !user.active }">
@@ -67,12 +71,13 @@ import Spinner from "../components/Spinner";
             /**
              * fetch all users
              */
-            fetchAllUsers() {
+            fetchAllUsers(page = 1) {
                 this.loading = true;
-                this.$store.dispatch('FETCH_ALL_USERS')
+                this.$store.dispatch('FETCH_ALL_USERS', page)
                     .then(() => this.loading = false)
                     .catch(() => console.log('Fetching all users in users component faild') );
             },
+
             /**
              * navigate to Edit
              */
@@ -85,7 +90,9 @@ import Spinner from "../components/Spinner";
         },
         created() {
             if (this.$gate.isAdmin()) {
+                // this.getResults();
                 this.fetchAllUsers();
+                console.log('id -> ', user.id);
             } else {
                 this.$router.push({path: `/dashboard` });
             }

@@ -16,7 +16,7 @@ function initialState () {
 export default {
     state: {
         ...initialState(),
-        users: [],
+        users: {},
         UserStateChanged: false,
     },
     actions: {
@@ -26,14 +26,15 @@ export default {
          * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
          * @constructor
          */
-        async FETCH_ALL_USERS(context) {
+        async FETCH_ALL_USERS(context, page) {
             // check if new user is created and users property has data
-            // avoid extronuous network call if article exists
+            // avoid extraneous network call if article exists
             if (this.state.UserStateChanged === false && this.state.users.length > 0) {
                 this.state.UserStateChanged = false;
                 return this.state.users;
             } else {
-                const user  = await axios.get("/api/user/");
+                const user  = await axios.get("/api/user?page=" + page);
+                console.log('all users -> ', user.data);
                 context.commit('SET_ALL_USERS', user.data);
             }
         },
@@ -41,8 +42,8 @@ export default {
         /**
          * update or create the user
          */
-        async CREATE_USER({state}) {
-            await axios.post('/api/user', state.user);
+        async CREATE_USER({state}, page = 1) {
+            await axios.post('/api/user?page=' + page, state.user);
             this.state.UserStateChanged = true;
             // commit('USER_CHANGED');
         },
