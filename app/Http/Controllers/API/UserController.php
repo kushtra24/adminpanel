@@ -36,21 +36,73 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
 
         if (Gate::denies('isUser') || Gate::denies('isAuthor')) {
             return response()->json('access denied', 403);
         }
 
-        // get users and order them by id discanding
-//        $user = User::orderBy('id', 'DESC')->get();
-//        $user = User::orderBy('created_at', 'DESC')->paginate(5);
-        $user = User::paginate(8);
+        $page = $request->input('page', null); // only needed to check if pagination is wanted
+        $limit = $request->input('limit', null);
+        $search = $request->input('search');
+        $type = $request->input('type');
+        $orderType = $request->input('order-type', 'desc'); // order type
+        $orderByArr = $request->input('order-by', 'created_at'); // default order
 
+        $user = User::select('*');
+
+        $this->filterUserType($user, $type); // filter user type
+        $this->checkSearch($user, $search); // check for search
+
+        $user = $this->executeQuery($user, $page, $limit, $orderByArr, $orderType); // execute the query
+
+//        $user = $user->paginate(8); // paginate query
         // return json response with user
         return response()->json($user, 200);
+    }
+
+    /**
+     * find the searched contract
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    private function checkSearch(&$query, $search) {
+
+        if (!isset($query)) {
+            return $query;
+        }
+
+        if (!is_null($search)) {
+            $searchTerms = $this->stringToArray($search, ' ');
+
+            $query = $query->where(function ($query) use ($searchTerms) {
+                for ($i = 0, $max = count($searchTerms); $i < $max; $i++) {
+                    $term = str_replace('_', '\_', mb_strtolower('%' . $searchTerms[$i] . '%'));
+                    $query->whereRaw("(Lower(name) LIKE ?)", [$term, $term])
+                        ->orWhereRaw("(Lower(bio) LIKE ?)", [$term, $term]);
+                }
+            });
+        }
+    }
+
+
+
+    /**
+     * check contract type
+     * @param $query
+     * @param $type
+     * @return mixed
+     */
+    private function filterUserType(&$query, $type) {
+        if (!isset($query)) { return $query; }
+
+        if (!is_null($type)) {
+            $query = $query->where( 'type', $type);
+        }
     }
 
     /**

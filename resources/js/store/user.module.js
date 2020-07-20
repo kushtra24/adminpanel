@@ -17,34 +17,95 @@ export default {
     state: {
         ...initialState(),
         users: {},
-        UserStateChanged: false,
+        userStateChanged: false,
+        filter: {
+            search: '',
+            type: '',
+        }
     },
     actions: {
         /**
          * get all users from database
          * @param context
+         * @param page
          * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
          * @constructor
          */
         async FETCH_ALL_USERS(context, page) {
+            console.log('state changed? -> ', context.state.userStateChanged);
             // check if new user is created and users property has data
             // avoid extraneous network call if article exists
-            if (this.state.UserStateChanged === false && this.state.users.length > 0) {
-                this.state.UserStateChanged = false;
+        //
+            if (context.state.userStateChanged === false && Object.keys(context.state.users).length !== 0) {
+                console.log('return existed users');
+                this.state.userStateChanged = false;
                 return this.state.users;
             } else {
-                const user  = await axios.get("/api/user?page=" + page);
-                console.log('all users -> ', user.data);
+                 let url = '/api/user?';
+
+                 if (page > 0) {
+                     url += "page=" + page;
+                 }
+
+                const user  = await axios.get(url);
                 context.commit('SET_ALL_USERS', user.data);
             }
         },
 
         /**
+         * get all users from database
+         * @param context
+         * @param page
+         * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
+         * @constructor
+         */
+        async FETCH_FILTERED_USERS(context) {
+
+                let url = '/api/user?';
+
+                if (context.state.filter.search) {
+                    url += "&search=" + context.state.filter.search;
+                }
+                if (context.state.filter.type) {
+                    url += "&type=" + context.state.filter.type;
+                }
+
+                const user  = await axios.get(url);
+                context.commit('SET_ALL_USERS', user.data);
+        },
+
+        /**
+         * get all searched users
+         * @param context
+         * @param searchTerm
+         * @param filterType
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        SEARCH_USER: (context, searchTerm = '', filterType = '') => {
+            console.log('search and tilter -> ', searchTerm + filterType);
+            const user = axios.get('/api/user?search=' + searchTerm + '&type=' + filterType);
+            context.commit('SET_SEARCHED_USER', user.data);
+        },
+
+        /**
+         * filter users based on type
+         * @param context
+         * @param filteredUser
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        async FILTER_TYPE(context, filteredUser) {
+            const user = await axios.get('api/user?type=' + filteredUser);
+            context.commit('SET_FILTERED_USER_TYPE', user.data)
+        },
+
+        /**
          * update or create the user
          */
-        async CREATE_USER({state}, page = 1) {
-            await axios.post('/api/user?page=' + page, state.user);
-            this.state.UserStateChanged = true;
+        async CREATE_USER({state}) {
+            await axios.post('/api/user', state.user);
+            state.userStateChanged = true;
             // commit('USER_CHANGED');
         },
 
@@ -53,7 +114,7 @@ export default {
          */
         async UPDATE_USER({state}) {
             await axios.put("/api/user/" + state.user.id, state.user);
-            this.state.UserStateChanged = true;
+            state.userStateChanged = true;
             // commit('USER_CHANGED');
         },
 
@@ -72,7 +133,7 @@ export default {
          */
         async DELETE_USER({state}) {
             await axios.delete("/api/user/" + state.user.id);
-            this.state.UserStateChanged = true;
+            this.state.userStateChanged = true;
             // commit('USER_CHANGED');
         },
 
@@ -87,7 +148,6 @@ export default {
             const user  = await axios.get("/api/user/" + id);
             context.commit('SET_SELECTED_USER', user.data);
         },
-
 
         /**
          * reset state
@@ -106,7 +166,27 @@ export default {
          */
         SET_ALL_USERS: (state, users) => {
             state.users = users;
-            state.UserStateChanged = false;
+            state.userStateChanged = false;
+        },
+
+        /**
+         * set searched users
+         * @param state
+         * @param searchedUser
+         * @constructor
+         */
+        SET_SEARCHED_USER(state, searchedUser) {
+            state.users = searchedUser;
+        },
+
+        /**
+         * set user type
+         * @param state
+         * @param filteredUserType
+         * @constructor
+         */
+        SET_FILTERED_USER_TYPE(state, filteredUserType) {
+            state.users = filteredUserType;
         },
 
         /**
@@ -119,6 +199,12 @@ export default {
             state.user = user;
         },
 
+        /**
+         * set user photo
+         * @param state
+         * @param reader
+         * @constructor
+         */
         SET_USER_PHOTO: (state, reader) => {
             state.user.photo = reader
         },
@@ -138,19 +224,27 @@ export default {
          * @constructor
          */
         USER_CHANGED: (state) => {
-            state.UserStateChanged = true;
-            console.log('new user? delete ->', this.state.UserStateChanged);
+            state.userStateChanged = true;
+            console.log('new user? delete ->', this.state.userStateChanged);
         },
-
-
 
     },
     getters: {
-        user(state) {
+        user: (state) => {
             return state.user;
         },
-        users(state) {
+        users: (state) => {
             return state.users;
+        },
+        filter: (state) => {
+            return state.filter
         }
+
+        // search: (state) => {
+        //     return state.search
+        // },
+        // type: (state) => {
+        //  return state.type;
+        // }
     }
 };

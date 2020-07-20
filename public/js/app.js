@@ -3273,6 +3273,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3284,7 +3307,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       id: this.$route.params.id,
       inProgress: false,
       loading: false,
-      errors: {}
+      errors: {},
+      searchLoading: ''
     };
   },
   methods: {
@@ -3299,9 +3323,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.dispatch('FETCH_ALL_USERS', page).then(function () {
         return _this.loading = false;
       })["catch"](function () {
-        return console.log('Fetching all users in users component faild');
+        _this.loading = false;
+        console.log('Fetching Filtered users in users component failed');
       });
     },
+    fetchFilteredUsers: function fetchFilteredUsers() {
+      var _this2 = this;
+
+      this.searchLoading = true;
+      this.$store.dispatch('FETCH_FILTERED_USERS').then(function () {
+        // if (data.data.length === 0) {
+        _this2.searchLoading = false; // }
+      })["catch"](function () {
+        _this2.searchLoading = false;
+        console.log('Fetching Filtered users in users component failed');
+      });
+    },
+
+    /**
+     * fetch searched users
+     */
+    // searchUser(event) {
+    //     clearTimeout(this.debounce)
+    //     this.debounce = setTimeout(() => {
+    //         console.log('searched -> ', event.target.value);
+    //         this.searchLoading = true;
+    //         this.$store.dispatch('SEARCH_USER', event.target.value)
+    //             .then(() => this.searchLoading = false)
+    //             .catch(() => console.log('error on Searching'));
+    //     }, 600)
+    // },
+    //
+    // filterUser(event) {
+    //     this.searchLoading = true;
+    //     this.$store.dispatch('SEARCH_USER',event.target.value)
+    //     .then( () => this.searchLoading = false)
+    //     .catch(() => console.log('Error in Filtering the user types'))
+    // },
 
     /**
      * navigate to Edit
@@ -3312,12 +3370,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["users"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["users", "filter"])),
   created: function created() {
     if (this.$gate.isAdmin()) {
       // this.getResults();
       this.fetchAllUsers();
-      console.log('id -> ', user.id);
     } else {
       this.$router.push({
         path: "/dashboard"
@@ -67713,108 +67770,246 @@ var render = function() {
             [
               _vm.loading ? _c("Spinner") : _vm._e(),
               _vm._v(" "),
-              _c(
-                "pagination",
-                {
-                  attrs: { data: _vm.users },
-                  on: { "pagination-change-page": _vm.fetchAllUsers }
-                },
-                [
-                  _c(
-                    "span",
-                    { attrs: { slot: "prev-nav" }, slot: "prev-nav" },
-                    [_vm._v("< Previous")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    { attrs: { slot: "next-nav" }, slot: "next-nav" },
-                    [_vm._v("Next >")]
-                  )
-                ]
-              ),
-              _vm._v(" "),
               !_vm.loading
                 ? _c(
                     "div",
-                    { staticClass: "users-cards" },
-                    _vm._l(_vm.users.data, function(user) {
-                      return _c(
-                        "div",
+                    { attrs: { id: "users-container" } },
+                    [
+                      _c(
+                        "form",
                         {
-                          key: user.id,
-                          staticClass: "card user-card",
-                          class: { "border-danger ": !user.active },
                           on: {
-                            click: function($event) {
-                              return _vm.navigateToEdit(user.id)
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.fetchFilteredUsers($event)
                             }
                           }
                         },
                         [
-                          !user.photo
-                            ? _c("img", {
-                                staticClass: "card-img-top",
+                          _c("div", { staticClass: "form-filters row" }, [
+                            _c("div", { staticClass: "input-group col-sm-3" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.filter.search,
+                                    expression: "filter.search"
+                                  }
+                                ],
+                                staticClass: "form-control",
                                 attrs: {
-                                  src: "./img/profile.png",
-                                  alt: "no image"
+                                  type: "search",
+                                  placeholder: "Search",
+                                  "aria-label": "Search"
+                                },
+                                domProps: { value: _vm.filter.search },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.filter,
+                                      "search",
+                                      $event.target.value
+                                    )
+                                  }
                                 }
                               })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          user.photo
-                            ? _c("img", {
-                                staticClass: "card-img-top",
-                                attrs: {
-                                  src: "./storage/user/" + user.photo,
-                                  alt: "user photo"
-                                }
-                              })
-                            : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group col-sm-2" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filter.type,
+                                      expression: "filter.type"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    name: "type",
+                                    id: "type",
+                                    type: "type"
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.filter,
+                                        "type",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(" Select User Role")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "admin" } }, [
+                                    _vm._v("Admin")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "user" } }, [
+                                    _vm._v(" Standard user")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "author" } }, [
+                                    _vm._v("Author")
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Submit")]
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.searchLoading
+                        ? _c("Spinner", { staticClass: " spinner-color-black" })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "pagination",
+                        {
+                          attrs: { data: _vm.users },
+                          on: { "pagination-change-page": _vm.fetchAllUsers }
+                        },
+                        [
+                          _c(
+                            "span",
+                            { attrs: { slot: "prev-nav" }, slot: "prev-nav" },
+                            [_vm._v("< Previous")]
+                          ),
                           _vm._v(" "),
                           _c(
-                            "div",
-                            {
-                              staticClass: "card-body",
-                              class: { "text-danger ": !user.active }
-                            },
-                            [
-                              _c(
-                                "h6",
-                                {
-                                  staticClass:
-                                    "text-secondary margin-top-small "
-                                },
-                                [_vm._v("Name")]
-                              ),
-                              _vm._v(" "),
-                              _c("h5", [_c("b", [_vm._v(_vm._s(user.name))])]),
-                              _vm._v(" "),
-                              _c("h6", { staticClass: "text-secondary" }, [
-                                _vm._v("Email")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                { attrs: { href: "mailto:" + user.email } },
-                                [_c("b", [_vm._v(_vm._s(user.email))])]
-                              ),
-                              _vm._v(" "),
-                              !user.active
-                                ? _c("p", [
-                                    _c("i", {
-                                      staticClass:
-                                        "fas fa-exclamation-circle fa-fw"
-                                    }),
-                                    _vm._v(" User is Disabled")
-                                  ])
-                                : _vm._e()
-                            ]
+                            "span",
+                            { attrs: { slot: "next-nav" }, slot: "next-nav" },
+                            [_vm._v("Next >")]
                           )
                         ]
-                      )
-                    }),
-                    0
+                      ),
+                      _vm._v(" "),
+                      !_vm.searchLoading
+                        ? _c(
+                            "div",
+                            { staticClass: "users-cards" },
+                            _vm._l(_vm.users.data, function(user) {
+                              return _c(
+                                "div",
+                                {
+                                  key: user.id,
+                                  staticClass: "card user-card",
+                                  class: { "border-danger ": !user.active },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.navigateToEdit(user.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  !user.photo
+                                    ? _c("img", {
+                                        staticClass: "card-img-top",
+                                        attrs: {
+                                          src: "./img/profile.png",
+                                          alt: "no image"
+                                        }
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  user.photo
+                                    ? _c("img", {
+                                        staticClass: "card-img-top",
+                                        attrs: {
+                                          src: "./storage/user/" + user.photo,
+                                          alt: "user photo"
+                                        }
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "card-body",
+                                      class: { "text-danger ": !user.active }
+                                    },
+                                    [
+                                      _c(
+                                        "h6",
+                                        {
+                                          staticClass:
+                                            "text-secondary margin-top-small "
+                                        },
+                                        [_vm._v("Name")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("h5", [
+                                        _c("b", [_vm._v(_vm._s(user.name))])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h6",
+                                        { staticClass: "text-secondary" },
+                                        [_vm._v("Email")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "mailto:" + user.email
+                                          }
+                                        },
+                                        [_c("b", [_vm._v(_vm._s(user.email))])]
+                                      ),
+                                      _vm._v(" "),
+                                      !user.active
+                                        ? _c("p", [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-exclamation-circle fa-fw"
+                                            }),
+                                            _vm._v(" User is Disabled")
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        : _vm._e()
+                    ],
+                    1
                   )
                 : _vm._e()
             ],
@@ -85571,7 +85766,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-var _this5 = undefined;
+var _this3 = undefined;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -85612,12 +85807,17 @@ function initialState() {
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: _objectSpread(_objectSpread({}, initialState()), {}, {
     users: {},
-    UserStateChanged: false
+    userStateChanged: false,
+    filter: {
+      search: '',
+      type: ''
+    }
   }),
   actions: {
     /**
      * get all users from database
      * @param context
+     * @param page
      * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
      * @constructor
      */
@@ -85625,29 +85825,39 @@ function initialState() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var user;
+        var url, user;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.state.UserStateChanged === false && _this.state.users.length > 0)) {
-                  _context.next = 5;
+                console.log('state changed? -> ', context.state.userStateChanged); // check if new user is created and users property has data
+                // avoid extraneous network call if article exists
+                //
+
+                if (!(context.state.userStateChanged === false && Object.keys(context.state.users).length !== 0)) {
+                  _context.next = 7;
                   break;
                 }
 
-                _this.state.UserStateChanged = false;
+                console.log('return existed users');
+                _this.state.userStateChanged = false;
                 return _context.abrupt("return", _this.state.users);
 
-              case 5:
-                _context.next = 7;
-                return axios.get("/api/user?page=" + page);
-
               case 7:
+                url = '/api/user?';
+
+                if (page > 0) {
+                  url += "page=" + page;
+                }
+
+                _context.next = 11;
+                return axios.get(url);
+
+              case 11:
                 user = _context.sent;
-                console.log('all users -> ', user.data);
                 context.commit('SET_ALL_USERS', user.data);
 
-              case 10:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -85657,27 +85867,37 @@ function initialState() {
     },
 
     /**
-     * update or create the user
+     * get all users from database
+     * @param context
+     * @param page
+     * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
+     * @constructor
      */
-    CREATE_USER: function CREATE_USER(_ref) {
-      var _arguments = arguments,
-          _this2 = this;
-
+    FETCH_FILTERED_USERS: function FETCH_FILTERED_USERS(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var state, page;
+        var url, user;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                state = _ref.state;
-                page = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : 1;
-                _context2.next = 4;
-                return axios.post('/api/user?page=' + page, state.user);
+                url = '/api/user?';
 
-              case 4:
-                _this2.state.UserStateChanged = true; // commit('USER_CHANGED');
+                if (context.state.filter.search) {
+                  url += "&search=" + context.state.filter.search;
+                }
+
+                if (context.state.filter.type) {
+                  url += "&type=" + context.state.filter.type;
+                }
+
+                _context2.next = 5;
+                return axios.get(url);
 
               case 5:
+                user = _context2.sent;
+                context.commit('SET_ALL_USERS', user.data);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -85687,23 +85907,41 @@ function initialState() {
     },
 
     /**
-     * create a new user
+     * get all searched users
+     * @param context
+     * @param searchTerm
+     * @param filterType
+     * @returns {Promise<void>}
+     * @constructor
      */
-    UPDATE_USER: function UPDATE_USER(_ref2) {
-      var _this3 = this;
+    SEARCH_USER: function SEARCH_USER(context) {
+      var searchTerm = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var filterType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      console.log('search and tilter -> ', searchTerm + filterType);
+      var user = axios.get('/api/user?search=' + searchTerm + '&type=' + filterType);
+      context.commit('SET_SEARCHED_USER', user.data);
+    },
 
+    /**
+     * filter users based on type
+     * @param context
+     * @param filteredUser
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    FILTER_TYPE: function FILTER_TYPE(context, filteredUser) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var state;
+        var user;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                state = _ref2.state;
-                _context3.next = 3;
-                return axios.put("/api/user/" + state.user.id, state.user);
+                _context3.next = 2;
+                return axios.get('api/user?type=' + filteredUser);
 
-              case 3:
-                _this3.state.UserStateChanged = true; // commit('USER_CHANGED');
+              case 2:
+                user = _context3.sent;
+                context.commit('SET_FILTERED_USER_TYPE', user.data);
 
               case 4:
               case "end":
@@ -85711,6 +85949,58 @@ function initialState() {
             }
           }
         }, _callee3);
+      }))();
+    },
+
+    /**
+     * update or create the user
+     */
+    CREATE_USER: function CREATE_USER(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                state = _ref.state;
+                _context4.next = 3;
+                return axios.post('/api/user', state.user);
+
+              case 3:
+                state.userStateChanged = true; // commit('USER_CHANGED');
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /**
+     * create a new user
+     */
+    UPDATE_USER: function UPDATE_USER(_ref2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                state = _ref2.state;
+                _context5.next = 3;
+                return axios.put("/api/user/" + state.user.id, state.user);
+
+              case 3:
+                state.userStateChanged = true; // commit('USER_CHANGED');
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     },
 
@@ -85730,27 +86020,27 @@ function initialState() {
      * create a new user
      */
     DELETE_USER: function DELETE_USER(_ref5) {
-      var _this4 = this;
+      var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 state = _ref5.state;
-                _context4.next = 3;
+                _context6.next = 3;
                 return axios["delete"]("/api/user/" + state.user.id);
 
               case 3:
-                _this4.state.UserStateChanged = true; // commit('USER_CHANGED');
+                _this2.state.userStateChanged = true; // commit('USER_CHANGED');
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context6.stop();
             }
           }
-        }, _callee4);
+        }, _callee6);
       }))();
     },
 
@@ -85762,25 +86052,25 @@ function initialState() {
      * @constructor
      */
     FETCH_SELECTED_USER: function FETCH_SELECTED_USER(context, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var user;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context5.next = 2;
+                _context7.next = 2;
                 return axios.get("/api/user/" + id);
 
               case 2:
-                user = _context5.sent;
+                user = _context7.sent;
                 context.commit('SET_SELECTED_USER', user.data);
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context7.stop();
             }
           }
-        }, _callee5);
+        }, _callee7);
       }))();
     },
 
@@ -85801,7 +86091,27 @@ function initialState() {
      */
     SET_ALL_USERS: function SET_ALL_USERS(state, users) {
       state.users = users;
-      state.UserStateChanged = false;
+      state.userStateChanged = false;
+    },
+
+    /**
+     * set searched users
+     * @param state
+     * @param searchedUser
+     * @constructor
+     */
+    SET_SEARCHED_USER: function SET_SEARCHED_USER(state, searchedUser) {
+      state.users = searchedUser;
+    },
+
+    /**
+     * set user type
+     * @param state
+     * @param filteredUserType
+     * @constructor
+     */
+    SET_FILTERED_USER_TYPE: function SET_FILTERED_USER_TYPE(state, filteredUserType) {
+      state.users = filteredUserType;
     },
 
     /**
@@ -85813,6 +86123,13 @@ function initialState() {
     SET_SELECTED_USER: function SET_SELECTED_USER(state, user) {
       state.user = user;
     },
+
+    /**
+     * set user photo
+     * @param state
+     * @param reader
+     * @constructor
+     */
     SET_USER_PHOTO: function SET_USER_PHOTO(state, reader) {
       state.user.photo = reader;
     },
@@ -85832,8 +86149,8 @@ function initialState() {
      * @constructor
      */
     USER_CHANGED: function USER_CHANGED(state) {
-      state.UserStateChanged = true;
-      console.log('new user? delete ->', _this5.state.UserStateChanged);
+      state.userStateChanged = true;
+      console.log('new user? delete ->', _this3.state.userStateChanged);
     }
   },
   getters: {
@@ -85842,7 +86159,16 @@ function initialState() {
     },
     users: function users(state) {
       return state.users;
-    }
+    },
+    filter: function filter(state) {
+      return state.filter;
+    } // search: (state) => {
+    //     return state.search
+    // },
+    // type: (state) => {
+    //  return state.type;
+    // }
+
   }
 });
 
