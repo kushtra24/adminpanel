@@ -1,28 +1,12 @@
 <template>
 <div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark inline-block">Users</h1>
-            <router-link to="/users-create" type="a" class="btn btn-success margin-small"> Create User</router-link>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
-                <li class="breadcrumb-item active">Users</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-
+    <pageHeader title="Users" />
+    <router-link to="/users-create" type="a" class="btn btn-success margin-small">Create User</router-link>
 
     <div class="container-fluid">
 
         <div class="box margin-top-medium">
-
             <!-- loading spinner-->
             <Spinner v-if="loading" />
 
@@ -42,13 +26,18 @@
                                 <option value="author">Author</option>
                             </select>
                         </div>
+                        <div class="submit-button margin-small-right">
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="clear-filters-button" v-bind:class="{ 'hidden': !filter.type && !filter.search}">
+                        <button @click="clearFilters" class="btn btn-danger">Clear</button>
+                        </div>
                     </div>
                 </form>
 
 
                 <Spinner v-if="searchLoading" class=" spinner-color-black" />
-                <pagination :data="users" @pagination-change-page="fetchAllUsers">
+                <pagination :data="users" @pagination-change-page="fetchFilteredUsers">
                     <span slot="prev-nav">&lt; Previous</span>
                     <span slot="next-nav">Next &gt;</span>
                 </pagination>
@@ -77,10 +66,14 @@
 <script>
 import {mapGetters} from "vuex";
 import Spinner from "../components/Spinner";
+import pageHeader from "../components/PageHeader";
+import pagination from "laravel-vue-pagination"
 
     export default {
         components: {
             Spinner,
+            pageHeader,
+            pagination
         },
         data() {
             return {
@@ -96,7 +89,7 @@ import Spinner from "../components/Spinner";
             /**
              * fetch all users
              */
-            fetchAllUsers(page = 1) {
+            fetchAllUsers(context, page = 1) {
                 this.loading = true;
                 this.$store.dispatch('FETCH_ALL_USERS', page)
                     .then(() => this.loading = false)
@@ -106,9 +99,29 @@ import Spinner from "../components/Spinner";
                     }  );
             },
 
-            fetchFilteredUsers() {
+            /**
+             * Fetch paginated Data
+             */
+            // fetchPaginatedData(page = 1) {
+            //     this.searchLoading = true;
+            //     this.$store.dispatch('FETCH_FILTERED_USERS', page)
+            //         .then(() => {
+            //             // if (data.data.length === 0) {
+            //             this.searchLoading = false
+            //             // }
+            //         }).catch(() => {
+            //             this.searchLoading = false
+            //             console.log('Fetching Filtered users in users component failed')
+            //         }
+            //     );
+            // },
+
+            /**
+             * FetchFilteredUSers
+             */
+            fetchFilteredUsers(page = 1) {
                 this.searchLoading = true;
-                this.$store.dispatch('FETCH_FILTERED_USERS')
+                this.$store.dispatch('FETCH_FILTERED_USERS', page)
                     .then(() => {
                         // if (data.data.length === 0) {
                             this.searchLoading = false
@@ -118,6 +131,10 @@ import Spinner from "../components/Spinner";
                             console.log('Fetching Filtered users in users component failed')
                         }
                 );
+            },
+
+            clearFilters() {
+                this.$store.dispatch('CLEAR_USER_FILTERS');
             },
 
             /**

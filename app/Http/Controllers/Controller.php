@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -61,11 +62,11 @@ class Controller extends BaseController
         return null;
     }
 
-    protected function executeQuery(&$query = null, $page = null, $limit = null, $orderByArr = null, $orderType = 'desc') {
+    protected function executeQuery(&$query = null, $page = null, $limit = null, $orderByArr = null, $orderType = 'asc') {
         $result = null;
         if(!isset($query)) { return $result; }
 
-//    Log::info('HERE: ' . var_export($query, true));
+//        Log::info('HERE: ' . var_export($query, true));
 
         // order by array
         if(is_countable($orderByArr) && count($orderByArr) > 0) {
@@ -78,7 +79,6 @@ class Controller extends BaseController
             for($i = 0, $max = count($orderByArr); $i < $max; $i++) {
                 $attr = $orderByArr[$i];
                 if(!isset($attr)) { continue; }
-
                 $query = $query->orderBy($attr, $orderType);
             }
         }
@@ -86,18 +86,16 @@ class Controller extends BaseController
         // check for pagination
         if(isset($page) && $page > 0) {
             // check limit
-            if(!isset($limit) || $limit <= 0) { $limit = 10; }
+            if(!isset($limit) || $limit <= 0) { $limit = 8; }
             // execute
-             $result = $query->paginate($limit); // laravel doing pagination (slow)
-//            $result = $this->paginate($query, $page, $limit); //
-
+             $result = $query->paginate($limit);
         } else {
             // check for limit
             if(isset($limit) && $limit > 0) {
                 $query = $query->limit($limit);
             }
-//            $result = $query->get();
-            $result = $query->paginate($limit); // laravel doing pagination (slow)
+            $result = $query->get();
+//            $result = $query->paginate($limit); // laravel doing pagination (slow)
 
         }
 

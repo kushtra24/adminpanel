@@ -1,24 +1,27 @@
 <template>
 <div class="wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark" v-if="!id">Create User</h1>
-            <h1 class="m-0 text-dark" v-if="id">Edit User</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
-                <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>
-                <li class="breadcrumb-item active" v-if="id"><router-link :to="{ path: '/users-details/'+ id }">User Details</router-link></li>
-                <li class="breadcrumb-item active">User Details</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+    <PageHeader v-if="!id" title="Create User" />
+    <PageHeader v-if="id" title="Edit User" />
+
+<!--    <div class="content-header">-->
+<!--      <div class="container-fluid">-->
+<!--        <div class="row mb-2">-->
+<!--          <div class="col-sm-6">-->
+<!--            <h1 class="m-0 text-dark" v-if="!id">Create User</h1>-->
+<!--            <h1 class="m-0 text-dark" v-if="id">Edit User</h1>-->
+<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
+<!--          <div class="col-sm-6">-->
+<!--            <ol class="breadcrumb float-sm-right">-->
+<!--                <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>-->
+<!--                <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>-->
+<!--                <li class="breadcrumb-item active" v-if="id"><router-link :to="{ path: '/users-details/'+ id }">User Details</router-link></li>-->
+<!--                <li class="breadcrumb-item active">User Details</li>-->
+<!--            </ol>-->
+<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
+<!--      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--    </div>-->
 
     <div class="container">
       <form @submit.prevent="onSubmit">
@@ -73,12 +76,14 @@
 import {mapActions, mapGetters, mapState} from "vuex";
 import ErrorsList from "../components/ErrorsList";
 import Spinner from "../components/Spinner";
+import PageHeader from "../components/PageHeader";
 
 export default {
         name: 'createUser',
         components: {
             ErrorsList,
-            Spinner
+            Spinner,
+            PageHeader
         },
       data() {
         return {

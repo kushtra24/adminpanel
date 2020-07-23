@@ -1,5 +1,5 @@
 
-function initialState () {
+function initialState() {
     return {
         user: {
             name: '',
@@ -13,15 +13,21 @@ function initialState () {
     }
 }
 
+function initialUserFilters() {
+    return {
+        filter: {
+            search: '',
+            type: '',
+        }
+    }
+}
+
 export default {
     state: {
         ...initialState(),
         users: {},
         userStateChanged: false,
-        filter: {
-            search: '',
-            type: '',
-        }
+        ...initialUserFilters()
     },
     actions: {
         /**
@@ -32,21 +38,14 @@ export default {
          * @constructor
          */
         async FETCH_ALL_USERS(context, page) {
-            console.log('state changed? -> ', context.state.userStateChanged);
             // check if new user is created and users property has data
             // avoid extraneous network call if article exists
-        //
-            if (context.state.userStateChanged === false && Object.keys(context.state.users).length !== 0) {
-                console.log('return existed users');
+
+            if (context.state.userStateChanged === false && Object.keys(context.state.users).length !== 0 ) {
                 this.state.userStateChanged = false;
                 return this.state.users;
             } else {
-                 let url = '/api/user?';
-
-                 if (page > 0) {
-                     url += "page=" + page;
-                 }
-
+                 let url = '/api/user?page=' + page;
                 const user  = await axios.get(url);
                 context.commit('SET_ALL_USERS', user.data);
             }
@@ -59,19 +58,29 @@ export default {
          * @returns {Promise<[]|(function(*): [])|[number, number, [], string, string]|(function(*): [])>}
          * @constructor
          */
-        async FETCH_FILTERED_USERS(context) {
-
+        async FETCH_FILTERED_USERS(context, page) {
+            console.log('page => ', page);
                 let url = '/api/user?';
+
+                if (page > 0) {
+                    url += "page=" + page;
+                }else {
+                    url += "page=1"
+                }
 
                 if (context.state.filter.search) {
                     url += "&search=" + context.state.filter.search;
-                }
-                if (context.state.filter.type) {
+                }{
+                if (context.state.filter.type)
                     url += "&type=" + context.state.filter.type;
                 }
 
                 const user  = await axios.get(url);
                 context.commit('SET_ALL_USERS', user.data);
+        },
+
+        CLEAR_USER_FILTERS(context) {
+            context.commit('RESET_USER_FILTERS');
         },
 
         /**
@@ -83,7 +92,6 @@ export default {
          * @constructor
          */
         SEARCH_USER: (context, searchTerm = '', filterType = '') => {
-            console.log('search and tilter -> ', searchTerm + filterType);
             const user = axios.get('/api/user?search=' + searchTerm + '&type=' + filterType);
             context.commit('SET_SEARCHED_USER', user.data);
         },
@@ -123,6 +131,7 @@ export default {
          * update photo state
          * @param state
          * @constructor
+         * @param context
          */
         UPDATE_USER_PHOTO(context, [reader]) {
             context.commit('SET_USER_PHOTO', reader);
@@ -219,13 +228,22 @@ export default {
         },
 
         /**
+         * Reset user filters
+         * @param state
+         * @constructor
+         */
+        RESET_USER_FILTERS: (state) => {
+          Object.assign(state, initialUserFilters());
+          console.log('new user filter ->', state.filter);
+        },
+
+        /**
          * set created user
          * @param state
          * @constructor
          */
         USER_CHANGED: (state) => {
             state.userStateChanged = true;
-            console.log('new user? delete ->', this.state.userStateChanged);
         },
 
     },

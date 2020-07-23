@@ -31,8 +31,6 @@ let routes = [
 
     // gate prototype
     Vue.prototype.$gate = new Gate(window.user);
-    // pagination
-    Vue.component('pagination', require('laravel-vue-pagination'));
 
   const router = new VueRouter({
     mode: "history",
@@ -61,7 +59,7 @@ let routes = [
  * Vue views. It will recursively scan this directory for the Vue
  * views and automatically register them with their "basename".
  *
- * Eg. ./views/ExampleComponent.vue -> <example-component></example-component>
+ * Eg. ./views/DashboardComponent.vue -> <example-component></example-component>
  */
 
     Vue.component(
@@ -82,7 +80,7 @@ let routes = [
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./views/ExampleComponent.vue').default);
+Vue.component('example-component', require('./views/DashboardComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

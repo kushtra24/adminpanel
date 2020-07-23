@@ -48205,6 +48205,10 @@ readers do not read off random characters that represent icons */
   margin-top: 10px;
 }
 
+.margin-small-right {
+  margin-right: 10px;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -48337,5 +48341,9 @@ readers do not read off random characters that represent icons */
 
 .search-form-filter {
   width: 280px;
+}
+
+.hidden {
+  display: none;
 }
 

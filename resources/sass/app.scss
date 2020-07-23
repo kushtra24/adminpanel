@@ -30,6 +30,10 @@ $fa-font-path: "../webfonts";
     margin-top: 10px;
 }
 
+.margin-small-right {
+    margin-right: 10px;
+}
+
 // loading spinner
 
 .lds-ring {
@@ -146,5 +150,9 @@ $fa-font-path: "../webfonts";
 
 .search-form-filter {
     width: 280px;
+}
+
+.hidden {
+    display: none;
 }
 

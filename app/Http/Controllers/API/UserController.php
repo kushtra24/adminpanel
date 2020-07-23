@@ -50,7 +50,8 @@ class UserController extends Controller
         $search = $request->input('search');
         $type = $request->input('type');
         $orderType = $request->input('order-type', 'desc'); // order type
-        $orderByArr = $request->input('order-by', 'created_at'); // default order
+        $orderByArr = $request->input('order-by', 'created_at, type'); // default order
+        $orderByArr = $this->stringToArray($orderByArr); // to array
 
         $user = User::select('*');
 

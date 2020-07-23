@@ -1,22 +1,24 @@
 <template>
 <div class="wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">User Details</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
-              <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>
-              <li class="breadcrumb-item active">User Details</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+    <PageHeader title="User Details" />
+
+    <!--    <div class="content-header">-->
+<!--      <div class="container-fluid">-->
+<!--        <div class="row mb-2">-->
+<!--          <div class="col-sm-6">-->
+<!--            <h1 class="m-0 text-dark">User Details</h1>-->
+<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
+<!--          <div class="col-sm-6">-->
+<!--            <ol class="breadcrumb float-sm-right">-->
+<!--              <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>-->
+<!--              <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>-->
+<!--              <li class="breadcrumb-item active">User Details</li>-->
+<!--            </ol>-->
+<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
+<!--      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--    </div>-->
 
     <div class="container">
         <!-- loading spinner-->
@@ -62,10 +64,12 @@
 
     import Spinner from "../components/Spinner";
     import {mapActions, mapGetters} from "vuex";
+    import PageHeader from "../components/PageHeader";
 
     export default {
         components: {
-          Spinner
+            Spinner,
+            PageHeader
         },
       data() {
         return {
