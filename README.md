@@ -24,3 +24,4 @@ This is an Starter project with Laravel and Vue.js (Vuex). It uses the folowing 
 After cloning the repo: rename the .env.example to .env and add the credentials, run `php artisan key:generate` to generate a key and `php artisan passport:kets` to generate a key for JWT.
 
 run `php artisan serve` and `npm run watch`
+also run `php artisan storage:link` to use the photos
