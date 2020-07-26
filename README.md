@@ -1,4 +1,4 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center">Laravel+Vuex Starter</p>
 
 <p align="center">
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
@@ -23,4 +23,4 @@ This is an Starter project with Laravel and Vue.js (Vuex). It uses the folowing 
 
 After cloning the repo: rename the .env.example to .env and add the credentials, run `php artisan key:generate` to generate a key and `php artisan passport:kets` to generate a key for JWT.
 
-    - run `php artisan serve` and `npm run watch`
+run `php artisan serve` and `npm run watch`
