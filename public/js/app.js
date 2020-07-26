@@ -1988,11 +1988,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PageHeader",
   props: {
-    title: '' // pages: { type: Array }
-
+    title: '',
+    pages: {
+      type: Array
+    }
   }
 });
 
@@ -3061,22 +3065,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3126,9 +3114,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         var response = _ref.response;
         _this.inProgress = false;
-        _this.errors = response === null || response === void 0 ? void 0 : (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.errors;
-        console.log('you have an error on creating an user');
-        Swal.fire('Failed!', 'Nothing was Updated', 'warning');
+
+        if (response === null || response === void 0 ? void 0 : (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.errors) {
+          var _response$data2;
+
+          _this.errors = response === null || response === void 0 ? void 0 : (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.errors;
+        } else {
+          _this.errors = response === null || response === void 0 ? void 0 : response.data;
+        }
+
+        console.log('you have an error on creating an user'); // Swal.fire(
+        //     'Failed!',
+        //     'Nothing was Updated',
+        //     'warning'
+        // )
       });
     },
 
@@ -3242,6 +3241,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -3450,22 +3450,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3490,6 +3474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Spinner */ "./resources/js/components/Spinner.vue");
 /* harmony import */ var _components_editProfileComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/editProfileComponent */ "./resources/js/components/editProfileComponent.vue");
+/* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/PageHeader */ "./resources/js/components/PageHeader.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3552,26 +3537,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__["default"],
-    EditProfileComponent: _components_editProfileComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
+    editProfileComponent: _components_editProfileComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   beforeCreate: function beforeCreate() {
     console.log('photo', this.$store.state.profile.photo);
@@ -3627,23 +3601,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -65824,21 +65781,35 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c(
+            "ol",
+            { staticClass: "breadcrumb float-sm-right" },
+            [
+              _vm._l(_vm.pages, function(value, index) {
+                return _c(
+                  "li",
+                  { key: index, staticClass: "breadcrumb-item" },
+                  [
+                    _c("span", { staticClass: "breadcrumb-item" }, [
+                      _vm._v(_vm._s(value))
+                    ])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "breadcrumb-item" }, [
+                _vm._v(_vm._s(_vm.title))
+              ])
+            ],
+            2
+          )
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-6" }, [
-      _c("ol", { staticClass: "breadcrumb float-sm-right" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67341,10 +67312,19 @@ var render = function() {
     { staticClass: "wrapper" },
     [
       !_vm.id
-        ? _c("PageHeader", { attrs: { title: "Create User" } })
+        ? _c("PageHeader", {
+            attrs: { title: "Create User", pages: ["Dashboard", "Users"] }
+          })
         : _vm._e(),
       _vm._v(" "),
-      _vm.id ? _c("PageHeader", { attrs: { title: "Edit User" } }) : _vm._e(),
+      _vm.id
+        ? _c("PageHeader", {
+            attrs: {
+              title: "Edit User",
+              pages: ["Dashboard", "Users", "Users Details"]
+            }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
         _c(
@@ -67384,6 +67364,12 @@ var render = function() {
               _vm.errors.name
                 ? _c("span", { staticClass: "invalid-feedback" }, [
                     _vm._v(_vm._s(_vm.errors.name))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.errors.message
+                ? _c("span", { staticClass: "invalid-feedback" }, [
+                    _vm._v(_vm._s(_vm.errors.message))
                   ])
                 : _vm._e()
             ]),
@@ -67705,7 +67691,7 @@ var render = function() {
         "div",
         { staticClass: "wrapper" },
         [
-          _c("pageHeader", { attrs: { title: "Users" } }),
+          _c("pageHeader", { attrs: { title: "Users", pages: ["Dashboard"] } }),
           _vm._v(" "),
           _c(
             "router-link",
@@ -67719,7 +67705,7 @@ var render = function() {
           _c("div", { staticClass: "container-fluid" }, [
             _c(
               "div",
-              { staticClass: "box margin-top-medium" },
+              { staticClass: "box" },
               [
                 _vm.loading ? _c("Spinner") : _vm._e(),
                 _vm._v(" "),
@@ -67855,11 +67841,16 @@ var render = function() {
                               _c(
                                 "div",
                                 {
-                                  staticClass: "clear-filters-button",
-                                  class: {
-                                    hidden:
-                                      !_vm.filter.type && !_vm.filter.search
-                                  }
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        _vm.filter.type && _vm.filter.search,
+                                      expression: "filter.type && filter.search"
+                                    }
+                                  ],
+                                  staticClass: "clear-filters-button"
                                 },
                                 [
                                   _c(
@@ -68098,32 +68089,7 @@ var render = function() {
     "div",
     { staticClass: "wrapper" },
     [
-      _c("div", { staticClass: "content-header" }, [
-        _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "row mb-2" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
-                _c(
-                  "li",
-                  { staticClass: "breadcrumb-item" },
-                  [
-                    _c("router-link", { attrs: { to: "/dashboard" } }, [
-                      _vm._v("Dashboard")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("li", { staticClass: "breadcrumb-item active" }, [
-                  _vm._v("Profile")
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
+      _c("pageHeader", { attrs: { title: "Profile" } }),
       _vm._v(" "),
       _vm.loading ? _c("Spinner") : _vm._e(),
       _vm._v(" "),
@@ -68217,7 +68183,7 @@ var render = function() {
                 _c(
                   "div",
                   { attrs: { id: "settings" } },
-                  [_c("EditProfileComponent")],
+                  [_c("editProfileComponent")],
                   1
                 )
               ])
@@ -68228,16 +68194,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-6" }, [
-      _c("h1", { staticClass: "m-0 text-dark" }, [_vm._v("Profile")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68263,7 +68220,9 @@ var render = function() {
     "div",
     { staticClass: "wrapper" },
     [
-      _c("PageHeader", { attrs: { title: "User Details" } }),
+      _c("PageHeader", {
+        attrs: { title: "User Details", pages: ["Dashboard", "Users"] }
+      }),
       _vm._v(" "),
       _c(
         "div",
@@ -68327,19 +68286,27 @@ var render = function() {
                       _vm._v("Bio")
                     ]),
                     _vm._v(" "),
-                    _c("p", [_c("b", [_vm._v(_vm._s(_vm.user.bio))])]),
+                    _c("p", [
+                      _c("b", [_vm._v(_vm._s(_vm._f("upText")(_vm.user.bio)))])
+                    ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "text-secondary" }, [
                       _vm._v("Type")
                     ]),
                     _vm._v(" "),
-                    _c("p", [_c("b", [_vm._v(_vm._s(_vm.user.type))])]),
+                    _c("p", [
+                      _c("b", [_vm._v(_vm._s(_vm._f("upText")(_vm.user.type)))])
+                    ]),
                     _vm._v(" "),
                     _c("h6", { staticClass: "text-secondary" }, [
                       _vm._v("Created at")
                     ]),
                     _vm._v(" "),
-                    _c("p", [_c("b", [_vm._v(_vm._s(_vm.user.created_at))])]),
+                    _c("p", [
+                      _c("b", [
+                        _vm._v(_vm._s(_vm._f("euDate")(_vm.user.created_at)))
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -84903,13 +84870,15 @@ var Gate = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _common_date_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./common/date.filter */ "./resources/js/common/date.filter.js");
+/* harmony import */ var _common_sentenceCase_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./common/sentenceCase.filter */ "./resources/js/common/sentenceCase.filter.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -84923,8 +84892,10 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a;
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
   path: '/dashboard',
   component: __webpack_require__(/*! ./views/DashboardComponent.vue */ "./resources/js/views/DashboardComponent.vue")["default"]
@@ -84949,30 +84920,18 @@ var routes = [{
 }, {
   path: '*',
   component: __webpack_require__(/*! ./views/DashboardComponent.vue */ "./resources/js/views/DashboardComponent.vue")["default"]
-}]; // gate prototype
-
-Vue.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_4__["default"](window.user);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+}];
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
   routes: routes // short for `routes: routes`
 
-}); // this filter makes text to uppercase
+}); // gate prototype
 
-Vue.filter('upText', function (value) {
-  if (!value) {
-    return;
-  }
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_6__["default"](window.user); // this filter makes text to uppercase
 
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}); // this filter changes the date to an EU format
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter("upText", _common_sentenceCase_filter__WEBPACK_IMPORTED_MODULE_3__["default"]); // this filter changes the date to an EU format
 
-Vue.filter('euDate', function (date) {
-  try {
-    return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).subtract(1, 'days').format("DD.MM.YYYY");
-  } catch (_unused) {
-    console.error('displaying the date in the eu format was not possible maybe because it\'s null or has no value');
-  }
-});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('euDate', _common_date_filter__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue views. It will recursively scan this directory for the Vue
@@ -84981,20 +84940,20 @@ Vue.filter('euDate', function (date) {
  * Eg. ./views/DashboardComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('passport-clients', __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
-Vue.component('passport-authorized-clients', __webpack_require__(/*! ./components/passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
-Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]); // const files = require.context('./', true, /\.vue$/i)
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-clients', __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-authorized-clients', __webpack_require__(/*! ./components/passport/AuthorizedClients.vue */ "./resources/js/components/passport/AuthorizedClients.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]); // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./views/DashboardComponent.vue */ "./resources/js/views/DashboardComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./views/DashboardComponent.vue */ "./resources/js/views/DashboardComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding views to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
+var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  store: _store__WEBPACK_IMPORTED_MODULE_5__["default"],
   el: '#app',
   router: router
 });
@@ -85045,6 +85004,47 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/common/date.filter.js":
+/*!********************************************!*\
+  !*** ./resources/js/common/date.filter.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = (function (date) {
+  try {
+    return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).subtract(1, 'days').format("DD.MM.YYYY");
+  } catch (_unused) {
+    console.error('displaying the date in the eu format was not possible maybe because it\'s null or has no value');
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/common/sentenceCase.filter.js":
+/*!****************************************************!*\
+  !*** ./resources/js/common/sentenceCase.filter.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (value) {
+  if (!value) {
+    return;
+  }
+
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
 
 /***/ }),
 
@@ -85809,7 +85809,8 @@ function initialState() {
       type: '',
       bio: '',
       photo: '',
-      active: '1'
+      active: '1',
+      created_at: ''
     }
   };
 }

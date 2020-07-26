@@ -9,6 +9,7 @@ function initialState() {
             bio: '',
             photo: '',
             active: '1',
+            created_at: ''
         },
     }
 }

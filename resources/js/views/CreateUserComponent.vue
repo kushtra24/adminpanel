@@ -1,33 +1,15 @@
 <template>
 <div class="wrapper">
     <!-- Content Header (Page header) -->
-    <PageHeader v-if="!id" title="Create User" />
-    <PageHeader v-if="id" title="Edit User" />
-
-<!--    <div class="content-header">-->
-<!--      <div class="container-fluid">-->
-<!--        <div class="row mb-2">-->
-<!--          <div class="col-sm-6">-->
-<!--            <h1 class="m-0 text-dark" v-if="!id">Create User</h1>-->
-<!--            <h1 class="m-0 text-dark" v-if="id">Edit User</h1>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--          <div class="col-sm-6">-->
-<!--            <ol class="breadcrumb float-sm-right">-->
-<!--                <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>-->
-<!--                <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>-->
-<!--                <li class="breadcrumb-item active" v-if="id"><router-link :to="{ path: '/users-details/'+ id }">User Details</router-link></li>-->
-<!--                <li class="breadcrumb-item active">User Details</li>-->
-<!--            </ol>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
-<!--      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--    </div>-->
+    <PageHeader v-if="!id" title="Create User" :pages="['Dashboard', 'Users']"/>
+    <PageHeader v-if="id" title="Edit User" :pages="['Dashboard', 'Users', 'Users Details']" />
 
     <div class="container">
       <form @submit.prevent="onSubmit">
         <div class="form-group">
           <input placeholder="Name" v-model="user.name" type="text" name="name" class="form-control">
             <span class="invalid-feedback" v-if="errors.name">{{ errors.name }}</span>
+            <span class="invalid-feedback" v-if="errors.message">{{ errors.message }}</span>
         </div>
 
         <div class="form-group">
@@ -66,7 +48,9 @@
         <button :disabled="inProgress" type="submit" class="btn btn-primary">Submit
             <Spinner v-if="inProgress" class="spinner-mini spinner-color-white" />
         </button>
+
           <ErrorsList :errors="errors" />
+
       </form>
     </div>
 </div>
@@ -126,13 +110,17 @@ export default {
                   })
                   .catch( ({ response }) => {
                       this.inProgress = false;
-                      this.errors = response?.data?.errors;
+                      if (response?.data?.errors) {
+                          this.errors = response?.data?.errors
+                      } else {
+                          this.errors = response?.data
+                      }
                       console.log('you have an error on creating an user');
-                      Swal.fire(
-                          'Failed!',
-                          'Nothing was Updated',
-                          'warning'
-                      )
+                      // Swal.fire(
+                      //     'Failed!',
+                      //     'Nothing was Updated',
+                      //     'warning'
+                      // )
                     });
             },
 

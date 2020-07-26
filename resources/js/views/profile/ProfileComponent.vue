@@ -1,21 +1,8 @@
 <template>
 <div class="wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Profile</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
-              <li class="breadcrumb-item active">Profile</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+    <pageHeader title="Profile" />
+
     <!-- loading spinner-->
     <Spinner v-if="loading" />
 
@@ -59,7 +46,7 @@
 
         <div class="col-md-5">
             <div class="" id="settings">
-                <EditProfileComponent></EditProfileComponent>
+                <editProfileComponent></editProfileComponent>
             </div>
         </div>
         </div>
@@ -69,14 +56,16 @@
 
 <script>
 
-import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
     import Spinner from "../../components/Spinner";
-    import EditProfileComponent from "../../components/editProfileComponent";
+    import editProfileComponent from "../../components/editProfileComponent";
+    import pageHeader from "../../components/PageHeader";
 
     export default {
         components: {
             Spinner,
-            EditProfileComponent
+            editProfileComponent,
+            pageHeader
         },
         beforeCreate() {
             console.log('photo', this.$store.state.profile.photo );

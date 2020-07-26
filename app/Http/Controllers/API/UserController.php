@@ -73,9 +73,7 @@ class UserController extends Controller
      */
     private function checkSearch(&$query, $search) {
 
-        if (!isset($query)) {
-            return $query;
-        }
+        if (!isset($query)) { return $query; }
 
         if (!is_null($search)) {
             $searchTerms = $this->stringToArray($search, ' ');
@@ -115,6 +113,10 @@ class UserController extends Controller
      */
     public function store(Request $request) {
 
+//        if (!$request['slug']) {
+//            throw new \InvalidArgumentException('Slug is not unique', 403);
+//        }
+
         // validate user
         $this->validate($request, $this->rules);
 
@@ -137,7 +139,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $user
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function show($user) {
@@ -152,9 +154,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
@@ -198,8 +201,6 @@ class UserController extends Controller
         if (!Gate::allows('isAdmin') || !Gate::allows('isAuthor')) {
             return response()->json('access denied', 403);
         }
-
-//        $this->authorize('isAdmin');
 
         // get the user
         $user = User::findOrfail($id);

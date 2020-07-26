@@ -1,16 +1,17 @@
 <template>
 <div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
-    <pageHeader title="Users" />
+    <pageHeader title="Users" :pages="['Dashboard']" />
     <router-link to="/users-create" type="a" class="btn btn-success margin-small">Create User</router-link>
 
     <div class="container-fluid">
 
-        <div class="box margin-top-medium">
+
+        <div class="box">
             <!-- loading spinner-->
             <Spinner v-if="loading" />
 
-            <div id="users-container" v-if="!loading">
+            <div id="users-container" v-if="!loading" >
                 <form @submit.prevent="fetchFilteredUsers">
                     <div class="form-filters row">
                         <!-- SEARCH FORM @input="searchUser" -->
@@ -29,7 +30,7 @@
                         <div class="submit-button margin-small-right">
                         <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-                        <div class="clear-filters-button" v-bind:class="{ 'hidden': !filter.type && !filter.search}">
+                        <div class="clear-filters-button" v-show="filter.type && filter.search">
                         <button @click="clearFilters" class="btn btn-danger">Clear</button>
                         </div>
                     </div>

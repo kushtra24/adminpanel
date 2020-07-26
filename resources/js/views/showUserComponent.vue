@@ -1,24 +1,7 @@
 <template>
 <div class="wrapper">
     <!-- Content Header (Page header) -->
-    <PageHeader title="User Details" />
-
-    <!--    <div class="content-header">-->
-<!--      <div class="container-fluid">-->
-<!--        <div class="row mb-2">-->
-<!--          <div class="col-sm-6">-->
-<!--            <h1 class="m-0 text-dark">User Details</h1>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--          <div class="col-sm-6">-->
-<!--            <ol class="breadcrumb float-sm-right">-->
-<!--              <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>-->
-<!--              <li class="breadcrumb-item active"><router-link to="/users">Users</router-link></li>-->
-<!--              <li class="breadcrumb-item active">User Details</li>-->
-<!--            </ol>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
-<!--      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--    </div>-->
+    <PageHeader title="User Details" :pages="['Dashboard', 'Users']" />
 
     <div class="container">
         <!-- loading spinner-->
@@ -42,13 +25,13 @@
                     <a :href="'mailto:' + user.email"><b>{{ user.email }}</b></a>
 
                     <h6 class="text-secondary">Bio</h6>
-                    <p><b>{{ user.bio }}</b></p>
+                    <p><b>{{ user.bio | upText}}</b></p>
 
                     <h6 class="text-secondary">Type</h6>
-                    <p><b>{{ user.type }}</b></p>
+                    <p><b>{{ user.type | upText }}</b></p>
 
                     <h6 class="text-secondary">Created at</h6>
-                    <p><b>{{ user.created_at }}</b></p>
+                    <p><b>{{ user.created_at | euDate }}</b></p>
 
                     <a href="#" @click="navigateToEdit(user.id)" class="btn btn-info"><i class="fas fa-user-edit fa-fw"></i> Edit User</a>
                     <a href="#" @click="deleteUser(user.id)" class="btn btn-danger float-right"><i class="fas fa-user-slash fa-fw "></i> Delete User</a>
