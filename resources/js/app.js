@@ -5,11 +5,13 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
 
+import Vue from "vue";
 import VueRouter from 'vue-router'
-import moment from 'moment';
+import DateFilter from './common/date.filter'
+import SentenceCaseFilter from './common/sentenceCase.filter'
+import limitCharFilter from './common/lmitChar.filter'
 import Swal from 'sweetalert2'
 import store from "./store";
 import Gate from "./Gate"
@@ -25,34 +27,24 @@ let routes = [
     { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},
     { path: '/users-details/:id', component: require('./views/showUserComponent.vue').default},
     { path: '/developer', component: require('./views/developerComponent.vue').default},
+    { path: '/articles', component: require('./views/article/ArticleComponent.vue').default},
     { path: '*', component: require('./views/DashboardComponent.vue').default},
-  ]
+]
 
-
-    // gate prototype
-    Vue.prototype.$gate = new Gate(window.user);
-
-  const router = new VueRouter({
+const router = new VueRouter({
     mode: "history",
     routes // short for `routes: routes`
-  })
+})
 
-    // this filter makes text to uppercase
-    Vue.filter('upText', function(value){
-        if (!value) { return }
-        return value.charAt(0).toUpperCase() + value.slice(1)
-    });
+// gate prototype
+Vue.prototype.$gate = new Gate(window.user);
 
-    // this filter changes the date to an EU format
-    Vue.filter('euDate', function (date) {
-        try{
-            return moment(date).subtract(1, 'days').format("DD.MM.YYYY");
-        } catch {
-            console.error('displaying the date in the eu format was not possible maybe because it\'s null or has no value');
-        }
-    });
-
-
+// this filter makes text to uppercase
+Vue.filter("upText", SentenceCaseFilter);
+// this filter changes the date to an EU format
+Vue.filter('euDate', DateFilter);
+// limit Character display
+Vue.filter('str_limit', limitCharFilter)
 
 /**
  * The following block of code may be used to automatically register your
@@ -62,20 +54,20 @@ let routes = [
  * Eg. ./views/DashboardComponent.vue -> <example-component></example-component>
  */
 
-    Vue.component(
-        'passport-clients',
-        require('./components/passport/Clients.vue').default
-    );
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
 
-    Vue.component(
-        'passport-authorized-clients',
-        require('./components/passport/AuthorizedClients.vue').default
-    );
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
 
-    Vue.component(
-        'passport-personal-access-tokens',
-        require('./components/passport/PersonalAccessTokens.vue').default
-    );
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))

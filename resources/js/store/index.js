@@ -5,10 +5,12 @@ Vue.use(Vuex);
 
 import user from "./user.module";
 import profile from "./profile.module";
+import article from "./article.module";
 
 export default new Vuex.Store({
     modules: {
         user,
         profile,
+        article,
     }
 });

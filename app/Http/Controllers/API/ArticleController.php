@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\article;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -21,11 +23,13 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $article = article::orderBy('id', 'DESC')->get();
+        Log::info('here');
+
+        $article = article::orderBy('id', 'DESC')->paginate(8);
 
         return response()->json($article, 200);
     }

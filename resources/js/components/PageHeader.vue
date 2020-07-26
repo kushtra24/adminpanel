@@ -8,9 +8,11 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-<!--                        <li class="breadcrumb-item" v-for="value in pages" :key="value">-->
-<!--                            <router-link to="/{{ value }}">{{ value }}</router-link>-->
-<!--                        </li>-->
+                        <li class="breadcrumb-item" v-for="(value, index) in pages" :key="index">
+                            <!--                            <router-link :to="{ path: '/' + value }">{{ value }} </router-link>-->
+                            <span class="breadcrumb-item">{{ value }}</span>
+                        </li>
+                        <span class="breadcrumb-item">{{ title }}</span>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -23,7 +25,7 @@ export default {
     name: "PageHeader",
     props: {
         title: '',
-        // pages: { type: Array }
+        pages: { type: Array }
     }
 };
 </script>

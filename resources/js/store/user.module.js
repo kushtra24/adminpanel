@@ -9,6 +9,7 @@ function initialState() {
             bio: '',
             photo: '',
             active: '1',
+            created_at: ''
         },
     }
 }
@@ -41,12 +42,12 @@ export default {
             // check if new user is created and users property has data
             // avoid extraneous network call if article exists
 
-            if (context.state.userStateChanged === false && Object.keys(context.state.users).length !== 0 ) {
+            if (!context.state.userStateChanged && Object.keys(context.state.users).length !== 0 ) {
                 this.state.userStateChanged = false;
                 return this.state.users;
             } else {
                  let url = '/api/user?page=' + page;
-                const user  = await axios.get(url);
+                const user = await axios.get(url);
                 context.commit('SET_ALL_USERS', user.data);
             }
         },

@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
             'name' => 'kushtrim',
             'email' => 'kushtra24@gmail.com',
             'password' => bcrypt('kushtrim'),
+            'type' => 'admin',
             'active' => true,
         ]);
 
