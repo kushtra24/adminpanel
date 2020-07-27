@@ -48347,3 +48347,52 @@ readers do not read off random characters that represent icons */
   display: none;
 }
 
+.menububble.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menububble {
+  position: absolute;
+  display: flex;
+  z-index: 20;
+  background: #000;
+  border-radius: 5px;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.menububble i,
+.menububble span {
+  color: white;
+}
+
+.menububble i:hover,
+.menububble span:hover {
+  cursor: pointer;
+  background-color: #CCCCCC;
+}
+
+.menububble i {
+  padding: 2px 5px 0 5px;
+}
+
+.menububble span {
+  padding: 0 5px;
+}
+
+.menububble .is-active {
+  color: green;
+}
+
+.menububble__input {
+  font: inherit;
+  border: none;
+  background: transparent;
+  color: #fff;
+}
+

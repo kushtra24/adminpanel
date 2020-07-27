@@ -8,12 +8,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin Panel Starter</title>
+    <title>Kushtrim.net</title>
 
     <link rel="stylesheet" href="/css/app.css">
 
@@ -103,19 +103,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Management
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p><i class="right fas fa-angle-left"></i>Management</p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <router-link to="/users" tag="a" active-class="active" class="nav-link active">
+                                    <router-link to="/users" tag="a" active-class="active" class="nav-link">
                                         <p>Users</p>
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link to="/articles" class="nav-link">
+                                    <router-link to="/articles" tag="a" class="nav-link" active-class="active">
                                         <p>Articles</p>
                                     </router-link>
                                 </li>

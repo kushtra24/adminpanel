@@ -50,7 +50,6 @@
                 </button>
 
                 <ErrorsList :errors="errors" />
-
             </form>
         </div>
     </div>
@@ -113,11 +112,6 @@ export default {
                         this.errors = response?.data
                     }
                     console.log('you have an error on creating an user');
-                    // Swal.fire(
-                    //     'Failed!',
-                    //     'Nothing was Updated',
-                    //     'warning'
-                    // )
                 });
         },
         /**

@@ -22,12 +22,15 @@ Vue.use(VueRouter)
 let routes = [
     { path: '/dashboard', component: require('./views/DashboardComponent.vue').default},
     { path: '/profile', component: require('./views/profile/ProfileComponent.vue').default},
-    { path: '/users', component: require('./views/UsersComponent.vue').default},
-    { path: '/users-create', component: require('./views/CreateUserComponent.vue').default},
-    { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},
-    { path: '/users-details/:id', component: require('./views/showUserComponent.vue').default},
+        { path: '/users', component: require('./views/UsersComponent.vue').default},
+        { path: '/users-create', component: require('./views/CreateUserComponent.vue').default},
+        { path: '/users-edit/:id', component: require('./views/CreateUserComponent.vue').default},
+        { path: '/users-details/:id', component: require('./views/showUserComponent.vue').default},
     { path: '/developer', component: require('./views/developerComponent.vue').default},
-    { path: '/articles', component: require('./views/article/ArticleComponent.vue').default},
+        { path: '/articles', component: require('./views/article/ArticleComponent.vue').default},
+        { path: '/articles/:slug', component: require('./views/article/showArticleComponent.vue').default},
+        { path: '/articles-create', component: require('./views/article/EditArticleComponent.vue').default},
+        { path: '/articles-edit/:slug', component: require('./views/article/EditArticleComponent.vue').default},
     { path: '*', component: require('./views/DashboardComponent.vue').default},
 ]
 

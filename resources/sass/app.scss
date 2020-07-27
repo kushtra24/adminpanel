@@ -156,3 +156,48 @@ $fa-font-path: "../webfonts";
     display: none;
 }
 
+.menububble.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menububble {
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    z-index: 20;
+    background: #000;
+    border-radius: 5px;
+    padding: .3rem;
+    margin-bottom: .5rem;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .2s,visibility .2s;
+    transition: opacity .2s,visibility .2s;
+    i, span {
+        color: white;
+        &:hover {
+            cursor: pointer;
+            background-color: #CCCCCC;
+        }
+    }
+    i {
+        padding: 2px 5px 0 5px;
+    }
+    span {
+        padding: 0 5px;
+    }
+    .is-active {
+        color: green;
+    }
+}
+
+.menububble__input {
+    font: inherit;
+    border: none;
+    background: transparent;
+    color: #fff;
+}

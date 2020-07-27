@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('content');
+            $table->integer('category_id');
             $table->string('photo')->nullable()->default('defaultArticle.png');
             $table->tinyInteger('public')->unsigned()->default(1);
             $table->timestamps();

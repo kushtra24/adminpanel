@@ -2,7 +2,7 @@
 <div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
     <pageHeader title="Articles" />
-    <router-link to="/article-create" type="a" class="btn btn-success margin-small">Create Article</router-link>
+    <router-link to="/articles-create" type="a" class="btn btn-success margin-small">Create Article</router-link>
 
     <div class="container-fluid">
 
@@ -11,31 +11,6 @@
             <Spinner v-if="loading" />
 
             <div id="users-container" v-if="!loading">
-<!--                <form @submit.prevent="fetchFilteredUsers">-->
-<!--                    <div class="form-filters row">-->
-<!--                        &lt;!&ndash; SEARCH FORM @input="searchUser" &ndash;&gt;-->
-<!--                        <div class="input-group col-sm-3">-->
-<!--                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" v-model="filter.search" >-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; filter type  @input="filterUser"&ndash;&gt;-->
-<!--                        <div class="form-group col-sm-2">-->
-<!--                            <select name="type" id="type" v-model="filter.type" type="type" class="form-control" >-->
-<!--                                <option value=""> Select User Role</option>-->
-<!--                                <option value="admin">Admin</option>-->
-<!--                                <option value="user"> Standard user</option>-->
-<!--                                <option value="author">Author</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="submit-button margin-small-right">-->
-<!--                        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--                        </div>-->
-<!--                        <div class="clear-filters-button" v-bind:class="{ 'hidden': !filter.type && !filter.search}">-->
-<!--                        <button @click="clearFilters" class="btn btn-danger">Clear</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-
-
                 <Spinner v-if="searchLoading" class=" spinner-color-black" />
                 <div v-if="!searchLoading">
                     <table class="table table-striped">
@@ -49,7 +24,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="article in articles.data" :key="article.id" v-bind:class="{ 'table-secondary': !article.public }" >
+                        <tr v-for="article in articles.data" :key="article.id" v-bind:class="{ 'table-secondary': !article.public }"
+                            @click="navigateToEdit(article.slug)">
                             <th scope="row">article.id</th>
                             <td>{{ article.title }}</td>
                             <td>{{ article.content | str_limit(15) }}</td>
@@ -85,7 +61,6 @@ import pagination from "laravel-vue-pagination"
         },
         data() {
             return {
-                id: this.$route.params.id,
                 loading: false,
                 searchLoading: '',
             }
@@ -146,8 +121,8 @@ import pagination from "laravel-vue-pagination"
             /**
              * navigate to Edit
              */
-            navigateToEdit(id) {
-                this.$router.push({path: `/article-details/${id}` });
+            navigateToEdit(slug) {
+                this.$router.push({path: `/article-details/${slug}` });
             }
         },
         computed: {

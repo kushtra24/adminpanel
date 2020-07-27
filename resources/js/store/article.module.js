@@ -5,6 +5,7 @@ function initialState() {
             title: '',
             slug: '',
             content: '',
+            photo: '',
             public: '',
             created_at: '',
             updated_at: ''
@@ -37,7 +38,18 @@ export  default {
               const article = await axios.get(url);
               context.commit('SET_ALL_ARTICLES', article.data);
             }
-        }
+        },
+        /**
+         * update photo state
+         * @param state
+         * @constructor
+         * @param context
+         */
+        UPDATE_ARTICLE_PHOTO(context, [reader]) {
+            context.commit('SET_ARTICLE_PHOTO', reader);
+        },
+
+
     },
     mutations: {
 
@@ -52,11 +64,23 @@ export  default {
                 state.articleStateChanged = false;
         },
 
+        /**
+         * set user photo
+         * @param state
+         * @param reader
+         * @constructor
+         */
+        SET_ARTICLE_PHOTO: (state, reader) => {
+            state.article.photo = reader
+        },
 
     },
     getters: {
         articles: (state) => {
             return state.articles;
+        },
+        article: (state) => {
+            return state.article;
         }
     }
 };
