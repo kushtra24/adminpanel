@@ -1,11 +1,10 @@
 <template>
 <div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
-    <pageHeader title="Articles" />
+    <pageHeader title="Articles" :pages="['Dashboard']" />
     <router-link to="/articles-create" type="a" class="btn btn-success margin-small">Create Article</router-link>
 
     <div class="container-fluid">
-
         <div class="box margin-top-medium">
             <!-- loading spinner-->
             <Spinner v-if="loading" />
@@ -17,24 +16,24 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">title</th>
-                            <th scope="col">content</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Content</th>
                             <th scope="col">created At</th>
-                            <th scope="col">Public</th>
+                            <th scope="col">Updated At</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="article in articles.data" :key="article.id" v-bind:class="{ 'table-secondary': !article.public }"
                             @click="navigateToEdit(article.slug)">
-                            <th scope="row">article.id</th>
+                            <th scope="row">{{ article.id }}</th>
                             <td>{{ article.title }}</td>
                             <td>{{ article.content | str_limit(15) }}</td>
-                            <td>{{ article.created_at }}</td>
-                            <td>{{ article.public }}</td>
+                            <td>{{ article.created_at | euDate }}</td>
+                            <td>{{ article.updated_at | euDate }}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <pagination :data="articles" @pagination-change-page="fetchFilteredUsers">
+                    <pagination :data="articles" @pagination-change-page="fetchFilteredArticles">
                         <span slot="prev-nav">&lt; Previous</span>
                         <span slot="next-nav">Next &gt;</span>
                     </pagination>
@@ -100,16 +99,16 @@ import pagination from "laravel-vue-pagination"
             /**
              * FetchFilteredUSers
              */
-            fetchFilteredUsers(page = 1) {
+            fetchFilteredArticles(page = 1) {
                 this.searchLoading = true;
-                this.$store.dispatch('FETCH_FILTERED_USERS', page)
+                this.$store.dispatch('FETCH_FILTERED_ARTICLES', page)
                     .then(() => {
                         // if (data.data.length === 0) {
                             this.searchLoading = false
                         // }
                     }).catch(() => {
                             this.searchLoading = false
-                            console.log('Fetching Filtered users in users component failed')
+                            console.log('Fetching Filtered Articles failed')
                         }
                 );
             },
@@ -122,7 +121,7 @@ import pagination from "laravel-vue-pagination"
              * navigate to Edit
              */
             navigateToEdit(slug) {
-                this.$router.push({path: `/article-details/${slug}` });
+                this.$router.push({path: `/articles/${slug}` });
             }
         },
         computed: {

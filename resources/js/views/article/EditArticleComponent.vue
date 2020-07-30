@@ -1,8 +1,8 @@
 <template>
     <div class="wrapper">
         <!-- Content Header (Page header) -->
-        <PageHeader v-if="!id" title="Create User" :pages="['Dashboard', 'Article']"/>
-        <PageHeader v-if="id" title="Edit User" :pages="['Dashboard', 'Article', 'Article Details']" />
+        <PageHeader v-if="!id" title="Create Article" :pages="['Dashboard', 'Article']"/>
+        <PageHeader v-if="id" title="Edit Article" :pages="['Dashboard', 'Article', 'Article Details']" />
 
         <div class="container-fluid">
                 <form @submit.prevent="onSubmit">
@@ -11,7 +11,7 @@
                     <div class="form-group">
                         <input type="text" placeholder="Title" v-model="article.title" name="title" class="form-control">
                     </div>
-                    <i class="fas fa-link"></i> <span> https://kushtrim.net/blog/</span> <span v-model="article.slug"></span>
+                    <slug :url="fullUrl" sub-directory="blog" :title="article.title"></slug>
                     <div class="form-group">
                         <div class="editor mt-4">
                             <editor-menu-bubble :editor="editor" @hide="hideLinkMenu" :keep-in-bounds="keepInBounds" v-slot="{ commands, getMarkAttrs, isActive, menu }">
@@ -43,11 +43,18 @@
                                     <i class="fas far fa-redo" @click="commands.redo"></i>
                                 </div>
                             </editor-menu-bubble>
-                        <editor-content class="editor__content" :editor="editor" />
+                        <editor-content class="editor__content" :editor="editor"/>
+                            <div hidden > {{ article.content }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-2 col-lg-2">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="published-wrapper">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="Published" v-model="article.public">
+                            <label class="form-check-label" for="Published">Public</label>
+                        </div>
+                    </div>
                     <div class="article-photo">
                         <div class="form-group">
                             <picture v-show="article.photo">
@@ -57,7 +64,13 @@
                             <input type="file" class="form-control-file" id="FormControlUserPhoto" @change="createArticlePhoto">
                         </div>
                     </div>
-                    <button :disabled="inProgress" type="submit" class="btn btn-primary">Submit
+
+                    <div class="category-wrapper">
+                        <label>Add category to Article</label>
+                        <category></category>
+                    </div>
+
+                    <button :disabled="inProgress" type="submit" class="btn btn-primary mt-3">Submit
                         <Spinner v-if="inProgress" class="spinner-mini spinner-color-white" />
                     </button>
                     <ErrorsList :errors="errors" />
@@ -74,6 +87,9 @@ import {mapActions, mapGetters} from "vuex";
 import {Editor, EditorContent, EditorMenuBubble} from 'tiptap';
 import Spinner from "../../components/Spinner";
 import ErrorsList from "../../components/ErrorsList";
+import slug from "../../components/slug"
+import category from "../../components/category"
+
 import {Blockquote,
     BulletList,
     CodeBlock,
@@ -95,14 +111,18 @@ export default {
         EditorMenuBubble,
         EditorContent,
         Spinner,
-        ErrorsList
+        ErrorsList,
+        slug,
+        category
     },
     data() {
         return {
             id: this.$route.params.id,
+            fullUrl: window.location.origin,
             inProgress: false,
             errors: {},
             keepInBounds: true,
+            newContent: this.saveContent(),
             editor: new Editor({
                 // other options omitted for brevity
                 extensions: [
@@ -120,6 +140,9 @@ export default {
                     new Underline(),
                     new History(),
                 ],
+                onUpdate: ({ getJSON, getHTML }) => {
+                    this.newContent = getHTML();
+                },
                 content: '<p>This is just a boring paragraph</p>',
             }),
             linkUrl: null,
@@ -127,7 +150,24 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['CREATE_USER', 'UPDATE_ARTICLE_PHOTO']),
+        ...mapActions(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE']),
+
+        setContentFromStore() {
+            // get store value
+            return this.$store.state.content
+        },
+        setEditorContent() {
+            //set the content to the editor
+            this.editor.setContent(
+                this.setContentFromStore()
+            )
+        },
+
+        saveContent() {
+            //send to store on save
+            this.$store.dispatch('SET_CONTENT_IN_STORE', this.newContent)
+            return this.newContent;
+        },
 
         /**
          * create or update the article
@@ -151,6 +191,7 @@ export default {
                     'Article Has been' + actionMessage,
                     'success'
                 )
+                this.$router.push('/articles');
             })
             .catch(({ response }) => {
                 this.inProgress = false;
@@ -195,7 +236,6 @@ export default {
         createArticlePhoto(event) {
             let file = event.target.files[0];
             let reader = new FileReader();
-            console.log('file => ', file);
             if (file['size'] < 2111776) {
                 reader.onloadend = (file) => {
                     this.$store.dispatch('UPDATE_ARTICLE_PHOTO', [reader.result])
@@ -217,6 +257,16 @@ export default {
     beforeDestroy() {
         // Always destroy your editor instance when it's no longer needed
         this.editor.destroy()
+        // if the id exists in the url parameters get the selected user data
+        if(!this.id){
+            // reset state of user
+            this.$store.dispatch("RESET_ARTICLE_STATE");
+        }
     },
+    watch: {
+        newContent() {
+            this.newContent = this.saveContent();
+        }
+    }
 }
 </script>

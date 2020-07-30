@@ -2026,6 +2026,92 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/category.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/category.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spinner */ "./resources/js/components/spinner.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "category",
+  components: {
+    spinner: _spinner__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      category: this.updateArticleCategory(),
+      loading: false
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["article", 'categories'])),
+  methods: {
+    /**
+     * update category
+     */
+    updateArticleCategory: function updateArticleCategory() {
+      this.$store.dispatch('UPDATE_ARTICLE_CATEGORY').then(function () {
+        return console.log('category updated');
+      })["catch"](function () {
+        return console.log('category failed to update');
+      });
+    },
+
+    /**
+     * fetch all users
+     */
+    fetchCategories: function fetchCategories(context) {
+      var _this = this;
+
+      this.loading = true;
+      this.$store.dispatch('FETCH_CATEGORIES').then(function () {
+        return _this.loading = false;
+      })["catch"](function () {
+        _this.loading = false;
+        console.log('Fetching categories failed');
+      });
+    }
+  },
+  created: function created() {
+    if (this.$gate.isAdmin()) {
+      console.log('1'); // this.getResults();
+
+      this.fetchCategories();
+    } else {
+      this.$router.push({
+        path: "/dashboard"
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editProfileComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/editProfileComponent.vue?vue&type=script&lang=js& ***!
@@ -2988,6 +3074,117 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/slug.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/slug.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// import slug from 'slug';
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Slug",
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    url: {
+      type: String,
+      required: true
+    },
+    subDirectory: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      isEditing: false
+    };
+  },
+  methods: {
+    /**
+     * convert title to slug
+     * @returns {*}
+     */
+    convertTitle: function convertTitle() {
+      var slug = Slug(this.title);
+      this.$store.dispatch('UPDATE_SLUG', slug); // return slug;
+    },
+
+    /**
+     * edit slug
+     */
+    editSlug: function editSlug() {
+      this.isEditing = true;
+    },
+
+    /**
+     * save slug
+     */
+    saveSlug: function saveSlug() {
+      this.isEditing = false;
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["article"])),
+  watch: {
+    /**
+     * watching the title
+     */
+    title: function title() {
+      this.convertTitle();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/spinner.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/spinner.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "LoadingSpinner"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CreateUserComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CreateUserComponent.vue?vue&type=script&lang=js& ***!
@@ -3127,17 +3324,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
-     * reset state if there is not an id in the url
-     */
-    resetState: function resetState() {
-      // if the id exists in the url parameters get the selected user data
-      if (!this.id) {
-        // reset state of user
-        this.$store.dispatch("RESET_STATE");
-      }
-    },
-
-    /**
      * update profile photo
      * @param event
      */
@@ -3160,8 +3346,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["user"])),
-  created: function created() {
-    this.resetState();
+  beforeDestroy: function beforeDestroy() {
+    // if the id exists in the url parameters get the selected user data
+    if (!this.id) {
+      // reset state of user
+      this.$store.dispatch("RESET_STATE");
+    }
   }
 });
 
@@ -3467,7 +3657,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -3521,17 +3710,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /**
      * FetchFilteredUSers
      */
-    fetchFilteredUsers: function fetchFilteredUsers() {
+    fetchFilteredArticles: function fetchFilteredArticles() {
       var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.searchLoading = true;
-      this.$store.dispatch('FETCH_FILTERED_USERS', page).then(function () {
+      this.$store.dispatch('FETCH_FILTERED_ARTICLES', page).then(function () {
         // if (data.data.length === 0) {
         _this2.searchLoading = false; // }
       })["catch"](function () {
         _this2.searchLoading = false;
-        console.log('Fetching Filtered users in users component failed');
+        console.log('Fetching Filtered Articles failed');
       });
     },
     // clearFilters() {
@@ -3543,7 +3732,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      */
     navigateToEdit: function navigateToEdit(slug) {
       this.$router.push({
-        path: "/article-details/".concat(slug)
+        path: "/articles/".concat(slug)
       });
     }
   },
@@ -3576,7 +3765,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tiptap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tiptap */ "./node_modules/tiptap/dist/tiptap.esm.js");
 /* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Spinner */ "./resources/js/components/Spinner.vue");
 /* harmony import */ var _components_ErrorsList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ErrorsList */ "./resources/js/components/ErrorsList.vue");
-/* harmony import */ var tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tiptap-extensions */ "./node_modules/tiptap-extensions/dist/extensions.esm.js");
+/* harmony import */ var _components_slug__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/slug */ "./resources/js/components/slug.vue");
+/* harmony import */ var _components_category__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/category */ "./resources/js/components/category.vue");
+/* harmony import */ var tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tiptap-extensions */ "./node_modules/tiptap-extensions/dist/extensions.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3653,6 +3844,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -3666,31 +3872,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     EditorMenuBubble: tiptap__WEBPACK_IMPORTED_MODULE_2__["EditorMenuBubble"],
     EditorContent: tiptap__WEBPACK_IMPORTED_MODULE_2__["EditorContent"],
     Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_3__["default"],
-    ErrorsList: _components_ErrorsList__WEBPACK_IMPORTED_MODULE_4__["default"]
+    ErrorsList: _components_ErrorsList__WEBPACK_IMPORTED_MODULE_4__["default"],
+    slug: _components_slug__WEBPACK_IMPORTED_MODULE_5__["default"],
+    category: _components_category__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
+    var _this = this;
+
     return {
       id: this.$route.params.id,
+      fullUrl: window.location.origin,
       inProgress: false,
       errors: {},
       keepInBounds: true,
+      newContent: this.saveContent(),
       editor: new tiptap__WEBPACK_IMPORTED_MODULE_2__["Editor"]({
         // other options omitted for brevity
-        extensions: [new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Blockquote"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["BulletList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["CodeBlock"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Heading"]({
+        extensions: [new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Blockquote"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["BulletList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["CodeBlock"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Heading"]({
           levels: [1, 2, 3]
-        }), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["ListItem"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["OrderedList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Link"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["HorizontalRule"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Bold"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Code"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Italic"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["Underline"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_5__["History"]()],
+        }), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["ListItem"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["OrderedList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Link"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["HorizontalRule"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Bold"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Code"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Italic"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Underline"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["History"]()],
+        onUpdate: function onUpdate(_ref) {
+          var getJSON = _ref.getJSON,
+              getHTML = _ref.getHTML;
+          _this.newContent = getHTML();
+        },
         content: '<p>This is just a boring paragraph</p>'
       }),
       linkUrl: null,
       linkMenuIsActive: false
     };
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['CREATE_USER', 'UPDATE_ARTICLE_PHOTO'])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE'])), {}, {
+    setContentFromStore: function setContentFromStore() {
+      // get store value
+      return this.$store.state.content;
+    },
+    setEditorContent: function setEditorContent() {
+      //set the content to the editor
+      this.editor.setContent(this.setContentFromStore());
+    },
+    saveContent: function saveContent() {
+      //send to store on save
+      this.$store.dispatch('SET_CONTENT_IN_STORE', this.newContent);
+      return this.newContent;
+    },
+
     /**
      * create or update the article
      */
     onSubmit: function onSubmit() {
-      var _this = this;
+      var _this2 = this;
 
       var action = '';
       var actionMessage = '';
@@ -3705,20 +3936,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.inProgress = true;
       this.$store.dispatch(action).then(function () {
-        _this.inProgress = false;
+        _this2.inProgress = false;
         Swal.fire(actionMessage, 'Article Has been' + actionMessage, 'success');
-      })["catch"](function (_ref) {
+
+        _this2.$router.push('/articles');
+      })["catch"](function (_ref2) {
         var _response$data;
 
-        var response = _ref.response;
-        _this.inProgress = false;
+        var response = _ref2.response;
+        _this2.inProgress = false;
 
         if (response === null || response === void 0 ? void 0 : (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.errors) {
           var _response$data2;
 
-          _this.errors = response === null || response === void 0 ? void 0 : (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.errors;
+          _this2.errors = response === null || response === void 0 ? void 0 : (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.errors;
         } else {
-          _this.errors = response === null || response === void 0 ? void 0 : response.data;
+          _this2.errors = response === null || response === void 0 ? void 0 : response.data;
         }
 
         console.log('you have an error on creating an user');
@@ -3729,12 +3962,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * show link menu
      */
     showLinkMenu: function showLinkMenu(attrs) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.linkUrl = attrs.href;
       this.linkMenuIsActive = true;
       this.$nextTick(function () {
-        _this2.$refs.linkInput.focus();
+        _this3.$refs.linkInput.focus();
       });
     },
 
@@ -3761,15 +3994,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * @param event
      */
     createArticlePhoto: function createArticlePhoto(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       var file = event.target.files[0];
       var reader = new FileReader();
-      console.log('file => ', file);
 
       if (file['size'] < 2111776) {
         reader.onloadend = function (file) {
-          _this3.$store.dispatch('UPDATE_ARTICLE_PHOTO', [reader.result]);
+          _this4.$store.dispatch('UPDATE_ARTICLE_PHOTO', [reader.result]);
         };
 
         reader.readAsDataURL(file);
@@ -3781,7 +4013,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["article"])),
   beforeDestroy: function beforeDestroy() {
     // Always destroy your editor instance when it's no longer needed
-    this.editor.destroy();
+    this.editor.destroy(); // if the id exists in the url parameters get the selected user data
+
+    if (!this.id) {
+      // reset state of user
+      this.$store.dispatch("RESET_ARTICLE_STATE");
+    }
+  },
+  watch: {
+    newContent: function newContent() {
+      this.newContent = this.saveContent();
+    }
   }
 });
 
@@ -3797,16 +4039,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/PageHeader */ "./resources/js/components/PageHeader.vue");
+/* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Spinner */ "./resources/js/components/Spinner.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "showArticleComponent",
   components: {
-    PageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
+    pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"],
+    spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      slug: this.$route.params.slug,
+      loading: false
+    };
+  },
+  methods: {
+    fetchArticleData: function fetchArticleData() {
+      var _this = this;
+
+      this.loading = true;
+      this.$store.dispatch('FETCH_ARTICLE_DATA', this.slug).then(function () {
+        _this.loading = false;
+        console.log('article data fetch success');
+      })["catch"](function () {
+        _this.loading = false;
+        console.log('article data fetch error');
+      });
+    }
+  },
+  created: function created() {
+    this.fetchArticleData();
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['article']))
 });
 
 /***/ }),
@@ -3934,7 +4228,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   beforeCreate: function beforeCreate() {
-    console.log('photo', this.$store.state.profile.photo);
     this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
   },
   data: function data() {
@@ -4109,6 +4402,170 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchSelectedUser();
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/base64-js/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/base64-js/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.byteLength = byteLength
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
+
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
+
+var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+for (var i = 0, len = code.length; i < len; ++i) {
+  lookup[i] = code[i]
+  revLookup[code.charCodeAt(i)] = i
+}
+
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
+revLookup['-'.charCodeAt(0)] = 62
+revLookup['_'.charCodeAt(0)] = 63
+
+function getLens (b64) {
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
+  }
+
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
+}
+
+// base64 is 4/3 + up to two characters of the original data
+function byteLength (b64) {
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function toByteArray (b64) {
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
+
+  var i
+  for (i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
+  }
+
+  return parts.join('')
+}
+
 
 /***/ }),
 
@@ -8542,6 +8999,1808 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/buffer/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/buffer/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+/* eslint-disable no-proto */
+
+
+
+var base64 = __webpack_require__(/*! base64-js */ "./node_modules/base64-js/index.js")
+var ieee754 = __webpack_require__(/*! ieee754 */ "./node_modules/ieee754/index.js")
+var isArray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js")
+
+exports.Buffer = Buffer
+exports.SlowBuffer = SlowBuffer
+exports.INSPECT_MAX_BYTES = 50
+
+/**
+ * If `Buffer.TYPED_ARRAY_SUPPORT`:
+ *   === true    Use Uint8Array implementation (fastest)
+ *   === false   Use Object implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * Due to various browser bugs, sometimes the Object implementation will be used even
+ * when the browser supports typed arrays.
+ *
+ * Note:
+ *
+ *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+ *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+ *
+ *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+ *
+ *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+ *     incorrect length in some situations.
+
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+ * get the Object implementation, which is slower but behaves correctly.
+ */
+Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
+  ? global.TYPED_ARRAY_SUPPORT
+  : typedArraySupport()
+
+/*
+ * Export kMaxLength after typed array support is determined.
+ */
+exports.kMaxLength = kMaxLength()
+
+function typedArraySupport () {
+  try {
+    var arr = new Uint8Array(1)
+    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
+    return arr.foo() === 42 && // typed array instances can be augmented
+        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+  } catch (e) {
+    return false
+  }
+}
+
+function kMaxLength () {
+  return Buffer.TYPED_ARRAY_SUPPORT
+    ? 0x7fffffff
+    : 0x3fffffff
+}
+
+function createBuffer (that, length) {
+  if (kMaxLength() < length) {
+    throw new RangeError('Invalid typed array length')
+  }
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = new Uint8Array(length)
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    if (that === null) {
+      that = new Buffer(length)
+    }
+    that.length = length
+  }
+
+  return that
+}
+
+/**
+ * The Buffer constructor returns instances of `Uint8Array` that have their
+ * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+ * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+ * returns a single octet.
+ *
+ * The `Uint8Array` prototype remains unmodified.
+ */
+
+function Buffer (arg, encodingOrOffset, length) {
+  if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
+    return new Buffer(arg, encodingOrOffset, length)
+  }
+
+  // Common case.
+  if (typeof arg === 'number') {
+    if (typeof encodingOrOffset === 'string') {
+      throw new Error(
+        'If encoding is specified then the first argument must be a string'
+      )
+    }
+    return allocUnsafe(this, arg)
+  }
+  return from(this, arg, encodingOrOffset, length)
+}
+
+Buffer.poolSize = 8192 // not used by this implementation
+
+// TODO: Legacy, not needed anymore. Remove in next major version.
+Buffer._augment = function (arr) {
+  arr.__proto__ = Buffer.prototype
+  return arr
+}
+
+function from (that, value, encodingOrOffset, length) {
+  if (typeof value === 'number') {
+    throw new TypeError('"value" argument must not be a number')
+  }
+
+  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
+    return fromArrayBuffer(that, value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'string') {
+    return fromString(that, value, encodingOrOffset)
+  }
+
+  return fromObject(that, value)
+}
+
+/**
+ * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+ * if value is a number.
+ * Buffer.from(str[, encoding])
+ * Buffer.from(array)
+ * Buffer.from(buffer)
+ * Buffer.from(arrayBuffer[, byteOffset[, length]])
+ **/
+Buffer.from = function (value, encodingOrOffset, length) {
+  return from(null, value, encodingOrOffset, length)
+}
+
+if (Buffer.TYPED_ARRAY_SUPPORT) {
+  Buffer.prototype.__proto__ = Uint8Array.prototype
+  Buffer.__proto__ = Uint8Array
+  if (typeof Symbol !== 'undefined' && Symbol.species &&
+      Buffer[Symbol.species] === Buffer) {
+    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+    Object.defineProperty(Buffer, Symbol.species, {
+      value: null,
+      configurable: true
+    })
+  }
+}
+
+function assertSize (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('"size" argument must be a number')
+  } else if (size < 0) {
+    throw new RangeError('"size" argument must not be negative')
+  }
+}
+
+function alloc (that, size, fill, encoding) {
+  assertSize(size)
+  if (size <= 0) {
+    return createBuffer(that, size)
+  }
+  if (fill !== undefined) {
+    // Only pay attention to encoding if it's a string. This
+    // prevents accidentally sending in a number that would
+    // be interpretted as a start offset.
+    return typeof encoding === 'string'
+      ? createBuffer(that, size).fill(fill, encoding)
+      : createBuffer(that, size).fill(fill)
+  }
+  return createBuffer(that, size)
+}
+
+/**
+ * Creates a new filled Buffer instance.
+ * alloc(size[, fill[, encoding]])
+ **/
+Buffer.alloc = function (size, fill, encoding) {
+  return alloc(null, size, fill, encoding)
+}
+
+function allocUnsafe (that, size) {
+  assertSize(size)
+  that = createBuffer(that, size < 0 ? 0 : checked(size) | 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+    for (var i = 0; i < size; ++i) {
+      that[i] = 0
+    }
+  }
+  return that
+}
+
+/**
+ * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+ * */
+Buffer.allocUnsafe = function (size) {
+  return allocUnsafe(null, size)
+}
+/**
+ * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+ */
+Buffer.allocUnsafeSlow = function (size) {
+  return allocUnsafe(null, size)
+}
+
+function fromString (that, string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') {
+    encoding = 'utf8'
+  }
+
+  if (!Buffer.isEncoding(encoding)) {
+    throw new TypeError('"encoding" must be a valid string encoding')
+  }
+
+  var length = byteLength(string, encoding) | 0
+  that = createBuffer(that, length)
+
+  var actual = that.write(string, encoding)
+
+  if (actual !== length) {
+    // Writing a hex string, for example, that contains invalid characters will
+    // cause everything after the first invalid character to be ignored. (e.g.
+    // 'abxxcd' will be treated as 'ab')
+    that = that.slice(0, actual)
+  }
+
+  return that
+}
+
+function fromArrayLike (that, array) {
+  var length = array.length < 0 ? 0 : checked(array.length) | 0
+  that = createBuffer(that, length)
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+function fromArrayBuffer (that, array, byteOffset, length) {
+  array.byteLength // this throws if `array` is not a valid ArrayBuffer
+
+  if (byteOffset < 0 || array.byteLength < byteOffset) {
+    throw new RangeError('\'offset\' is out of bounds')
+  }
+
+  if (array.byteLength < byteOffset + (length || 0)) {
+    throw new RangeError('\'length\' is out of bounds')
+  }
+
+  if (byteOffset === undefined && length === undefined) {
+    array = new Uint8Array(array)
+  } else if (length === undefined) {
+    array = new Uint8Array(array, byteOffset)
+  } else {
+    array = new Uint8Array(array, byteOffset, length)
+  }
+
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = array
+    that.__proto__ = Buffer.prototype
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    that = fromArrayLike(that, array)
+  }
+  return that
+}
+
+function fromObject (that, obj) {
+  if (Buffer.isBuffer(obj)) {
+    var len = checked(obj.length) | 0
+    that = createBuffer(that, len)
+
+    if (that.length === 0) {
+      return that
+    }
+
+    obj.copy(that, 0, 0, len)
+    return that
+  }
+
+  if (obj) {
+    if ((typeof ArrayBuffer !== 'undefined' &&
+        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
+      if (typeof obj.length !== 'number' || isnan(obj.length)) {
+        return createBuffer(that, 0)
+      }
+      return fromArrayLike(that, obj)
+    }
+
+    if (obj.type === 'Buffer' && isArray(obj.data)) {
+      return fromArrayLike(that, obj.data)
+    }
+  }
+
+  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+}
+
+function checked (length) {
+  // Note: cannot use `length < kMaxLength()` here because that fails when
+  // length is NaN (which is otherwise coerced to zero.)
+  if (length >= kMaxLength()) {
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+  }
+  return length | 0
+}
+
+function SlowBuffer (length) {
+  if (+length != length) { // eslint-disable-line eqeqeq
+    length = 0
+  }
+  return Buffer.alloc(+length)
+}
+
+Buffer.isBuffer = function isBuffer (b) {
+  return !!(b != null && b._isBuffer)
+}
+
+Buffer.compare = function compare (a, b) {
+  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+    throw new TypeError('Arguments must be Buffers')
+  }
+
+  if (a === b) return 0
+
+  var x = a.length
+  var y = b.length
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i]
+      y = b[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+Buffer.isEncoding = function isEncoding (encoding) {
+  switch (String(encoding).toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'latin1':
+    case 'binary':
+    case 'base64':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+      return true
+    default:
+      return false
+  }
+}
+
+Buffer.concat = function concat (list, length) {
+  if (!isArray(list)) {
+    throw new TypeError('"list" argument must be an Array of Buffers')
+  }
+
+  if (list.length === 0) {
+    return Buffer.alloc(0)
+  }
+
+  var i
+  if (length === undefined) {
+    length = 0
+    for (i = 0; i < list.length; ++i) {
+      length += list[i].length
+    }
+  }
+
+  var buffer = Buffer.allocUnsafe(length)
+  var pos = 0
+  for (i = 0; i < list.length; ++i) {
+    var buf = list[i]
+    if (!Buffer.isBuffer(buf)) {
+      throw new TypeError('"list" argument must be an Array of Buffers')
+    }
+    buf.copy(buffer, pos)
+    pos += buf.length
+  }
+  return buffer
+}
+
+function byteLength (string, encoding) {
+  if (Buffer.isBuffer(string)) {
+    return string.length
+  }
+  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
+      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+    return string.byteLength
+  }
+  if (typeof string !== 'string') {
+    string = '' + string
+  }
+
+  var len = string.length
+  if (len === 0) return 0
+
+  // Use a for loop to avoid recursion
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'ascii':
+      case 'latin1':
+      case 'binary':
+        return len
+      case 'utf8':
+      case 'utf-8':
+      case undefined:
+        return utf8ToBytes(string).length
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return len * 2
+      case 'hex':
+        return len >>> 1
+      case 'base64':
+        return base64ToBytes(string).length
+      default:
+        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+Buffer.byteLength = byteLength
+
+function slowToString (encoding, start, end) {
+  var loweredCase = false
+
+  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+  // property of a typed array.
+
+  // This behaves neither like String nor Uint8Array in that we set start/end
+  // to their upper/lower bounds if the value passed is out of range.
+  // undefined is handled specially as per ECMA-262 6th Edition,
+  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+  if (start === undefined || start < 0) {
+    start = 0
+  }
+  // Return early if start > this.length. Done here to prevent potential uint32
+  // coercion fail below.
+  if (start > this.length) {
+    return ''
+  }
+
+  if (end === undefined || end > this.length) {
+    end = this.length
+  }
+
+  if (end <= 0) {
+    return ''
+  }
+
+  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+  end >>>= 0
+  start >>>= 0
+
+  if (end <= start) {
+    return ''
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  while (true) {
+    switch (encoding) {
+      case 'hex':
+        return hexSlice(this, start, end)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Slice(this, start, end)
+
+      case 'ascii':
+        return asciiSlice(this, start, end)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Slice(this, start, end)
+
+      case 'base64':
+        return base64Slice(this, start, end)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return utf16leSlice(this, start, end)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = (encoding + '').toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+// Buffer instances.
+Buffer.prototype._isBuffer = true
+
+function swap (b, n, m) {
+  var i = b[n]
+  b[n] = b[m]
+  b[m] = i
+}
+
+Buffer.prototype.swap16 = function swap16 () {
+  var len = this.length
+  if (len % 2 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 16-bits')
+  }
+  for (var i = 0; i < len; i += 2) {
+    swap(this, i, i + 1)
+  }
+  return this
+}
+
+Buffer.prototype.swap32 = function swap32 () {
+  var len = this.length
+  if (len % 4 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 32-bits')
+  }
+  for (var i = 0; i < len; i += 4) {
+    swap(this, i, i + 3)
+    swap(this, i + 1, i + 2)
+  }
+  return this
+}
+
+Buffer.prototype.swap64 = function swap64 () {
+  var len = this.length
+  if (len % 8 !== 0) {
+    throw new RangeError('Buffer size must be a multiple of 64-bits')
+  }
+  for (var i = 0; i < len; i += 8) {
+    swap(this, i, i + 7)
+    swap(this, i + 1, i + 6)
+    swap(this, i + 2, i + 5)
+    swap(this, i + 3, i + 4)
+  }
+  return this
+}
+
+Buffer.prototype.toString = function toString () {
+  var length = this.length | 0
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
+}
+
+Buffer.prototype.equals = function equals (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer.compare(this, b) === 0
+}
+
+Buffer.prototype.inspect = function inspect () {
+  var str = ''
+  var max = exports.INSPECT_MAX_BYTES
+  if (this.length > 0) {
+    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+    if (this.length > max) str += ' ... '
+  }
+  return '<Buffer ' + str + '>'
+}
+
+Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+  if (!Buffer.isBuffer(target)) {
+    throw new TypeError('Argument must be a Buffer')
+  }
+
+  if (start === undefined) {
+    start = 0
+  }
+  if (end === undefined) {
+    end = target ? target.length : 0
+  }
+  if (thisStart === undefined) {
+    thisStart = 0
+  }
+  if (thisEnd === undefined) {
+    thisEnd = this.length
+  }
+
+  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+    throw new RangeError('out of range index')
+  }
+
+  if (thisStart >= thisEnd && start >= end) {
+    return 0
+  }
+  if (thisStart >= thisEnd) {
+    return -1
+  }
+  if (start >= end) {
+    return 1
+  }
+
+  start >>>= 0
+  end >>>= 0
+  thisStart >>>= 0
+  thisEnd >>>= 0
+
+  if (this === target) return 0
+
+  var x = thisEnd - thisStart
+  var y = end - start
+  var len = Math.min(x, y)
+
+  var thisCopy = this.slice(thisStart, thisEnd)
+  var targetCopy = target.slice(start, end)
+
+  for (var i = 0; i < len; ++i) {
+    if (thisCopy[i] !== targetCopy[i]) {
+      x = thisCopy[i]
+      y = targetCopy[i]
+      break
+    }
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+//
+// Arguments:
+// - buffer - a Buffer to search
+// - val - a string, Buffer, or number
+// - byteOffset - an index into `buffer`; will be clamped to an int32
+// - encoding - an optional encoding, relevant is val is a string
+// - dir - true for indexOf, false for lastIndexOf
+function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
+  // Empty buffer means no match
+  if (buffer.length === 0) return -1
+
+  // Normalize byteOffset
+  if (typeof byteOffset === 'string') {
+    encoding = byteOffset
+    byteOffset = 0
+  } else if (byteOffset > 0x7fffffff) {
+    byteOffset = 0x7fffffff
+  } else if (byteOffset < -0x80000000) {
+    byteOffset = -0x80000000
+  }
+  byteOffset = +byteOffset  // Coerce to Number.
+  if (isNaN(byteOffset)) {
+    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+    byteOffset = dir ? 0 : (buffer.length - 1)
+  }
+
+  // Normalize byteOffset: negative offsets start from the end of the buffer
+  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
+  if (byteOffset >= buffer.length) {
+    if (dir) return -1
+    else byteOffset = buffer.length - 1
+  } else if (byteOffset < 0) {
+    if (dir) byteOffset = 0
+    else return -1
+  }
+
+  // Normalize val
+  if (typeof val === 'string') {
+    val = Buffer.from(val, encoding)
+  }
+
+  // Finally, search either indexOf (if dir is true) or lastIndexOf
+  if (Buffer.isBuffer(val)) {
+    // Special case: looking for empty string/buffer always fails
+    if (val.length === 0) {
+      return -1
+    }
+    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
+  } else if (typeof val === 'number') {
+    val = val & 0xFF // Search for a byte value [0-255]
+    if (Buffer.TYPED_ARRAY_SUPPORT &&
+        typeof Uint8Array.prototype.indexOf === 'function') {
+      if (dir) {
+        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
+      } else {
+        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
+      }
+    }
+    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
+  }
+
+  throw new TypeError('val must be string, number or Buffer')
+}
+
+function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
+  var indexSize = 1
+  var arrLength = arr.length
+  var valLength = val.length
+
+  if (encoding !== undefined) {
+    encoding = String(encoding).toLowerCase()
+    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+        encoding === 'utf16le' || encoding === 'utf-16le') {
+      if (arr.length < 2 || val.length < 2) {
+        return -1
+      }
+      indexSize = 2
+      arrLength /= 2
+      valLength /= 2
+      byteOffset /= 2
+    }
+  }
+
+  function read (buf, i) {
+    if (indexSize === 1) {
+      return buf[i]
+    } else {
+      return buf.readUInt16BE(i * indexSize)
+    }
+  }
+
+  var i
+  if (dir) {
+    var foundIndex = -1
+    for (i = byteOffset; i < arrLength; i++) {
+      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+        if (foundIndex === -1) foundIndex = i
+        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
+      } else {
+        if (foundIndex !== -1) i -= i - foundIndex
+        foundIndex = -1
+      }
+    }
+  } else {
+    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
+    for (i = byteOffset; i >= 0; i--) {
+      var found = true
+      for (var j = 0; j < valLength; j++) {
+        if (read(arr, i + j) !== read(val, j)) {
+          found = false
+          break
+        }
+      }
+      if (found) return i
+    }
+  }
+
+  return -1
+}
+
+Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
+  return this.indexOf(val, byteOffset, encoding) !== -1
+}
+
+Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
+}
+
+Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
+}
+
+function hexWrite (buf, string, offset, length) {
+  offset = Number(offset) || 0
+  var remaining = buf.length - offset
+  if (!length) {
+    length = remaining
+  } else {
+    length = Number(length)
+    if (length > remaining) {
+      length = remaining
+    }
+  }
+
+  // must be an even number of digits
+  var strLen = string.length
+  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
+
+  if (length > strLen / 2) {
+    length = strLen / 2
+  }
+  for (var i = 0; i < length; ++i) {
+    var parsed = parseInt(string.substr(i * 2, 2), 16)
+    if (isNaN(parsed)) return i
+    buf[offset + i] = parsed
+  }
+  return i
+}
+
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
+}
+
+function latin1Write (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
+}
+
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
+}
+
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+Buffer.prototype.write = function write (string, offset, length, encoding) {
+  // Buffer#write(string)
+  if (offset === undefined) {
+    encoding = 'utf8'
+    length = this.length
+    offset = 0
+  // Buffer#write(string, encoding)
+  } else if (length === undefined && typeof offset === 'string') {
+    encoding = offset
+    length = this.length
+    offset = 0
+  // Buffer#write(string, offset[, length][, encoding])
+  } else if (isFinite(offset)) {
+    offset = offset | 0
+    if (isFinite(length)) {
+      length = length | 0
+      if (encoding === undefined) encoding = 'utf8'
+    } else {
+      encoding = length
+      length = undefined
+    }
+  // legacy write(string, encoding, offset, length) - remove in v0.13
+  } else {
+    throw new Error(
+      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
+    )
+  }
+
+  var remaining = this.length - offset
+  if (length === undefined || length > remaining) length = remaining
+
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('Attempt to write outside buffer bounds')
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'hex':
+        return hexWrite(this, string, offset, length)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Write(this, string, offset, length)
+
+      case 'ascii':
+        return asciiWrite(this, string, offset, length)
+
+      case 'latin1':
+      case 'binary':
+        return latin1Write(this, string, offset, length)
+
+      case 'base64':
+        // Warning: maxLength not taken into account in base64Write
+        return base64Write(this, string, offset, length)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return ucs2Write(this, string, offset, length)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toJSON = function toJSON () {
+  return {
+    type: 'Buffer',
+    data: Array.prototype.slice.call(this._arr || this, 0)
+  }
+}
+
+function base64Slice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return base64.fromByteArray(buf)
+  } else {
+    return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+
+function utf8Slice (buf, start, end) {
+  end = Math.min(buf.length, end)
+  var res = []
+
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
+    }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
+  }
+
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
+}
+
+function asciiSlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i] & 0x7F)
+  }
+  return ret
+}
+
+function latin1Slice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; ++i) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
+}
+
+function hexSlice (buf, start, end) {
+  var len = buf.length
+
+  if (!start || start < 0) start = 0
+  if (!end || end < 0 || end > len) end = len
+
+  var out = ''
+  for (var i = start; i < end; ++i) {
+    out += toHex(buf[i])
+  }
+  return out
+}
+
+function utf16leSlice (buf, start, end) {
+  var bytes = buf.slice(start, end)
+  var res = ''
+  for (var i = 0; i < bytes.length; i += 2) {
+    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+  }
+  return res
+}
+
+Buffer.prototype.slice = function slice (start, end) {
+  var len = this.length
+  start = ~~start
+  end = end === undefined ? len : ~~end
+
+  if (start < 0) {
+    start += len
+    if (start < 0) start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0) end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start) end = start
+
+  var newBuf
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    newBuf = this.subarray(start, end)
+    newBuf.__proto__ = Buffer.prototype
+  } else {
+    var sliceLen = end - start
+    newBuf = new Buffer(sliceLen, undefined)
+    for (var i = 0; i < sliceLen; ++i) {
+      newBuf[i] = this[i + start]
+    }
+  }
+
+  return newBuf
+}
+
+/*
+ * Need to make sure that buffer isn't trying to write out of bounds.
+ */
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    checkOffset(offset, byteLength, this.length)
+  }
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100)) {
+    val += this[offset + --byteLength] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  return this[offset]
+}
+
+Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return this[offset] | (this[offset + 1] << 8)
+}
+
+Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return (this[offset] << 8) | this[offset + 1]
+}
+
+Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
+}
+
+Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100)) {
+    val += this[offset + --i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
+}
+
+Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset] | (this[offset + 1] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset + 1] | (this[offset] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset]) |
+    (this[offset + 1] << 8) |
+    (this[offset + 2] << 16) |
+    (this[offset + 3] << 24)
+}
+
+Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] << 24) |
+    (this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    (this[offset + 3])
+}
+
+Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, true, 23, 4)
+}
+
+Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, false, 23, 4)
+}
+
+Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, true, 52, 8)
+}
+
+Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, false, 52, 8)
+}
+
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+    checkInt(this, value, offset, byteLength, maxBytes, 0)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+function objectWriteUInt16 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
+    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+      (littleEndian ? i : 1 - i) * 8
+  }
+}
+
+Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+function objectWriteUInt32 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffffffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
+    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+  }
+}
+
+Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset + 3] = (value >>> 24)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 1] = (value >>> 8)
+    this[offset] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+      sub = 1
+    }
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  if (value < 0) value = 0xff + value + 1
+  this[offset] = (value & 0xff)
+  return offset + 1
+}
+
+Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = (value & 0xff)
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value & 0xff)
+    this[offset + 1] = (value >>> 8)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 3] = (value >>> 24)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (value < 0) value = 0xffffffff + value + 1
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = (value & 0xff)
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+  if (offset < 0) throw new RangeError('Index out of range')
+}
+
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+  return offset + 4
+}
+
+Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
+}
+
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+  return offset + 8
+}
+
+Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
+}
+
+// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!start) start = 0
+  if (!end && end !== 0) end = this.length
+  if (targetStart >= target.length) targetStart = target.length
+  if (!targetStart) targetStart = 0
+  if (end > 0 && end < start) end = start
+
+  // Copy 0 bytes; we're done
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
+
+  // Fatal error conditions
+  if (targetStart < 0) {
+    throw new RangeError('targetStart out of bounds')
+  }
+  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+
+  // Are we oob?
+  if (end > this.length) end = this.length
+  if (target.length - targetStart < end - start) {
+    end = target.length - targetStart + start
+  }
+
+  var len = end - start
+  var i
+
+  if (this === target && start < targetStart && targetStart < end) {
+    // descending copy from end
+    for (i = len - 1; i >= 0; --i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+    // ascending copy from start
+    for (i = 0; i < len; ++i) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else {
+    Uint8Array.prototype.set.call(
+      target,
+      this.subarray(start, start + len),
+      targetStart
+    )
+  }
+
+  return len
+}
+
+// Usage:
+//    buffer.fill(number[, offset[, end]])
+//    buffer.fill(buffer[, offset[, end]])
+//    buffer.fill(string[, offset[, end]][, encoding])
+Buffer.prototype.fill = function fill (val, start, end, encoding) {
+  // Handle string cases:
+  if (typeof val === 'string') {
+    if (typeof start === 'string') {
+      encoding = start
+      start = 0
+      end = this.length
+    } else if (typeof end === 'string') {
+      encoding = end
+      end = this.length
+    }
+    if (val.length === 1) {
+      var code = val.charCodeAt(0)
+      if (code < 256) {
+        val = code
+      }
+    }
+    if (encoding !== undefined && typeof encoding !== 'string') {
+      throw new TypeError('encoding must be a string')
+    }
+    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+      throw new TypeError('Unknown encoding: ' + encoding)
+    }
+  } else if (typeof val === 'number') {
+    val = val & 255
+  }
+
+  // Invalid ranges are not set to a default, so can range check early.
+  if (start < 0 || this.length < start || this.length < end) {
+    throw new RangeError('Out of range index')
+  }
+
+  if (end <= start) {
+    return this
+  }
+
+  start = start >>> 0
+  end = end === undefined ? this.length : end >>> 0
+
+  if (!val) val = 0
+
+  var i
+  if (typeof val === 'number') {
+    for (i = start; i < end; ++i) {
+      this[i] = val
+    }
+  } else {
+    var bytes = Buffer.isBuffer(val)
+      ? val
+      : utf8ToBytes(new Buffer(val, encoding).toString())
+    var len = bytes.length
+    for (i = 0; i < end - start; ++i) {
+      this[i + start] = bytes[i % len]
+    }
+  }
+
+  return this
+}
+
+// HELPER FUNCTIONS
+// ================
+
+var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
+
+function base64clean (str) {
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
+function stringtrim (str) {
+  if (str.trim) return str.trim()
+  return str.replace(/^\s+|\s+$/g, '')
+}
+
+function toHex (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
+}
+
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+
+  for (var i = 0; i < length; ++i) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (!leadSurrogate) {
+        // no lead yet
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
+      }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+    }
+
+    leadSurrogate = null
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x110000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
+    }
+  }
+
+  return bytes
+}
+
+function asciiToBytes (str) {
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    // Node's code seems to be doing this and not & 0x7F..
+    byteArray.push(str.charCodeAt(i) & 0xFF)
+  }
+  return byteArray
+}
+
+function utf16leToBytes (str, units) {
+  var c, hi, lo
+  var byteArray = []
+  for (var i = 0; i < str.length; ++i) {
+    if ((units -= 2) < 0) break
+
+    c = str.charCodeAt(i)
+    hi = c >> 8
+    lo = c % 256
+    byteArray.push(lo)
+    byteArray.push(hi)
+  }
+
+  return byteArray
+}
+
+function base64ToBytes (str) {
+  return base64.toByteArray(base64clean(str))
+}
+
+function blitBuffer (src, dst, offset, length) {
+  for (var i = 0; i < length; ++i) {
+    if ((i + offset >= dst.length) || (i >= src.length)) break
+    dst[i + offset] = src[i]
+  }
+  return i
+}
+
+function isnan (val) {
+  return val !== val // eslint-disable-line no-self-compare
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css& ***!
@@ -10952,6 +13211,117 @@ const HLJS = function(hljs) {
 var highlight = HLJS({});
 
 module.exports = highlight;
+
+
+/***/ }),
+
+/***/ "./node_modules/ieee754/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/ieee754/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/isarray/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/isarray/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
 
 
 /***/ }),
@@ -83320,6 +85690,849 @@ var ropeSequence = RopeSequence;
 
 /***/ }),
 
+/***/ "./node_modules/slug/slug.js":
+/*!***********************************!*\
+  !*** ./node_modules/slug/slug.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* global btoa */
+(function (root) {
+  var base64
+
+  // This function's sole purpose is to help us ignore lone surrogates so that
+  // malformed strings don't throw in the browser while being processed
+  // permissively in Node.js. If we didn't care about parity, we could get rid
+  // of it.
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt
+  function getWholeCharAndI (str, i) {
+    const code = str.charCodeAt(i)
+
+    // This is a coherence check. `code` should never be `NaN`.
+    /* istanbul ignore if */
+    if (Number.isNaN(code)) {
+      throw new RangeError('Index ' + i + ' out of range for string "' + str + '"; please open an issue at https://github.com/Trott/slug/issues/new')
+    }
+    if (code < 0xD800 || code > 0xDFFF) {
+      return [str.charAt(i), i] // Non-surrogate character, keeping 'i' the same
+    }
+
+    // High surrogate
+    if (code >= 0xD800 && code <= 0xDBFF) {
+      if (str.length <= (i + 1)) {
+        // High surrogate without following low surrogate
+        return [' ', i]
+      }
+      const next = str.charCodeAt(i + 1)
+      if (next < 0xDC00 || next > 0xDFFF) {
+        // High surrogate without following low surrogate
+        return [' ', i]
+      }
+      return [str.charAt(i) + str.charAt(i + 1), i + 1]
+    }
+
+    // Low surrogate (0xDC00 <= code && code <= 0xDFFF)
+    if (i === 0) {
+      // Low surrogate without preceding high surrogate
+      return [' ', i]
+    }
+
+    const prev = str.charCodeAt(i - 1)
+
+    /* istanbul ignore else */
+    if (prev < 0xD800 || prev > 0xDBFF) {
+      // Low surrogate without preceding high surrogate
+      return [' ', i]
+    }
+
+    /* istanbul ignore next */
+    throw new Error('String "' + str + '" reaches code believed to be unreachable; please open an issue at https://github.com/Trott/slug/issues/new')
+  }
+
+  if (typeof window === 'undefined') {
+    base64 = function (input) {
+      return Buffer.from(input).toString('base64')
+    }
+  } else {
+    base64 = function (input) {
+      return btoa(unescape(encodeURIComponent(input)))
+    }
+  }
+
+  function slug (string, opts) {
+    var result = slugify(string, opts)
+    // If output is an empty string, try slug for base64 of string.
+    if (result === '') {
+      // Get rid of lone surrogates.
+      let input = ''
+      for (let i = 0, chr; i < string.length; i++) {
+        [chr, i] = getWholeCharAndI(string, i)
+        input += chr
+      }
+      result = slugify(base64(input), opts)
+    }
+    return result
+  }
+
+  const locales = {
+    // http://www.eki.ee/wgrs/rom1_bg.pdf
+    bg: { Й: 'Y', й: 'y', X: 'H', x: 'h', Ц: 'Ts', ц: 'ts', Щ: 'Sht', щ: 'sht', Ъ: 'A', ъ: 'a', Ь: 'Y', ь: 'y' },
+    // Need a reference URL for Serbian.
+    sr: { đ: 'dj', Đ: 'DJ' }
+  }
+
+  function slugify (string, opts) {
+    if (typeof string !== 'string') {
+      throw new Error('slug() requires a string argument, received ' + typeof string)
+    }
+    if (typeof opts === 'string') { opts = { replacement: opts } }
+    opts = opts || {}
+    opts.mode = opts.mode || slug.defaults.mode
+    var defaults = slug.defaults.modes[opts.mode]
+    var keys = ['replacement', 'multicharmap', 'charmap', 'remove', 'lower']
+    for (let key, i = 0, l = keys.length; i < l; i++) {
+      key = keys[i]
+      opts[key] = (key in opts) ? opts[key] : defaults[key]
+    }
+    const localeMap = locales[opts.locale] || {}
+
+    var lengths = []
+    // "let" instead of "const" in next line is for IE11 compatibilty
+    for (let key in opts.multicharmap) { // eslint-disable-line prefer-const
+      if (!Object.prototype.hasOwnProperty.call(opts.multicharmap, key)) { continue }
+
+      var len = key.length
+      if (lengths.indexOf(len) === -1) { lengths.push(len) }
+    }
+
+    var result = ''
+    for (let char, i = 0, l = string.length; i < l; i++) {
+      char = string[i]
+      if (!lengths.some(function (len) {
+        var str = string.substr(i, len)
+        if (opts.multicharmap[str]) {
+          i += len - 1
+          char = opts.multicharmap[str]
+          return true
+        } else return false
+      })) {
+        if (localeMap[char]) {
+          char = localeMap[char]
+        } else if (opts.charmap[char]) {
+          char = opts.charmap[char]
+        }
+      }
+      // next line preserves the replacement character in case it is included in allowedChars
+      char = char.replace(opts.replacement, ' ')
+      result += char
+    }
+    const allowedChars = opts.mode === 'rfc3986' ? /[^\w\s\-.~]/g : /[^A-Za-z0-9\s]/g
+    result = result.replace(allowedChars, '') // allowed
+    if (opts.remove) {
+      result = result.replace(opts.remove, '')
+    }
+    result = result.trim()
+    result = result.replace(/[-\s]+/g, opts.replacement) // convert spaces
+    result = result.replace(opts.replacement + '$', '') // remove trailing separator
+    if (opts.lower) {
+      result = result.toLowerCase()
+    }
+    return result
+  }
+
+  slug.defaults = {
+    mode: 'pretty'
+  }
+
+  const initialMulticharmap = {
+    '<3': 'love',
+    '&&': 'and',
+    '||': 'or',
+    'w/': 'with',
+    // multibyte devanagari characters (hindi, sanskrit, etc.)
+    फ़: 'Fi',
+    ग़: 'Ghi',
+    ख़: 'Khi',
+    क़: 'Qi',
+    ड़: 'ugDha',
+    ढ़: 'ugDhha',
+    य़: 'Yi',
+    ज़: 'Za'
+  }
+  slug.multicharmap = slug.defaults.multicharmap = Object.assign({}, initialMulticharmap)
+
+  // https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
+  const initialCharmap = {
+    // latin
+    À: 'A',
+    Á: 'A',
+    Â: 'A',
+    Ã: 'A',
+    Ä: 'A',
+    Å: 'A',
+    Æ: 'AE',
+    Ç: 'C',
+    È: 'E',
+    É: 'E',
+    Ê: 'E',
+    Ë: 'E',
+    Ì: 'I',
+    Í: 'I',
+    Î: 'I',
+    Ï: 'I',
+    Ð: 'D',
+    Ñ: 'N',
+    Ò: 'O',
+    Ó: 'O',
+    Ô: 'O',
+    Õ: 'O',
+    Ö: 'O',
+    Ő: 'O',
+    Ø: 'O',
+    Ù: 'U',
+    Ú: 'U',
+    Û: 'U',
+    Ü: 'U',
+    Ű: 'U',
+    Ý: 'Y',
+    Þ: 'TH',
+    ß: 'ss',
+    à: 'a',
+    á: 'a',
+    â: 'a',
+    ã: 'a',
+    ä: 'a',
+    å: 'a',
+    æ: 'ae',
+    ç: 'c',
+    è: 'e',
+    é: 'e',
+    ê: 'e',
+    ë: 'e',
+    ì: 'i',
+    í: 'i',
+    î: 'i',
+    ï: 'i',
+    ð: 'd',
+    ñ: 'n',
+    ò: 'o',
+    ó: 'o',
+    ô: 'o',
+    õ: 'o',
+    ö: 'o',
+    ő: 'o',
+    ø: 'o',
+    ù: 'u',
+    ú: 'u',
+    û: 'u',
+    ü: 'u',
+    ű: 'u',
+    ý: 'y',
+    þ: 'th',
+    ÿ: 'y',
+    ẞ: 'SS',
+    // greek
+    α: 'a',
+    β: 'b',
+    γ: 'g',
+    δ: 'd',
+    ε: 'e',
+    ζ: 'z',
+    η: 'h',
+    θ: '8',
+    ι: 'i',
+    κ: 'k',
+    λ: 'l',
+    μ: 'm',
+    ν: 'n',
+    ξ: '3',
+    ο: 'o',
+    π: 'p',
+    ρ: 'r',
+    σ: 's',
+    τ: 't',
+    υ: 'y',
+    φ: 'f',
+    χ: 'x',
+    ψ: 'ps',
+    ω: 'w',
+    ά: 'a',
+    έ: 'e',
+    ί: 'i',
+    ό: 'o',
+    ύ: 'y',
+    ή: 'h',
+    ώ: 'w',
+    ς: 's',
+    ϊ: 'i',
+    ΰ: 'y',
+    ϋ: 'y',
+    ΐ: 'i',
+    Α: 'A',
+    Β: 'B',
+    Γ: 'G',
+    Δ: 'D',
+    Ε: 'E',
+    Ζ: 'Z',
+    Η: 'H',
+    Θ: '8',
+    Ι: 'I',
+    Κ: 'K',
+    Λ: 'L',
+    Μ: 'M',
+    Ν: 'N',
+    Ξ: '3',
+    Ο: 'O',
+    Π: 'P',
+    Ρ: 'R',
+    Σ: 'S',
+    Τ: 'T',
+    Υ: 'Y',
+    Φ: 'F',
+    Χ: 'X',
+    Ψ: 'PS',
+    Ω: 'W',
+    Ά: 'A',
+    Έ: 'E',
+    Ί: 'I',
+    Ό: 'O',
+    Ύ: 'Y',
+    Ή: 'H',
+    Ώ: 'W',
+    Ϊ: 'I',
+    Ϋ: 'Y',
+    // turkish
+    ş: 's',
+    Ş: 'S',
+    ı: 'i',
+    İ: 'I',
+    ğ: 'g',
+    Ğ: 'G',
+    // russian
+    а: 'a',
+    б: 'b',
+    в: 'v',
+    г: 'g',
+    д: 'd',
+    е: 'e',
+    ё: 'yo',
+    ж: 'zh',
+    з: 'z',
+    и: 'i',
+    й: 'j',
+    к: 'k',
+    л: 'l',
+    м: 'm',
+    н: 'n',
+    о: 'o',
+    п: 'p',
+    р: 'r',
+    с: 's',
+    т: 't',
+    у: 'u',
+    ф: 'f',
+    х: 'h',
+    ц: 'c',
+    ч: 'ch',
+    ш: 'sh',
+    щ: 'sh',
+    ъ: 'u',
+    ы: 'y',
+    ь: '',
+    э: 'e',
+    ю: 'yu',
+    я: 'ya',
+    А: 'A',
+    Б: 'B',
+    В: 'V',
+    Г: 'G',
+    Д: 'D',
+    Е: 'E',
+    Ё: 'Yo',
+    Ж: 'Zh',
+    З: 'Z',
+    И: 'I',
+    Й: 'J',
+    К: 'K',
+    Л: 'L',
+    М: 'M',
+    Н: 'N',
+    О: 'O',
+    П: 'P',
+    Р: 'R',
+    С: 'S',
+    Т: 'T',
+    У: 'U',
+    Ф: 'F',
+    Х: 'H',
+    Ц: 'C',
+    Ч: 'Ch',
+    Ш: 'Sh',
+    Щ: 'Sh',
+    Ъ: 'U',
+    Ы: 'Y',
+    Ь: '',
+    Э: 'E',
+    Ю: 'Yu',
+    Я: 'Ya',
+    // ukranian
+    Є: 'Ye',
+    І: 'I',
+    Ї: 'Yi',
+    Ґ: 'G',
+    є: 'ye',
+    і: 'i',
+    ї: 'yi',
+    ґ: 'g',
+    // czech
+    č: 'c',
+    ď: 'd',
+    ě: 'e',
+    ň: 'n',
+    ř: 'r',
+    š: 's',
+    ť: 't',
+    ů: 'u',
+    ž: 'z',
+    Č: 'C',
+    Ď: 'D',
+    Ě: 'E',
+    Ň: 'N',
+    Ř: 'R',
+    Š: 'S',
+    Ť: 'T',
+    Ů: 'U',
+    Ž: 'Z',
+    // slovak
+    ľ: 'l',
+    ĺ: 'l',
+    ŕ: 'r',
+    Ľ: 'L',
+    Ĺ: 'L',
+    Ŕ: 'R',
+    // polish
+    ą: 'a',
+    ć: 'c',
+    ę: 'e',
+    ł: 'l',
+    ń: 'n',
+    ś: 's',
+    ź: 'z',
+    ż: 'z',
+    Ą: 'A',
+    Ć: 'C',
+    Ę: 'E',
+    Ł: 'L',
+    Ń: 'N',
+    Ś: 'S',
+    Ź: 'Z',
+    Ż: 'Z',
+    // latvian
+    ā: 'a',
+    ē: 'e',
+    ģ: 'g',
+    ī: 'i',
+    ķ: 'k',
+    ļ: 'l',
+    ņ: 'n',
+    ū: 'u',
+    Ā: 'A',
+    Ē: 'E',
+    Ģ: 'G',
+    Ī: 'I',
+    Ķ: 'K',
+    Ļ: 'L',
+    Ņ: 'N',
+    Ū: 'U',
+    // arabic
+    أ: 'a',
+    ب: 'b',
+    ت: 't',
+    ث: 'th',
+    ج: 'g',
+    ح: 'h',
+    خ: 'kh',
+    د: 'd',
+    ذ: 'th',
+    ر: 'r',
+    ز: 'z',
+    س: 's',
+    ش: 'sh',
+    ص: 's',
+    ض: 'd',
+    ط: 't',
+    ظ: 'th',
+    ع: 'aa',
+    غ: 'gh',
+    ف: 'f',
+    ق: 'k',
+    ك: 'k',
+    ل: 'l',
+    م: 'm',
+    ن: 'n',
+    ه: 'h',
+    و: 'o',
+    ي: 'y',
+    // farsi
+    آ: 'a',
+    ا: 'a',
+    پ: 'p',
+    ژ: 'zh',
+    گ: 'g',
+    چ: 'ch',
+    ک: 'k',
+    ی: 'i',
+    // lithuanian
+    ė: 'e',
+    į: 'i',
+    ų: 'u',
+    Ė: 'E',
+    Į: 'I',
+    Ų: 'U',
+    // romanian
+    ț: 't',
+    Ț: 'T',
+    ţ: 't',
+    Ţ: 'T',
+    ș: 's',
+    Ș: 'S',
+    ă: 'a',
+    Ă: 'A',
+    // vietnamese
+    Ạ: 'A',
+    Ả: 'A',
+    Ầ: 'A',
+    Ấ: 'A',
+    Ậ: 'A',
+    Ẩ: 'A',
+    Ẫ: 'A',
+    Ằ: 'A',
+    Ắ: 'A',
+    Ặ: 'A',
+    Ẳ: 'A',
+    Ẵ: 'A',
+    Ẹ: 'E',
+    Ẻ: 'E',
+    Ẽ: 'E',
+    Ề: 'E',
+    Ế: 'E',
+    Ệ: 'E',
+    Ể: 'E',
+    Ễ: 'E',
+    Ị: 'I',
+    Ỉ: 'I',
+    Ĩ: 'I',
+    Ọ: 'O',
+    Ỏ: 'O',
+    Ồ: 'O',
+    Ố: 'O',
+    Ộ: 'O',
+    Ổ: 'O',
+    Ỗ: 'O',
+    Ơ: 'O',
+    Ờ: 'O',
+    Ớ: 'O',
+    Ợ: 'O',
+    Ở: 'O',
+    Ỡ: 'O',
+    Ụ: 'U',
+    Ủ: 'U',
+    Ũ: 'U',
+    Ư: 'U',
+    Ừ: 'U',
+    Ứ: 'U',
+    Ự: 'U',
+    Ử: 'U',
+    Ữ: 'U',
+    Ỳ: 'Y',
+    Ỵ: 'Y',
+    Ỷ: 'Y',
+    Ỹ: 'Y',
+    Đ: 'D',
+    ạ: 'a',
+    ả: 'a',
+    ầ: 'a',
+    ấ: 'a',
+    ậ: 'a',
+    ẩ: 'a',
+    ẫ: 'a',
+    ằ: 'a',
+    ắ: 'a',
+    ặ: 'a',
+    ẳ: 'a',
+    ẵ: 'a',
+    ẹ: 'e',
+    ẻ: 'e',
+    ẽ: 'e',
+    ề: 'e',
+    ế: 'e',
+    ệ: 'e',
+    ể: 'e',
+    ễ: 'e',
+    ị: 'i',
+    ỉ: 'i',
+    ĩ: 'i',
+    ọ: 'o',
+    ỏ: 'o',
+    ồ: 'o',
+    ố: 'o',
+    ộ: 'o',
+    ổ: 'o',
+    ỗ: 'o',
+    ơ: 'o',
+    ờ: 'o',
+    ớ: 'o',
+    ợ: 'o',
+    ở: 'o',
+    ỡ: 'o',
+    ụ: 'u',
+    ủ: 'u',
+    ũ: 'u',
+    ư: 'u',
+    ừ: 'u',
+    ứ: 'u',
+    ự: 'u',
+    ử: 'u',
+    ữ: 'u',
+    ỳ: 'y',
+    ỵ: 'y',
+    ỷ: 'y',
+    ỹ: 'y',
+    đ: 'd',
+    // kazakh
+    Ә: 'AE',
+    ә: 'ae',
+    Ғ: 'GH',
+    ғ: 'gh',
+    Қ: 'KH',
+    қ: 'kh',
+    Ң: 'NG',
+    ң: 'ng',
+    Ү: 'UE',
+    ү: 'ue',
+    Ұ: 'U',
+    ұ: 'u',
+    Һ: 'H',
+    һ: 'h',
+    Ө: 'OE',
+    ө: 'oe',
+    // serbian
+    ђ: 'dj',
+    ј: 'j',
+    љ: 'lj',
+    њ: 'nj',
+    ћ: 'c',
+    џ: 'dz',
+    Ђ: 'Dj',
+    Ј: 'j',
+    Љ: 'Lj',
+    Њ: 'Nj',
+    Ћ: 'C',
+    Џ: 'Dz',
+    ǌ: 'nj',
+    ǉ: 'lj',
+    ǋ: 'NJ',
+    ǈ: 'LJ',
+    // hindi
+    अ: 'a',
+    आ: 'aa',
+    ए: 'e',
+    ई: 'ii',
+    ऍ: 'ei',
+    ऎ: 'ae',
+    ऐ: 'ai',
+    इ: 'i',
+    ओ: 'o',
+    ऑ: 'oi',
+    ऒ: 'oii',
+    ऊ: 'uu',
+    औ: 'ou',
+    उ: 'u',
+    ब: 'B',
+    भ: 'Bha',
+    च: 'Ca',
+    छ: 'Chha',
+    ड: 'Da',
+    ढ: 'Dha',
+    फ: 'Fa',
+    ग: 'Ga',
+    घ: 'Gha',
+    ग़: 'Ghi',
+    ह: 'Ha',
+    ज: 'Ja',
+    झ: 'Jha',
+    क: 'Ka',
+    ख: 'Kha',
+    ख़: 'Khi',
+    ल: 'L',
+    ळ: 'Li',
+    ऌ: 'Li',
+    ऴ: 'Lii',
+    ॡ: 'Lii',
+    म: 'Ma',
+    न: 'Na',
+    ङ: 'Na',
+    ञ: 'Nia',
+    ण: 'Nae',
+    ऩ: 'Ni',
+    ॐ: 'oms',
+    प: 'Pa',
+    क़: 'Qi',
+    र: 'Ra',
+    ऋ: 'Ri',
+    ॠ: 'Ri',
+    ऱ: 'Ri',
+    स: 'Sa',
+    श: 'Sha',
+    ष: 'Shha',
+    ट: 'Ta',
+    त: 'Ta',
+    ठ: 'Tha',
+    द: 'Tha',
+    थ: 'Tha',
+    ध: 'Thha',
+    ड़: 'ugDha',
+    ढ़: 'ugDhha',
+    व: 'Va',
+    य: 'Ya',
+    य़: 'Yi',
+    ज़: 'Za',
+    // azerbaijani
+    ə: 'e',
+    Ə: 'E',
+    // georgian
+    ა: 'a',
+    ბ: 'b',
+    გ: 'g',
+    დ: 'd',
+    ე: 'e',
+    ვ: 'v',
+    ზ: 'z',
+    თ: 't',
+    ი: 'i',
+    კ: 'k',
+    ლ: 'l',
+    მ: 'm',
+    ნ: 'n',
+    ო: 'o',
+    პ: 'p',
+    ჟ: 'zh',
+    რ: 'r',
+    ს: 's',
+    ტ: 't',
+    უ: 'u',
+    ფ: 'p',
+    ქ: 'k',
+    ღ: 'gh',
+    ყ: 'q',
+    შ: 'sh',
+    ჩ: 'ch',
+    ც: 'ts',
+    ძ: 'dz',
+    წ: 'ts',
+    ჭ: 'ch',
+    ხ: 'kh',
+    ჯ: 'j',
+    ჰ: 'h',
+    // currency
+    '€': 'euro',
+    '₢': 'cruzeiro',
+    '₣': 'french franc',
+    '£': 'pound',
+    '₤': 'lira',
+    '₥': 'mill',
+    '₦': 'naira',
+    '₧': 'peseta',
+    '₨': 'rupee',
+    '₩': 'won',
+    '₪': 'new shequel',
+    '₫': 'dong',
+    '₭': 'kip',
+    '₮': 'tugrik',
+    '₯': 'drachma',
+    '₰': 'penny',
+    '₱': 'peso',
+    '₲': 'guarani',
+    '₳': 'austral',
+    '₴': 'hryvnia',
+    '₵': 'cedi',
+    '¢': 'cent',
+    '¥': 'yen',
+    元: 'yuan',
+    円: 'yen',
+    '﷼': 'rial',
+    '₠': 'ecu',
+    '¤': 'currency',
+    '฿': 'baht',
+    $: 'dollar',
+    '₹': 'indian rupee',
+    '₽': 'russian ruble',
+    '₿': 'bitcoin',
+    '₸': 'kazakhstani tenge',
+    // symbols
+    '©': 'c',
+    œ: 'oe',
+    Œ: 'OE',
+    '∑': 'sum',
+    '®': 'r',
+    '∂': 'd',
+    ƒ: 'f',
+    '™': 'tm',
+    '℠': 'sm',
+    '…': '...',
+    '˚': 'o',
+    º: 'o',
+    ª: 'a',
+    '∆': 'delta',
+    '∞': 'infinity',
+    '♥': 'love',
+    '&': 'and',
+    '|': 'or',
+    '<': 'less',
+    '>': 'greater'
+  }
+  slug.charmap = slug.defaults.charmap = Object.assign({}, initialCharmap)
+
+  slug.reset = function () {
+    slug.defaults.modes.rfc3986.charmap = slug.defaults.modes.pretty.charmap = slug.charmap = slug.defaults.charmap = Object.assign({}, initialCharmap)
+    slug.defaults.modes.rfc3986.multiCharmap = slug.defaults.modes.pretty.multiCharmap = slug.multicharmap = slug.defaults.multicharmap = Object.assign({}, initialMulticharmap)
+  }
+
+  slug.extend = function (customMap) {
+    Object.assign(slug.charmap, customMap)
+  }
+
+  slug.defaults.modes = {
+    rfc3986: {
+      replacement: '-',
+      remove: null,
+      lower: true,
+      charmap: slug.defaults.charmap,
+      multicharmap: slug.defaults.multicharmap
+    },
+    pretty: {
+      replacement: '-',
+      remove: null,
+      lower: true,
+      charmap: slug.defaults.charmap,
+      multicharmap: slug.defaults.multicharmap
+    }
+  }
+
+  /* global define */
+  // Be compatible with different module systems
+
+  if (true) { // AMD
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () { return slug }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
+  } else {}
+}(this))
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/passport/AuthorizedClients.vue?vue&type=style&index=0&id=397d14ca&scoped=true&lang=css& ***!
@@ -93321,6 +96534,101 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/category.vue?vue&type=template&id=29cbcf49&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/category.vue?vue&type=template&id=29cbcf49& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "categories" },
+    [
+      _vm.loading ? _c("spinner") : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.categories, function(category) {
+        return !_vm.loading
+          ? _c("div", { key: category.id, staticClass: "form-check" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.article.category,
+                    expression: "article.category"
+                  }
+                ],
+                staticClass: "form-check-input",
+                attrs: { type: "checkbox", id: category.name },
+                domProps: {
+                  value: category.id,
+                  checked: Array.isArray(_vm.article.category)
+                    ? _vm._i(_vm.article.category, category.id) > -1
+                    : _vm.article.category
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.article.category,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = category.id,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.article, "category", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.article,
+                            "category",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.article, "category", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-check-label",
+                  attrs: { for: category.name }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(category.name) +
+                      "\n            "
+                  )
+                ]
+              )
+            ])
+          : _vm._e()
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editProfileComponent.vue?vue&type=template&id=8cc1856e&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/editProfileComponent.vue?vue&type=template&id=8cc1856e& ***!
@@ -94754,6 +98062,169 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "slug-wrapper" }, [
+    _c("i", { staticClass: "fas fa-link" }),
+    _vm._v(" "),
+    _c("span", [
+      _vm._v(_vm._s(_vm.url) + "/" + _vm._s(_vm.subDirectory) + "/")
+    ]),
+    _vm._v(" "),
+    _c(
+      "span",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.title && !_vm.isEditing,
+            expression: "title && !isEditing"
+          }
+        ],
+        staticClass: "slug",
+        staticStyle: { "margin-left": "-3px" },
+        on: { click: _vm.editSlug }
+      },
+      [_vm._v(_vm._s(_vm.title))]
+    ),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.isEditing,
+          expression: "isEditing"
+        },
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.title,
+          expression: "title"
+        }
+      ],
+      staticClass: "input is-small",
+      attrs: { type: "text", name: "slug-edit" },
+      domProps: { value: _vm.title },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.title = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.isEditing,
+            expression: "!isEditing"
+          }
+        ],
+        staticClass: "btn btn-outline-dark btn-sm",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.editSlug($event)
+          }
+        }
+      },
+      [_vm._v("Edit")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isEditing,
+            expression: "isEditing"
+          }
+        ],
+        staticClass: "btn btn-outline-dark btn-sm",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.saveSlug($event)
+          }
+        }
+      },
+      [_vm._v("save")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/spinner.vue?vue&type=template&id=17797f1e&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/spinner.vue?vue&type=template&id=17797f1e& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "lds-ring spinner-color-black spinner-center" },
+      [
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div")
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CreateUserComponent.vue?vue&type=template&id=63e78987&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CreateUserComponent.vue?vue&type=template&id=63e78987& ***!
@@ -95506,7 +98977,9 @@ var render = function() {
         "div",
         { staticClass: "wrapper" },
         [
-          _c("pageHeader", { attrs: { title: "Articles" } }),
+          _c("pageHeader", {
+            attrs: { title: "Articles", pages: ["Dashboard"] }
+          }),
           _vm._v(" "),
           _c(
             "router-link",
@@ -95569,7 +99042,7 @@ var render = function() {
                                             _c(
                                               "th",
                                               { attrs: { scope: "row" } },
-                                              [_vm._v("article.id")]
+                                              [_vm._v(_vm._s(article.id))]
                                             ),
                                             _vm._v(" "),
                                             _c("td", [
@@ -95588,11 +99061,23 @@ var render = function() {
                                             ]),
                                             _vm._v(" "),
                                             _c("td", [
-                                              _vm._v(_vm._s(article.created_at))
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("euDate")(
+                                                    article.created_at
+                                                  )
+                                                )
+                                              )
                                             ]),
                                             _vm._v(" "),
                                             _c("td", [
-                                              _vm._v(_vm._s(article.public))
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("euDate")(
+                                                    article.updated_at
+                                                  )
+                                                )
+                                              )
                                             ])
                                           ]
                                         )
@@ -95608,7 +99093,7 @@ var render = function() {
                                     attrs: { data: _vm.articles },
                                     on: {
                                       "pagination-change-page":
-                                        _vm.fetchFilteredUsers
+                                        _vm.fetchFilteredArticles
                                     }
                                   },
                                   [
@@ -95657,13 +99142,13 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("title")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Title")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("content")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Content")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("created At")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Public")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Updated At")])
       ])
     ])
   }
@@ -95695,14 +99180,14 @@ var render = function() {
     [
       !_vm.id
         ? _c("PageHeader", {
-            attrs: { title: "Create User", pages: ["Dashboard", "Article"] }
+            attrs: { title: "Create Article", pages: ["Dashboard", "Article"] }
           })
         : _vm._e(),
       _vm._v(" "),
       _vm.id
         ? _c("PageHeader", {
             attrs: {
-              title: "Edit User",
+              title: "Edit Article",
               pages: ["Dashboard", "Article", "Article Details"]
             }
           })
@@ -95721,333 +99206,402 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-8 col-md-8 col-lg-8" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.article.title,
-                        expression: "article.title"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Title",
-                      name: "title"
-                    },
-                    domProps: { value: _vm.article.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+              _c(
+                "div",
+                { staticClass: "col-md-8 col-md-8 col-lg-8" },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.article.title,
+                          expression: "article.title"
                         }
-                        _vm.$set(_vm.article, "title", $event.target.value)
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Title",
+                        name: "title"
+                      },
+                      domProps: { value: _vm.article.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.article, "title", $event.target.value)
+                        }
                       }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("slug", {
+                    attrs: {
+                      url: _vm.fullUrl,
+                      "sub-directory": "blog",
+                      title: _vm.article.title
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("i", { staticClass: "fas fa-link" }),
-                _vm._v(" "),
-                _c("span", [_vm._v(" https://kushtrim.net/blog/")]),
-                _vm._v(" "),
-                _c("span", {
-                  model: {
-                    value: _vm.article.slug,
-                    callback: function($$v) {
-                      _vm.$set(_vm.article, "slug", $$v)
-                    },
-                    expression: "article.slug"
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "div",
-                    { staticClass: "editor mt-4" },
-                    [
-                      _c("editor-menu-bubble", {
-                        attrs: {
-                          editor: _vm.editor,
-                          "keep-in-bounds": _vm.keepInBounds
-                        },
-                        on: { hide: _vm.hideLinkMenu },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var commands = ref.commands
-                              var getMarkAttrs = ref.getMarkAttrs
-                              var isActive = ref.isActive
-                              var menu = ref.menu
-                              return [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "menububble",
-                                    class: { "is-active": menu.isActive },
-                                    style:
-                                      "left: " +
-                                      menu.left +
-                                      "px; bottom: " +
-                                      menu.bottom +
-                                      "px;"
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-bold",
-                                      class: { "is-active": isActive.bold() },
-                                      on: { click: commands.bold }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-italic",
-                                      class: { "is-active": isActive.italic() },
-                                      on: { click: commands.italic }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-underline",
-                                      class: {
-                                        "is-active": isActive.underline()
-                                      },
-                                      on: { click: commands.underline }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-quote-right",
-                                      class: {
-                                        "is-active": isActive.blockquote()
-                                      },
-                                      on: { click: commands.blockquote }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fas fa-list-ol",
-                                      class: {
-                                        "is-active": isActive.ordered_list()
-                                      },
-                                      on: { click: commands.ordered_list }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-list-ul",
-                                      class: {
-                                        "is-active": isActive.bullet_list()
-                                      },
-                                      on: { click: commands.bullet_list }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-code",
-                                      class: { "is-active": isActive.code() },
-                                      on: { click: commands.code }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas far fa-file-code",
-                                      class: {
-                                        "is-active": isActive.code_block()
-                                      },
-                                      on: { click: commands.code_block }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-arrows-alt-h",
-                                      on: { click: commands.horizontal_rule }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas fa-paragraph",
-                                      class: {
-                                        "is-active": isActive.paragraph()
-                                      },
-                                      on: { click: commands.paragraph }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "div",
+                      { staticClass: "editor mt-4" },
+                      [
+                        _c("editor-menu-bubble", {
+                          attrs: {
+                            editor: _vm.editor,
+                            "keep-in-bounds": _vm.keepInBounds
+                          },
+                          on: { hide: _vm.hideLinkMenu },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var commands = ref.commands
+                                var getMarkAttrs = ref.getMarkAttrs
+                                var isActive = ref.isActive
+                                var menu = ref.menu
+                                return [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "menububble",
+                                      class: { "is-active": menu.isActive },
+                                      style:
+                                        "left: " +
+                                        menu.left +
+                                        "px; bottom: " +
+                                        menu.bottom +
+                                        "px;"
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-bold",
+                                        class: { "is-active": isActive.bold() },
+                                        on: { click: commands.bold }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-italic",
                                         class: {
-                                          "is-active": isActive.heading({
-                                            level: 1
-                                          })
+                                          "is-active": isActive.italic()
                                         },
-                                        on: {
-                                          click: function($event) {
-                                            return commands.heading({
+                                        on: { click: commands.italic }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-underline",
+                                        class: {
+                                          "is-active": isActive.underline()
+                                        },
+                                        on: { click: commands.underline }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-quote-right",
+                                        class: {
+                                          "is-active": isActive.blockquote()
+                                        },
+                                        on: { click: commands.blockquote }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fas fa-list-ol",
+                                        class: {
+                                          "is-active": isActive.ordered_list()
+                                        },
+                                        on: { click: commands.ordered_list }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-list-ul",
+                                        class: {
+                                          "is-active": isActive.bullet_list()
+                                        },
+                                        on: { click: commands.bullet_list }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-code",
+                                        class: { "is-active": isActive.code() },
+                                        on: { click: commands.code }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas far fa-file-code",
+                                        class: {
+                                          "is-active": isActive.code_block()
+                                        },
+                                        on: { click: commands.code_block }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-arrows-alt-h",
+                                        on: { click: commands.horizontal_rule }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas fa-paragraph",
+                                        class: {
+                                          "is-active": isActive.paragraph()
+                                        },
+                                        on: { click: commands.paragraph }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          class: {
+                                            "is-active": isActive.heading({
                                               level: 1
                                             })
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return commands.heading({
+                                                level: 1
+                                              })
+                                            }
                                           }
-                                        }
-                                      },
-                                      [_vm._v("h1")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        class: {
-                                          "is-active": isActive.heading({
-                                            level: 2
-                                          })
                                         },
-                                        on: {
-                                          click: function($event) {
-                                            return commands.heading({
+                                        [_vm._v("h1")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          class: {
+                                            "is-active": isActive.heading({
                                               level: 2
                                             })
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return commands.heading({
+                                                level: 2
+                                              })
+                                            }
                                           }
-                                        }
-                                      },
-                                      [_vm._v("H2")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        class: {
-                                          "is-active": isActive.heading({
-                                            level: 3
-                                          })
                                         },
-                                        on: {
-                                          click: function($event) {
-                                            return commands.heading({
+                                        [_vm._v("H2")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          class: {
+                                            "is-active": isActive.heading({
                                               level: 3
                                             })
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("H3")]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm.linkMenuIsActive
-                                      ? _c(
-                                          "form",
-                                          {
-                                            staticClass: "menububble__form",
-                                            on: {
-                                              submit: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.setLinkUrl(
-                                                  commands.link,
-                                                  _vm.linkUrl
-                                                )
-                                              }
-                                            }
                                           },
-                                          [
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.linkUrl,
-                                                  expression: "linkUrl"
-                                                }
-                                              ],
-                                              ref: "linkInput",
-                                              staticClass: "menububble__input",
-                                              attrs: {
-                                                type: "text",
-                                                placeholder: "https://"
-                                              },
-                                              domProps: { value: _vm.linkUrl },
+                                          on: {
+                                            click: function($event) {
+                                              return commands.heading({
+                                                level: 3
+                                              })
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("H3")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm.linkMenuIsActive
+                                        ? _c(
+                                            "form",
+                                            {
+                                              staticClass: "menububble__form",
                                               on: {
-                                                keydown: function($event) {
-                                                  if (
-                                                    !$event.type.indexOf(
-                                                      "key"
-                                                    ) &&
-                                                    _vm._k(
-                                                      $event.keyCode,
-                                                      "esc",
-                                                      27,
-                                                      $event.key,
-                                                      ["Esc", "Escape"]
-                                                    )
-                                                  ) {
-                                                    return null
-                                                  }
-                                                  return _vm.hideLinkMenu(
-                                                    $event
-                                                  )
-                                                },
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.linkUrl =
-                                                    $event.target.value
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("i", {
-                                              staticClass: "fas fa-unlink",
-                                              on: {
-                                                click: function($event) {
+                                                submit: function($event) {
+                                                  $event.preventDefault()
                                                   return _vm.setLinkUrl(
                                                     commands.link,
-                                                    null
+                                                    _vm.linkUrl
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.linkUrl,
+                                                    expression: "linkUrl"
+                                                  }
+                                                ],
+                                                ref: "linkInput",
+                                                staticClass:
+                                                  "menububble__input",
+                                                attrs: {
+                                                  type: "text",
+                                                  placeholder: "https://"
+                                                },
+                                                domProps: {
+                                                  value: _vm.linkUrl
+                                                },
+                                                on: {
+                                                  keydown: function($event) {
+                                                    if (
+                                                      !$event.type.indexOf(
+                                                        "key"
+                                                      ) &&
+                                                      _vm._k(
+                                                        $event.keyCode,
+                                                        "esc",
+                                                        27,
+                                                        $event.key,
+                                                        ["Esc", "Escape"]
+                                                      )
+                                                    ) {
+                                                      return null
+                                                    }
+                                                    return _vm.hideLinkMenu(
+                                                      $event
+                                                    )
+                                                  },
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.linkUrl =
+                                                      $event.target.value
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("i", {
+                                                staticClass: "fas fa-unlink",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.setLinkUrl(
+                                                      commands.link,
+                                                      null
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        : [
+                                            _c("i", {
+                                              staticClass: "fas fa-link",
+                                              class: {
+                                                "is-active": isActive.link()
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.showLinkMenu(
+                                                    getMarkAttrs("link")
                                                   )
                                                 }
                                               }
                                             })
-                                          ]
-                                        )
-                                      : [
-                                          _c("i", {
-                                            staticClass: "fas fa-link",
-                                            class: {
-                                              "is-active": isActive.link()
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                _vm.showLinkMenu(
-                                                  getMarkAttrs("link")
-                                                )
-                                              }
-                                            }
-                                          })
-                                        ],
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas far fa-undo",
-                                      on: { click: commands.undo }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("i", {
-                                      staticClass: "fas far fa-redo",
-                                      on: { click: commands.redo }
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]
+                                          ],
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas far fa-undo",
+                                        on: { click: commands.undo }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        staticClass: "fas far fa-redo",
+                                        on: { click: commands.redo }
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              }
                             }
-                          }
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c("editor-content", {
+                          staticClass: "editor__content",
+                          attrs: { editor: _vm.editor }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { attrs: { hidden: "" } }, [
+                          _vm._v(" " + _vm._s(_vm.article.content))
                         ])
-                      }),
-                      _vm._v(" "),
-                      _c("editor-content", {
-                        staticClass: "editor__content",
-                        attrs: { editor: _vm.editor }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]),
+                      ],
+                      1
+                    )
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-sm-4 col-md-2 col-lg-2" },
+                { staticClass: "col-sm-4 col-md-4 col-lg-4" },
                 [
+                  _c("div", { staticClass: "published-wrapper" }, [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.article.public,
+                            expression: "article.public"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox", id: "Published" },
+                        domProps: {
+                          checked: Array.isArray(_vm.article.public)
+                            ? _vm._i(_vm.article.public, null) > -1
+                            : _vm.article.public
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.article.public,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.article,
+                                    "public",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.article,
+                                    "public",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.article, "public", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          attrs: { for: "Published" }
+                        },
+                        [_vm._v("Public")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "article-photo" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c(
@@ -96087,9 +99641,20 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c(
+                    "div",
+                    { staticClass: "category-wrapper" },
+                    [
+                      _c("label", [_vm._v("Add category to Article")]),
+                      _vm._v(" "),
+                      _c("category")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "btn btn-primary mt-3",
                       attrs: { disabled: _vm.inProgress, type: "submit" }
                     },
                     [
@@ -96137,7 +99702,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    { staticClass: "show-article-wrapper" },
+    [
+      _c("pageHeader", {
+        attrs: { title: "Article Details", pages: ["Dashboard", "Article"] }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "container" },
+        [
+          _vm.loading ? _c("spinner") : _vm._e(),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.article.title))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.article.slug))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm._f("euDate")(_vm.article.created_at)))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm._f("euDate")(_vm.article.updated_at)))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm._f("bool")(_vm.article.public)))]),
+          _vm._v(" "),
+          _c("div", { staticClass: "article-content" }, [
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.article.content) } })
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -113138,10 +116735,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_date_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./common/date.filter */ "./resources/js/common/date.filter.js");
 /* harmony import */ var _common_sentenceCase_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./common/sentenceCase.filter */ "./resources/js/common/sentenceCase.filter.js");
 /* harmony import */ var _common_lmitChar_filter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./common/lmitChar.filter */ "./resources/js/common/lmitChar.filter.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
+/* harmony import */ var _common_boolen_filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./common/boolen.filter */ "./resources/js/common/boolen.filter.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -113158,7 +116756,10 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a;
+
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a;
+window.Slug = __webpack_require__(/*! slug */ "./node_modules/slug/slug.js");
+Slug.defaults.mode = 'rfc3986';
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
   path: '/dashboard',
@@ -113203,13 +116804,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 }); // gate prototype
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_7__["default"](window.user); // this filter makes text to uppercase
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_8__["default"](window.user); // this filter makes text to uppercase
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter("upText", _common_sentenceCase_filter__WEBPACK_IMPORTED_MODULE_3__["default"]); // this filter changes the date to an EU format
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('euDate', _common_date_filter__WEBPACK_IMPORTED_MODULE_2__["default"]); // limit Character display
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('str_limit', _common_lmitChar_filter__WEBPACK_IMPORTED_MODULE_4__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('str_limit', _common_lmitChar_filter__WEBPACK_IMPORTED_MODULE_4__["default"]); // display boolean value
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('bool', _common_boolen_filter__WEBPACK_IMPORTED_MODULE_5__["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue views. It will recursively scan this directory for the Vue
@@ -113231,7 +116834,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webp
  */
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  store: _store__WEBPACK_IMPORTED_MODULE_6__["default"],
+  store: _store__WEBPACK_IMPORTED_MODULE_7__["default"],
   el: '#app',
   router: router
 });
@@ -113282,6 +116885,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/common/boolen.filter.js":
+/*!**********************************************!*\
+  !*** ./resources/js/common/boolen.filter.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (value) {
+  if (!value) {
+    return;
+  }
+
+  if (value === 1) {
+    return 'true';
+  } else {
+    return 'false';
+  }
+});
 
 /***/ }),
 
@@ -113550,6 +117176,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Spinner_vue_vue_type_template_id_7ae326fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Spinner_vue_vue_type_template_id_7ae326fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/category.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/category.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./category.vue?vue&type=template&id=29cbcf49& */ "./resources/js/components/category.vue?vue&type=template&id=29cbcf49&");
+/* harmony import */ var _category_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.vue?vue&type=script&lang=js& */ "./resources/js/components/category.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _category_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/category.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/category.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/category.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./category.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/category.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/category.vue?vue&type=template&id=29cbcf49&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/category.vue?vue&type=template&id=29cbcf49& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./category.vue?vue&type=template&id=29cbcf49& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/category.vue?vue&type=template&id=29cbcf49&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_category_vue_vue_type_template_id_29cbcf49___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -113885,6 +117580,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/slug.vue":
+/*!******************************************!*\
+  !*** ./resources/js/components/slug.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slug.vue?vue&type=template&id=6887aff6&scoped=true& */ "./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true&");
+/* harmony import */ var _slug_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slug.vue?vue&type=script&lang=js& */ "./resources/js/components/slug.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _slug_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6887aff6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/slug.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/slug.vue?vue&type=script&lang=js&":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/slug.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_slug_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./slug.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/slug.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_slug_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./slug.vue?vue&type=template&id=6887aff6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/slug.vue?vue&type=template&id=6887aff6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_slug_vue_vue_type_template_id_6887aff6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/spinner.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/spinner.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spinner.vue?vue&type=template&id=17797f1e& */ "./resources/js/components/spinner.vue?vue&type=template&id=17797f1e&");
+/* harmony import */ var _spinner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./spinner.vue?vue&type=script&lang=js& */ "./resources/js/components/spinner.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _spinner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/spinner.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/spinner.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/spinner.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_spinner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./spinner.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/spinner.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_spinner_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/spinner.vue?vue&type=template&id=17797f1e&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/spinner.vue?vue&type=template&id=17797f1e& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./spinner.vue?vue&type=template&id=17797f1e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/spinner.vue?vue&type=template&id=17797f1e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_spinner_vue_vue_type_template_id_17797f1e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/store/article.module.js":
 /*!**********************************************!*\
   !*** ./resources/js/store/article.module.js ***!
@@ -113920,14 +117753,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function initialState() {
+function initialArticleState() {
   return {
     article: {
       title: '',
       slug: '',
       content: '',
       photo: '',
-      "public": '',
+      "public": true,
+      category: [],
       created_at: '',
       updated_at: ''
     }
@@ -113935,7 +117769,7 @@ function initialState() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  state: _objectSpread(_objectSpread({}, initialState()), {}, {
+  state: _objectSpread(_objectSpread({}, initialArticleState()), {}, {
     articleStateChanged: false,
     articles: {}
   }),
@@ -113983,28 +117817,156 @@ function initialState() {
     },
 
     /**
+     * fetch filtered article
+     * @param context
+     * @param page
+     */
+    FETCH_FILTERED_ARTICLES: function FETCH_FILTERED_ARTICLES(context, page) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var url, article;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = '/api/article?page=' + page;
+                _context2.next = 3;
+                return axios.get(url);
+
+              case 3:
+                article = _context2.sent;
+                context.commit('SET_ALL_ARTICLES', article.data);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /**
+     * get article detaild data
+     * @param context
+     * @param slug
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    FETCH_ARTICLE_DATA: function FETCH_ARTICLE_DATA(context, slug) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var url, article;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                url = '/api/article/';
+                _context3.next = 3;
+                return axios.get(url + slug);
+
+              case 3:
+                article = _context3.sent;
+                context.commit('SET_ARTICLE_DATA', article.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+
+    /**
+     * create article
+     * @param state
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    CREATE_ARTICLE: function CREATE_ARTICLE(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                state = _ref.state;
+                _context4.next = 3;
+                return axios.post('/api/article', state.article);
+
+              case 3:
+                state.articleStateChanged = true;
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /**
+     * Set content in store
+     * @param state
+     * @param content
+     */
+    SET_CONTENT_IN_STORE: function SET_CONTENT_IN_STORE(_ref2, content) {
+      var state = _ref2.state;
+      state.article.content = content;
+    },
+
+    /**
      * update photo state
      * @param state
      * @constructor
      * @param context
      */
-    UPDATE_ARTICLE_PHOTO: function UPDATE_ARTICLE_PHOTO(context, _ref) {
-      var _ref2 = _slicedToArray(_ref, 1),
-          reader = _ref2[0];
+    UPDATE_ARTICLE_PHOTO: function UPDATE_ARTICLE_PHOTO(context, _ref3) {
+      var _ref4 = _slicedToArray(_ref3, 1),
+          reader = _ref4[0];
 
       context.commit('SET_ARTICLE_PHOTO', reader);
+    },
+
+    /**
+     * update slug
+     * @param context
+     * @param slug
+     * @constructor
+     */
+    UPDATE_SLUG: function UPDATE_SLUG(context, slug) {
+      context.commit('SET_SLUG', slug);
+    },
+
+    /**
+     * return
+     * @constructor
+     */
+    UPDATE_ARTICLE_CATEGORY: function UPDATE_ARTICLE_CATEGORY(context, category) {
+      context.commit('SET_CATEGORY', category);
+    },
+
+    /**
+     * reset state
+     */
+    RESET_ARTICLE_STATE: function RESET_ARTICLE_STATE(_ref5) {
+      var commit = _ref5.commit;
+      commit('RESET_STATE');
     }
   },
   mutations: {
     /**
      * mutate articles state
      * @param state
-     * @param article
+     * @param articles
      * @constructor
      */
-    SET_ALL_ARTICLES: function SET_ALL_ARTICLES(state, article) {
-      state.articles = article;
+    SET_ALL_ARTICLES: function SET_ALL_ARTICLES(state, articles) {
+      state.articles = articles;
       state.articleStateChanged = false;
+    },
+    SET_ARTICLE_DATA: function SET_ARTICLE_DATA(state, article) {
+      state.article = article;
     },
 
     /**
@@ -114015,6 +117977,33 @@ function initialState() {
      */
     SET_ARTICLE_PHOTO: function SET_ARTICLE_PHOTO(state, reader) {
       state.article.photo = reader;
+    },
+
+    /**
+     * set slug
+     * @param state
+     * @param slug
+     * @constructor
+     */
+    SET_SLUG: function SET_SLUG(state, slug) {
+      state.article.slug = slug;
+    },
+
+    /**
+     * set category for article
+     * @constructor
+     */
+    SET_CATEGORY: function SET_CATEGORY(state, category) {
+      state.articles.category = category;
+    },
+
+    /**
+     * reset user state
+     * @param state
+     * @constructor
+     */
+    RESET_STATE: function RESET_STATE(state) {
+      Object.assign(state, initialArticleState());
     }
   },
   getters: {
@@ -114023,6 +118012,93 @@ function initialState() {
     },
     article: function article(state) {
       return state.article;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/category.module.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/category.module.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function initialState() {
+  return {
+    category: {
+      name: '',
+      slug: ''
+    }
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: _objectSpread(_objectSpread({}, initialState()), {}, {
+    categories: {} // categoryStateChanged: false,
+
+  }),
+  actions: {
+    /**
+     * fetch authenticated user
+     * @param state
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    FETCH_CATEGORIES: function FETCH_CATEGORIES(context) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var categories;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("/api/category");
+
+              case 2:
+                categories = _context.sent;
+                context.commit('SET_CATEGORY', categories.data);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    } // /**
+    //  * reset state
+    //  */
+    // RESET_STATE({commit}) {
+    //     commit('RESET_STATE');
+    // },
+
+  },
+  mutations: {
+    SET_CATEGORY: function SET_CATEGORY(state, categories) {
+      state.categories = categories;
+    }
+  },
+  getters: {
+    categories: function categories(state) {
+      return state.categories;
     }
   }
 });
@@ -114044,9 +118120,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.module */ "./resources/js/store/user.module.js");
 /* harmony import */ var _profile_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile.module */ "./resources/js/store/profile.module.js");
 /* harmony import */ var _article_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./article.module */ "./resources/js/store/article.module.js");
+/* harmony import */ var _category_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./category.module */ "./resources/js/store/category.module.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -114054,7 +118132,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   modules: {
     user: _user_module__WEBPACK_IMPORTED_MODULE_2__["default"],
     profile: _profile_module__WEBPACK_IMPORTED_MODULE_3__["default"],
-    article: _article_module__WEBPACK_IMPORTED_MODULE_4__["default"]
+    article: _article_module__WEBPACK_IMPORTED_MODULE_4__["default"],
+    category: _category_module__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }));
 

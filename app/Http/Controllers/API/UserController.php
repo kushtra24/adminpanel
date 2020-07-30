@@ -121,6 +121,7 @@ class UserController extends Controller
 
         // photo request
         $requestedPhoto = $request['photo'];
+
         // check if requested photo is not an empty string and does not contain storage in it
         if ( $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage') ) {
             $this->updatePhoto($request, $requestedPhoto, 'user');

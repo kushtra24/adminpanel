@@ -12,11 +12,14 @@ import VueRouter from 'vue-router'
 import DateFilter from './common/date.filter'
 import SentenceCaseFilter from './common/sentenceCase.filter'
 import limitCharFilter from './common/lmitChar.filter'
+import booleanFilter from './common/boolen.filter'
 import Swal from 'sweetalert2'
 import store from "./store";
 import Gate from "./Gate"
 
 window.Swal = Swal;
+window.Slug = require('slug');
+Slug.defaults.mode = 'rfc3986';
 
 Vue.use(VueRouter)
 let routes = [
@@ -48,6 +51,8 @@ Vue.filter("upText", SentenceCaseFilter);
 Vue.filter('euDate', DateFilter);
 // limit Character display
 Vue.filter('str_limit', limitCharFilter)
+// display boolean value
+Vue.filter('bool', booleanFilter)
 
 /**
  * The following block of code may be used to automatically register your

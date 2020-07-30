@@ -18,6 +18,5 @@ class UserSeeder extends Seeder
             'type' => 'admin',
             'active' => true,
         ]);
-
     }
 }

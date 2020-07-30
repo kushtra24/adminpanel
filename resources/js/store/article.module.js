@@ -1,12 +1,13 @@
 
-function initialState() {
+function initialArticleState() {
     return {
         article: {
             title: '',
             slug: '',
             content: '',
             photo: '',
-            public: '',
+            public: true,
+            category: [],
             created_at: '',
             updated_at: ''
         },
@@ -15,7 +16,7 @@ function initialState() {
 
 export  default {
     state: {
-        ...initialState(),
+        ...initialArticleState(),
         articleStateChanged: false,
         articles: {}
     },
@@ -29,7 +30,6 @@ export  default {
          * @constructor
          */
         async FETCH_ALL_ARTICLES(context, page) {
-
             if (!context.state.articleStateChanged && Object.keys(context.state.articles).length !== 0 ) {
                 this.state.articleStateChanged = false;
                 return this.state.article;
@@ -39,6 +39,51 @@ export  default {
               context.commit('SET_ALL_ARTICLES', article.data);
             }
         },
+
+        /**
+         * fetch filtered article
+         * @param context
+         * @param page
+         */
+        async FETCH_FILTERED_ARTICLES(context, page) {
+            let url = '/api/article?page=' + page;
+            const article = await axios.get(url);
+            context.commit('SET_ALL_ARTICLES', article.data);
+        },
+
+        /**
+         * get article detaild data
+         * @param context
+         * @param slug
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        async FETCH_ARTICLE_DATA(context, slug) {
+          let url = '/api/article/';
+          const article = await axios.get(url + slug);
+          context.commit('SET_ARTICLE_DATA', article.data);
+        },
+
+        /**
+         * create article
+         * @param state
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        async CREATE_ARTICLE({state}) {
+            await axios.post('/api/article', state.article);
+            state.articleStateChanged = true;
+        },
+
+        /**
+         * Set content in store
+         * @param state
+         * @param content
+         */
+        SET_CONTENT_IN_STORE({state}, content) {
+            state.article.content = content;
+        },
+
         /**
          * update photo state
          * @param state
@@ -49,6 +94,30 @@ export  default {
             context.commit('SET_ARTICLE_PHOTO', reader);
         },
 
+        /**
+         * update slug
+         * @param context
+         * @param slug
+         * @constructor
+         */
+        UPDATE_SLUG(context, slug) {
+            context.commit('SET_SLUG', slug)
+        },
+
+        /**
+         * return
+         * @constructor
+         */
+        UPDATE_ARTICLE_CATEGORY(context, category) {
+            context.commit('SET_CATEGORY', category);
+        },
+
+        /**
+         * reset state
+         */
+        RESET_ARTICLE_STATE({commit}) {
+            commit('RESET_STATE');
+        },
 
     },
     mutations: {
@@ -56,12 +125,16 @@ export  default {
         /**
          * mutate articles state
          * @param state
-         * @param article
+         * @param articles
          * @constructor
          */
-        SET_ALL_ARTICLES: (state, article) => {
-                state.articles = article;
+        SET_ALL_ARTICLES: (state, articles) => {
+                state.articles = articles;
                 state.articleStateChanged = false;
+        },
+
+        SET_ARTICLE_DATA: (state, article) => {
+          state.article = article;
         },
 
         /**
@@ -72,6 +145,33 @@ export  default {
          */
         SET_ARTICLE_PHOTO: (state, reader) => {
             state.article.photo = reader
+        },
+
+        /**
+         * set slug
+         * @param state
+         * @param slug
+         * @constructor
+         */
+        SET_SLUG: (state, slug) => {
+            state.article.slug = slug;
+        },
+
+        /**
+         * set category for article
+         * @constructor
+         */
+        SET_CATEGORY: (state, category) => {
+            state.articles.category = category;
+        },
+
+        /**
+         * reset user state
+         * @param state
+         * @constructor
+         */
+        RESET_STATE: (state) => {
+            Object.assign(state, initialArticleState())
         },
 
     },

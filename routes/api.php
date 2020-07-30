@@ -23,7 +23,11 @@ Route::middleware('auth:api')->group( function(){
     Route::apiResources(['user' => 'API\UserController']);
     Route::get('profile', 'API\UserController@profile');
     Route::put('profile', 'API\UserController@updateProfile');
-    Route::apiResources(['article' => 'API\ArticleController']);
+    Route::get('category', 'API\CategoryController@index');
+
 });
+
+Route::get('article/{slug}', 'API\ArticleController@show');
+//Route::apiResources(['article' => 'API\ArticleController']);
 
 

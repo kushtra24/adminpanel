@@ -66,7 +66,6 @@ export default {
         pageHeader
     },
     beforeCreate() {
-        console.log('photo', this.$store.state.profile.photo );
         this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
     },
     data() {

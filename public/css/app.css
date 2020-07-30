@@ -48396,3 +48396,9 @@ readers do not read off random characters that represent icons */
   color: #fff;
 }
 
+.category-wrapper {
+  display: table;
+  border: 1px solid;
+  padding: 12px;
+}
+
