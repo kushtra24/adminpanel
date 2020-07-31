@@ -2,7 +2,7 @@
     <div class="slug-wrapper">
         <i class="fas fa-link"></i>
         <span>{{ url }}/{{ subDirectory }}/</span>
-        <span class="slug" v-show="title && !isEditing" style="margin-left: -3px" @click="editSlug">{{ title }}</span>
+        <span class="slug" v-show="title && !isEditing" style="margin-left: -3px" @click="editSlug">{{ article.slug }}</span>
         <input type="text" name="slug-edit" class="input is-small" v-show="isEditing" v-model="title">
         <button class="btn btn-outline-dark btn-sm" v-show="!isEditing" @click.prevent="editSlug">Edit</button>
         <button class="btn btn-outline-dark btn-sm" v-show="isEditing" @click.prevent="saveSlug">save</button>

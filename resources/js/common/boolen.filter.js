@@ -1,8 +1,8 @@
 export default value => {
     if (!value) { return }
     if (value === 1) {
-        return 'true'
+        return 'Yes'
     } else {
-        return 'false'
+        return 'No'
     }
 }

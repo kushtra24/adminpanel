@@ -3,7 +3,7 @@
         <!-- loading spinner-->
         <spinner v-if="loading" />
         <div class="form-check" v-for="category in categories" :key="category.id" v-if="!loading">
-            <input class="form-check-input" type="checkbox" :value="category.id" :id="category.name" v-model="article.category">
+            <input class="form-check-input" type="checkbox" :value="category.id" :id="category.name" v-model="article.cat">
             <label class="form-check-label" :for="category.name">
                 {{ category.name }}
             </label>
@@ -20,26 +20,16 @@ name: "category",
     components: {
         spinner
     },
+    beforeDestroy() {
+            // reset state of user
+            this.$store.dispatch("RESET_CATEGORIES_STATE");
+    },
     data() {
         return {
-            category: this.updateArticleCategory(),
             loading: false
         }
     },
-    computed: {
-        // get user from store
-        ...mapGetters(["article", 'categories']),
-
-    },
     methods: {
-        /**
-         * update category
-         */
-        updateArticleCategory() {
-            this.$store.dispatch('UPDATE_ARTICLE_CATEGORY')
-            .then(() => console.log('category updated'))
-            .catch(() => console.log('category failed to update'));
-        },
         /**
          * fetch all users
          */
@@ -61,6 +51,11 @@ name: "category",
         } else {
             this.$router.push({path: `/dashboard` });
         }
+    },
+    computed: {
+        // get user from store
+        ...mapGetters(["article", 'categories']),
+
     },
 }
 </script>

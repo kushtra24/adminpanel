@@ -67,7 +67,7 @@
 
                     <div class="category-wrapper">
                         <label>Add category to Article</label>
-                        <category></category>
+                        <category categories="article.category"></category>
                     </div>
 
                     <button :disabled="inProgress" type="submit" class="btn btn-primary mt-3">Submit
@@ -117,12 +117,12 @@ export default {
     },
     data() {
         return {
-            id: this.$route.params.id,
+            id: this.$route.params.slug,
             fullUrl: window.location.origin,
             inProgress: false,
             errors: {},
             keepInBounds: true,
-            newContent: this.saveContent(),
+            newContent: '',
             editor: new Editor({
                 // other options omitted for brevity
                 extensions: [
@@ -149,20 +149,29 @@ export default {
             linkMenuIsActive: false,
         }
     },
+    beforeDestroy() {
+        // Always destroy your editor instance when it's no longer needed
+        this.editor.destroy()
+        // if the id exists in the url parameters get the selected user data
+        if(this.id){
+            // reset state of user
+            this.$store.dispatch("RESET_ARTICLE_STATE");
+        }
+    },
     methods: {
         ...mapActions(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE']),
 
-        setContentFromStore() {
-            // get store value
-            return this.$store.state.content
-        },
+        /**
+         * set editor content
+         */
         setEditorContent() {
             //set the content to the editor
-            this.editor.setContent(
-                this.setContentFromStore()
-            )
+            this.editor.setContent(this.$store.getters.article.content);
         },
 
+        /**
+         * save content
+         */
         saveContent() {
             //send to store on save
             this.$store.dispatch('SET_CONTENT_IN_STORE', this.newContent)
@@ -252,16 +261,12 @@ export default {
     },
     computed: {
         // get user from store
-        ...mapGetters(["article"])
+        ...mapGetters(["article", "category"]),
     },
-    beforeDestroy() {
-        // Always destroy your editor instance when it's no longer needed
-        this.editor.destroy()
-        // if the id exists in the url parameters get the selected user data
-        if(!this.id){
-            // reset state of user
-            this.$store.dispatch("RESET_ARTICLE_STATE");
-        }
+    created() {
+      if (this.id) {
+          this.setEditorContent();
+      }
     },
     watch: {
         newContent() {

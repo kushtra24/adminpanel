@@ -80,23 +80,6 @@ import pagination from "laravel-vue-pagination"
             },
 
             /**
-             * Fetch paginated Data
-             */
-            // fetchPaginatedData(page = 1) {
-            //     this.searchLoading = true;
-            //     this.$store.dispatch('FETCH_FILTERED_USERS', page)
-            //         .then(() => {
-            //             // if (data.data.length === 0) {
-            //             this.searchLoading = false
-            //             // }
-            //         }).catch(() => {
-            //             this.searchLoading = false
-            //             console.log('Fetching Filtered users in users component failed')
-            //         }
-            //     );
-            // },
-
-            /**
              * FetchFilteredUSers
              */
             fetchFilteredArticles(page = 1) {
@@ -125,7 +108,7 @@ import pagination from "laravel-vue-pagination"
             }
         },
         computed: {
-            ...mapGetters(["articles", "filter"]),
+            ...mapGetters(["articles"]),
         },
         created() {
             if (this.$gate.isAdmin()) {

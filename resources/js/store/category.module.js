@@ -1,5 +1,5 @@
 
-function initialState () {
+function initialCategoryState () {
     return {
         category: {
             name: '',
@@ -10,7 +10,7 @@ function initialState () {
 
 export default {
     state: {
-        ...initialState(),
+        ...initialCategoryState(),
         categories: {}
         // categoryStateChanged: false,
     },
@@ -27,23 +27,40 @@ export default {
             context.commit('SET_CATEGORY', categories.data);
         },
 
-        // /**
-        //  * reset state
-        //  */
-        // RESET_STATE({commit}) {
-        //     commit('RESET_STATE');
-        // },
+        /**
+         * reset state
+         */
+        RESET_CATEGORIES_STATE({commit}) {
+            commit('RESET_CATEGORIES');
+        },
 
     },
     mutations: {
+        /**
+         * set category data
+         * @param state
+         * @param categories
+         * @constructor
+         */
         SET_CATEGORY: (state, categories) => {
-
         state.categories = categories
+        },
+
+        /**
+         * reset Categories
+         * @constructor
+         */
+        RESET_CATEGORIES: (state) => {
+            Object.assign(state, initialCategoryState())
         }
     },
     getters: {
         categories(state) {
             return state.categories;
         },
+
+        category(state) {
+            return state.category;
+        }
     }
 };

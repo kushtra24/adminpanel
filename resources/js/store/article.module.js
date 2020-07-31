@@ -7,9 +7,10 @@ function initialArticleState() {
             content: '',
             photo: '',
             public: true,
-            category: [],
+            // category: [],
             created_at: '',
-            updated_at: ''
+            updated_at: '',
+            cat: []
         },
     }
 }
@@ -31,12 +32,11 @@ export  default {
          */
         async FETCH_ALL_ARTICLES(context, page) {
             if (!context.state.articleStateChanged && Object.keys(context.state.articles).length !== 0 ) {
-                this.state.articleStateChanged = false;
                 return this.state.article;
             } else {
-              let url = '/api/article?page=' + page;
-              const article = await axios.get(url);
-              context.commit('SET_ALL_ARTICLES', article.data);
+                let url = '/api/article?page=' + page;
+                const article = await axios.get(url);
+                context.commit('SET_ALL_ARTICLES', article.data);
             }
         },
 
@@ -75,6 +75,10 @@ export  default {
             state.articleStateChanged = true;
         },
 
+        async DELETE_ARTICLE(context, slug) {
+            await axios.delete("/api/article/" + slug);
+        },
+
         /**
          * Set content in store
          * @param state
@@ -105,18 +109,10 @@ export  default {
         },
 
         /**
-         * return
-         * @constructor
-         */
-        UPDATE_ARTICLE_CATEGORY(context, category) {
-            context.commit('SET_CATEGORY', category);
-        },
-
-        /**
          * reset state
          */
         RESET_ARTICLE_STATE({commit}) {
-            commit('RESET_STATE');
+            commit('ARTICLE_RESET_STATE');
         },
 
     },
@@ -133,8 +129,15 @@ export  default {
                 state.articleStateChanged = false;
         },
 
+        /**
+         * set article data
+         * @param state
+         * @param article
+         * @constructor
+         */
         SET_ARTICLE_DATA: (state, article) => {
           state.article = article;
+          state.article.photo = '../storage/article/' + state.article.photo;
         },
 
         /**
@@ -158,19 +161,11 @@ export  default {
         },
 
         /**
-         * set category for article
-         * @constructor
-         */
-        SET_CATEGORY: (state, category) => {
-            state.articles.category = category;
-        },
-
-        /**
          * reset user state
          * @param state
          * @constructor
          */
-        RESET_STATE: (state) => {
+        ARTICLE_RESET_STATE: (state) => {
             Object.assign(state, initialArticleState())
         },
 
@@ -181,6 +176,6 @@ export  default {
         },
         article: (state) => {
             return state.article;
-        }
+        },
     }
 };

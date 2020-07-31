@@ -48,7 +48,6 @@ export default {
          * @constructor
          */
         UPDATE_PROFILE_PHOTO(context, [reader]) {
-            console.log('profile photo',);
             context.commit('SET_PROFILE_PHOTO', reader);
         },
 

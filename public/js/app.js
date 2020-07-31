@@ -2063,25 +2063,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     spinner: _spinner__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  beforeDestroy: function beforeDestroy() {
+    // reset state of user
+    this.$store.dispatch("RESET_CATEGORIES_STATE");
+  },
   data: function data() {
     return {
-      category: this.updateArticleCategory(),
       loading: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["article", 'categories'])),
   methods: {
-    /**
-     * update category
-     */
-    updateArticleCategory: function updateArticleCategory() {
-      this.$store.dispatch('UPDATE_ARTICLE_CATEGORY').then(function () {
-        return console.log('category updated');
-      })["catch"](function () {
-        return console.log('category failed to update');
-      });
-    },
-
     /**
      * fetch all users
      */
@@ -2107,7 +2098,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         path: "/dashboard"
       });
     }
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["article", 'categories']))
 });
 
 /***/ }),
@@ -3691,23 +3683,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
-     * Fetch paginated Data
-     */
-    // fetchPaginatedData(page = 1) {
-    //     this.searchLoading = true;
-    //     this.$store.dispatch('FETCH_FILTERED_USERS', page)
-    //         .then(() => {
-    //             // if (data.data.length === 0) {
-    //             this.searchLoading = false
-    //             // }
-    //         }).catch(() => {
-    //             this.searchLoading = false
-    //             console.log('Fetching Filtered users in users component failed')
-    //         }
-    //     );
-    // },
-
-    /**
      * FetchFilteredUSers
      */
     fetchFilteredArticles: function fetchFilteredArticles() {
@@ -3736,7 +3711,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["articles", "filter"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["articles"])),
   created: function created() {
     if (this.$gate.isAdmin()) {
       // this.getResults();
@@ -3880,12 +3855,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     return {
-      id: this.$route.params.id,
+      id: this.$route.params.slug,
       fullUrl: window.location.origin,
       inProgress: false,
       errors: {},
       keepInBounds: true,
-      newContent: this.saveContent(),
+      newContent: '',
       editor: new tiptap__WEBPACK_IMPORTED_MODULE_2__["Editor"]({
         // other options omitted for brevity
         extensions: [new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Blockquote"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["BulletList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["CodeBlock"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_7__["Heading"]({
@@ -3902,15 +3877,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       linkMenuIsActive: false
     };
   },
+  beforeDestroy: function beforeDestroy() {
+    // Always destroy your editor instance when it's no longer needed
+    this.editor.destroy(); // if the id exists in the url parameters get the selected user data
+
+    if (this.id) {
+      // reset state of user
+      this.$store.dispatch("RESET_ARTICLE_STATE");
+    }
+  },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE'])), {}, {
-    setContentFromStore: function setContentFromStore() {
-      // get store value
-      return this.$store.state.content;
-    },
+    /**
+     * set editor content
+     */
     setEditorContent: function setEditorContent() {
       //set the content to the editor
-      this.editor.setContent(this.setContentFromStore());
+      this.editor.setContent(this.$store.getters.article.content);
     },
+
+    /**
+     * save content
+     */
     saveContent: function saveContent() {
       //send to store on save
       this.$store.dispatch('SET_CONTENT_IN_STORE', this.newContent);
@@ -4010,14 +3997,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["article"])),
-  beforeDestroy: function beforeDestroy() {
-    // Always destroy your editor instance when it's no longer needed
-    this.editor.destroy(); // if the id exists in the url parameters get the selected user data
-
-    if (!this.id) {
-      // reset state of user
-      this.$store.dispatch("RESET_ARTICLE_STATE");
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["article", "category"])),
+  created: function created() {
+    if (this.id) {
+      this.setEditorContent();
     }
   },
   watch: {
@@ -4068,6 +4051,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4084,6 +4083,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    /**
+     * fetch article data with slug
+     */
     fetchArticleData: function fetchArticleData() {
       var _this = this;
 
@@ -4095,10 +4097,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.loading = false;
         console.log('article data fetch error');
       });
+    },
+    // fetchCategoriesForArticles() {
+    //     this.$store.dispatch('FETCH_CATEGORIES_FOR_ARTICLE', this.slug)
+    //     .then( () => {
+    //         console.log('category data');
+    //     })
+    //     .cache(() => {
+    //         console.log('category error');
+    //     })
+    // },
+
+    /**
+     * Edit an article
+     */
+    editArticle: function editArticle() {
+      this.$router.push({
+        path: "/articles-edit/".concat(this.slug)
+      });
+    },
+
+    /**
+     * Delete an article
+     */
+    deleteArticle: function deleteArticle() {
+      var _this2 = this;
+
+      this.$store.dispatch('DELETE_ARTICLE', this.slug).then(function () {
+        console.log('Article deleted');
+
+        _this2.$router.push({
+          path: '/articles'
+        });
+      })["catch"](function () {
+        console.log('Article not deleted');
+      });
     }
   },
   created: function created() {
-    this.fetchArticleData();
+    // fetch an article
+    this.fetchArticleData(); // this.fetchCategoriesForArticles();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['article']))
 });
@@ -4227,9 +4265,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     editProfileComponent: _components_editProfileComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
     pageHeader: _components_PageHeader__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  beforeCreate: function beforeCreate() {
-    this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
-  },
+  // beforeCreate() {
+  // this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
+  // },
   data: function data() {
     return {
       loading: false,
@@ -4391,9 +4429,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * navigate to edit page
      * @param id
      */
-    navigateToEdit: function navigateToEdit(id) {
+    navigateToEdit: function navigateToEdit() {
       this.$router.push({
-        path: "/users-edit/".concat(id)
+        path: "/users-edit/".concat(this.id)
       });
     }
   }),
@@ -96563,21 +96601,21 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.article.category,
-                    expression: "article.category"
+                    value: _vm.article.cat,
+                    expression: "article.cat"
                   }
                 ],
                 staticClass: "form-check-input",
                 attrs: { type: "checkbox", id: category.name },
                 domProps: {
                   value: category.id,
-                  checked: Array.isArray(_vm.article.category)
-                    ? _vm._i(_vm.article.category, category.id) > -1
-                    : _vm.article.category
+                  checked: Array.isArray(_vm.article.cat)
+                    ? _vm._i(_vm.article.cat, category.id) > -1
+                    : _vm.article.cat
                 },
                 on: {
                   change: function($event) {
-                    var $$a = _vm.article.category,
+                    var $$a = _vm.article.cat,
                       $$el = $event.target,
                       $$c = $$el.checked ? true : false
                     if (Array.isArray($$a)) {
@@ -96585,17 +96623,17 @@ var render = function() {
                         $$i = _vm._i($$a, $$v)
                       if ($$el.checked) {
                         $$i < 0 &&
-                          _vm.$set(_vm.article, "category", $$a.concat([$$v]))
+                          _vm.$set(_vm.article, "cat", $$a.concat([$$v]))
                       } else {
                         $$i > -1 &&
                           _vm.$set(
                             _vm.article,
-                            "category",
+                            "cat",
                             $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                           )
                       }
                     } else {
-                      _vm.$set(_vm.article, "category", $$c)
+                      _vm.$set(_vm.article, "cat", $$c)
                     }
                   }
                 }
@@ -98099,7 +98137,7 @@ var render = function() {
         staticStyle: { "margin-left": "-3px" },
         on: { click: _vm.editSlug }
       },
-      [_vm._v(_vm._s(_vm.title))]
+      [_vm._v(_vm._s(_vm.article.slug))]
     ),
     _vm._v(" "),
     _c("input", {
@@ -99646,7 +99684,9 @@ var render = function() {
                     [
                       _c("label", [_vm._v("Add category to Article")]),
                       _vm._v(" "),
-                      _c("category")
+                      _c("category", {
+                        attrs: { categories: "article.category" }
+                      })
                     ],
                     1
                   ),
@@ -99716,15 +99756,59 @@ var render = function() {
         [
           _vm.loading ? _c("spinner") : _vm._e(),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.article.title))]),
+          _c(
+            "button",
+            { staticClass: "btn btn-warning", on: { click: _vm.editArticle } },
+            [_c("i", { staticClass: "fas fa-edit fa-fw" }), _vm._v("Edit")]
+          ),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.article.slug))]),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger float-right",
+              on: { click: _vm.deleteArticle }
+            },
+            [
+              _c("i", { staticClass: "fas fa-trash-alt fa-fw" }),
+              _vm._v("Delete")
+            ]
+          ),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm._f("euDate")(_vm.article.created_at)))]),
+          _c("hr"),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm._f("euDate")(_vm.article.updated_at)))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm._f("bool")(_vm.article.public)))]),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("h3", [_vm._v(" " + _vm._s(_vm.article.title))]),
+              _vm._v(" "),
+              _c("h6", [_vm._v(_vm._s(_vm.article.slug))]),
+              _vm._v(" "),
+              _c("p", [
+                _c("b", [_vm._v("Created at: ")]),
+                _vm._v(
+                  " " +
+                    _vm._s(_vm._f("euDate")(_vm.article.created_at)) +
+                    ",\n                        "
+                ),
+                _c("b", [_vm._v("Updated at: ")]),
+                _vm._v(
+                  _vm._s(_vm._f("euDate")(_vm.article.updated_at)) +
+                    ",\n                        "
+                ),
+                _c("b", [_vm._v("Public: ")]),
+                _vm._v(
+                  _vm._s(_vm._f("bool")(_vm.article.public)) +
+                    "\n                    "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("img", {
+                staticClass: "img-fluid",
+                attrs: { src: _vm.article.photo, alt: "article photo" }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "article-content" }, [
             _c("div", { domProps: { innerHTML: _vm._s(_vm.article.content) } })
@@ -100032,11 +100116,7 @@ var render = function() {
                       {
                         staticClass: "btn btn-info",
                         attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.navigateToEdit(_vm.user.id)
-                          }
-                        }
+                        on: { click: _vm.navigateToEdit }
                       },
                       [
                         _c("i", { staticClass: "fas fa-user-edit fa-fw" }),
@@ -116903,9 +116983,9 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   if (value === 1) {
-    return 'true';
+    return 'Yes';
   } else {
-    return 'false';
+    return 'No';
   }
 });
 
@@ -117761,9 +117841,10 @@ function initialArticleState() {
       content: '',
       photo: '',
       "public": true,
-      category: [],
+      // category: [],
       created_at: '',
-      updated_at: ''
+      updated_at: '',
+      cat: []
     }
   };
 }
@@ -117791,23 +117872,22 @@ function initialArticleState() {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(!context.state.articleStateChanged && Object.keys(context.state.articles).length !== 0)) {
-                  _context.next = 5;
+                  _context.next = 4;
                   break;
                 }
 
-                _this.state.articleStateChanged = false;
                 return _context.abrupt("return", _this.state.article);
 
-              case 5:
+              case 4:
                 url = '/api/article?page=' + page;
-                _context.next = 8;
+                _context.next = 7;
                 return axios.get(url);
 
-              case 8:
+              case 7:
                 article = _context.sent;
                 context.commit('SET_ALL_ARTICLES', article.data);
 
-              case 10:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -117904,6 +117984,23 @@ function initialArticleState() {
         }, _callee4);
       }))();
     },
+    DELETE_ARTICLE: function DELETE_ARTICLE(context, slug) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("/api/article/" + slug);
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
 
     /**
      * Set content in store
@@ -117939,19 +118036,11 @@ function initialArticleState() {
     },
 
     /**
-     * return
-     * @constructor
-     */
-    UPDATE_ARTICLE_CATEGORY: function UPDATE_ARTICLE_CATEGORY(context, category) {
-      context.commit('SET_CATEGORY', category);
-    },
-
-    /**
      * reset state
      */
     RESET_ARTICLE_STATE: function RESET_ARTICLE_STATE(_ref5) {
       var commit = _ref5.commit;
-      commit('RESET_STATE');
+      commit('ARTICLE_RESET_STATE');
     }
   },
   mutations: {
@@ -117965,8 +118054,16 @@ function initialArticleState() {
       state.articles = articles;
       state.articleStateChanged = false;
     },
+
+    /**
+     * set article data
+     * @param state
+     * @param article
+     * @constructor
+     */
     SET_ARTICLE_DATA: function SET_ARTICLE_DATA(state, article) {
       state.article = article;
+      state.article.photo = '../storage/article/' + state.article.photo;
     },
 
     /**
@@ -117990,19 +118087,11 @@ function initialArticleState() {
     },
 
     /**
-     * set category for article
-     * @constructor
-     */
-    SET_CATEGORY: function SET_CATEGORY(state, category) {
-      state.articles.category = category;
-    },
-
-    /**
      * reset user state
      * @param state
      * @constructor
      */
-    RESET_STATE: function RESET_STATE(state) {
+    ARTICLE_RESET_STATE: function ARTICLE_RESET_STATE(state) {
       Object.assign(state, initialArticleState());
     }
   },
@@ -118041,7 +118130,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function initialState() {
+function initialCategoryState() {
   return {
     category: {
       name: '',
@@ -118051,7 +118140,7 @@ function initialState() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  state: _objectSpread(_objectSpread({}, initialState()), {}, {
+  state: _objectSpread(_objectSpread({}, initialCategoryState()), {}, {
     categories: {} // categoryStateChanged: false,
 
   }),
@@ -118083,22 +118172,41 @@ function initialState() {
           }
         }, _callee);
       }))();
-    } // /**
-    //  * reset state
-    //  */
-    // RESET_STATE({commit}) {
-    //     commit('RESET_STATE');
-    // },
+    },
 
+    /**
+     * reset state
+     */
+    RESET_CATEGORIES_STATE: function RESET_CATEGORIES_STATE(_ref) {
+      var commit = _ref.commit;
+      commit('RESET_CATEGORIES');
+    }
   },
   mutations: {
+    /**
+     * set category data
+     * @param state
+     * @param categories
+     * @constructor
+     */
     SET_CATEGORY: function SET_CATEGORY(state, categories) {
       state.categories = categories;
+    },
+
+    /**
+     * reset Categories
+     * @constructor
+     */
+    RESET_CATEGORIES: function RESET_CATEGORIES(state) {
+      Object.assign(state, initialCategoryState());
     }
   },
   getters: {
     categories: function categories(state) {
       return state.categories;
+    },
+    category: function category(state) {
+      return state.category;
     }
   }
 });
@@ -118262,7 +118370,6 @@ function initialState() {
       var _ref3 = _slicedToArray(_ref2, 1),
           reader = _ref3[0];
 
-      console.log('profile photo');
       context.commit('SET_PROFILE_PHOTO', reader);
     },
 

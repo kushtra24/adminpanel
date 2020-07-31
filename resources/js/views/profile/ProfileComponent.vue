@@ -65,9 +65,9 @@ export default {
         editProfileComponent,
         pageHeader
     },
-    beforeCreate() {
-        this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
-    },
+    // beforeCreate() {
+        // this.$store.state.profile.photo = '../storage/user/' + this.$store.state.profile.photo;
+    // },
     data() {
         return {
             loading: false,
