@@ -1,5 +1,5 @@
 <template>
-    <div class="lds-ring spinner-color-black spinner-center">
+    <div class="lds-ring Spinner-color-black Spinner-center">
         <div></div>
         <div></div>
         <div></div>

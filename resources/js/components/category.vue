@@ -1,7 +1,7 @@
 <template>
 <div class="categories">
-        <!-- loading spinner-->
-        <spinner v-if="loading" />
+        <!-- loading Spinner-->
+        <Spinner v-if="loading" />
         <div class="form-check" v-for="category in categories" :key="category.id" v-if="!loading">
             <input class="form-check-input" type="checkbox" :value="category.id" :id="category.name" v-model="article.cat">
             <label class="form-check-label" :for="category.name">
@@ -13,12 +13,12 @@
 
 <script>
 import {mapGetters} from "vuex";
-import spinner from "./spinner";
+import Spinner from "./Spinner";
 
 export default {
 name: "category",
     components: {
-        spinner
+        Spinner
     },
     beforeDestroy() {
             // reset state of user

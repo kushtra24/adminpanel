@@ -46,7 +46,7 @@
                 </div>
 
                 <button :disabled="inProgress" type="submit" class="btn btn-primary">Submit
-                    <Spinner v-if="inProgress" class="spinner-mini spinner-color-white" />
+                    <Spinner v-if="inProgress" class="Spinner-mini Spinner-color-white" />
                 </button>
 
                 <ErrorsList :errors="errors" />

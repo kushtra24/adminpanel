@@ -34,7 +34,7 @@ $fa-font-path: "../webfonts";
     margin-right: 10px;
 }
 
-// loading spinner
+// loading Spinner
 
 .lds-ring {
     display: inline-block;
@@ -63,20 +63,20 @@ $fa-font-path: "../webfonts";
     }
 }
 
-.spinner-color-black div{
+.Spinner-color-black div{
     border-color: #000 transparent transparent transparent;
 }
 
-.spinner-color-white div{
+.Spinner-color-white div{
     border-color: #fff transparent transparent transparent;
 }
 
-.spinner-center {
+.Spinner-center {
     margin: 0 auto;
     display: block;
 }
 
-.spinner-mini {
+.Spinner-mini {
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -99,7 +99,7 @@ $fa-font-path: "../webfonts";
         transform: rotate(360deg);
     }
 }
-// loading spinner end
+// loading Spinner end
 
 // user-table
 .user-table {

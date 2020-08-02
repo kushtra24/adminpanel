@@ -4,13 +4,16 @@
         <pageHeader title="Article Details" :pages="['Dashboard', 'Article']" />
 
         <div class="container">
-            <!-- loading spinner-->
-            <spinner v-if="loading" />
+            <!-- loading Spinner-->
+            <Spinner v-if="loading" />
             <button class="btn btn-warning" @click="editArticle"><i class="fas fa-edit fa-fw"></i>Edit</button>
             <button class="btn btn-danger float-right" @click="deleteArticle"><i class="fas fa-trash-alt fa-fw"></i>Delete</button>
             <hr>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-2" v-if="article.photo">
+                    <img :src="article.photo" alt="article photo" class="img-fluid">
+                </div>
+                <div class="col-md-10 mt-3">
                     <h3> {{ article.title }}</h3>
                     <h6>{{ article.slug }}</h6>
                     <p>
@@ -19,11 +22,8 @@
                         <b>Public: </b>{{ article.public | bool}}
                     </p>
                 </div>
-                <div class="col-md-6" v-if="article.photo">
-                    <img :src="article.photo" alt="article photo" class="img-fluid">
-                </div>
             </div>
-            <div class="article-content">
+            <div class="article-content mt-4">
                 <div v-html="article.content"></div>
             </div>
         </div>
@@ -32,14 +32,14 @@
 
 <script>
 import pageHeader from "../../components/PageHeader";
-import spinner from "../../components/Spinner";
+import Spinner from "../../components/Spinner";
 import {mapGetters} from "vuex";
 
 export default {
     name: "showArticleComponent",
     components: {
         pageHeader,
-        spinner
+        Spinner
     },
     data() {
         return {

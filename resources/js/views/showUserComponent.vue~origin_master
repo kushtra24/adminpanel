@@ -4,7 +4,7 @@
     <PageHeader title="User Details" :pages="['Dashboard', 'Users']" />
 
     <div class="container">
-        <!-- loading spinner-->
+        <!-- loading Spinner-->
         <Spinner v-if="loading" />
 
         <div class="info-container" v-if="!loading">

@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <pageHeader title="Profile" />
 
-        <!-- loading spinner-->
+        <!-- loading Spinner-->
         <Spinner v-if="loading" />
 
         <div class="container" v-if="!loading">

@@ -8,7 +8,7 @@
 
 
             <div class="box">
-                <!-- loading spinner-->
+                <!-- loading Spinner-->
                 <Spinner v-if="loading" />
 
                 <div id="users-container" v-if="!loading" >
@@ -37,7 +37,7 @@
                     </form>
 
 
-                    <Spinner v-if="searchLoading" class=" spinner-color-black" />
+                    <Spinner v-if="searchLoading" class=" Spinner-color-black" />
                     <pagination :data="users" @pagination-change-page="fetchFilteredUsers">
                         <span slot="prev-nav">&lt; Previous</span>
                         <span slot="next-nav">Next &gt;</span>

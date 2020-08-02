@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
         <div class="box margin-top-medium">
-            <!-- loading spinner-->
+            <!-- loading Spinner-->
             <Spinner v-if="loading" />
 
             <div id="users-container" v-if="!loading">
@@ -33,7 +33,7 @@
                     </div>
                 </form>
 
-                <Spinner v-if="searchLoading" class=" spinner-color-black" />
+                <Spinner v-if="searchLoading" class=" Spinner-color-black" />
                 <div v-if="!searchLoading">
                     <table class="table table-striped">
                         <thead>
