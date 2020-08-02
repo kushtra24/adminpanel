@@ -23,8 +23,11 @@ export default {
          * @constructor
          */
         async FETCH_CATEGORIES(context) {
-            const categories  = await axios.get("/api/category");
-            context.commit('SET_CATEGORY', categories.data);
+            console.log('categories length -> ', context.state.categories.length);
+            if (!context.state.categories.length){
+                const categories  = await axios.get("/api/category");
+                context.commit('SET_CATEGORY', categories.data);
+            }
         },
 
         /**

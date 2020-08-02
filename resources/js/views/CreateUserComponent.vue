@@ -115,6 +115,16 @@ export default {
                 });
         },
         /**
+         * reset state if there is not an id in the url
+         */
+        resetState() {
+            // if the id exists in the url parameters get the selected user data
+            if(!this.id){
+                // reset state of user
+                this.$store.dispatch("RESET_STATE");
+            }
+        },
+        /**
          * update profile photo
          * @param event
          */
@@ -140,12 +150,8 @@ export default {
         // get user from store
         ...mapGetters(["user"])
     },
-    beforeDestroy() {
-        // if the id exists in the url parameters get the selected user data
-        if(!this.id){
-            // reset state of user
-            this.$store.dispatch("RESET_STATE");
-        }
+    created() {
+        this.resetState();
     }
 }
 </script>

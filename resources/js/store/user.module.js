@@ -41,7 +41,6 @@ export default {
         async FETCH_ALL_USERS(context, page) {
             // check if new user is created and users property has data
             // avoid extraneous network call if article exists
-
             if (!context.state.userStateChanged && Object.keys(context.state.users).length !== 0 ) {
                 this.state.userStateChanged = false;
                 return this.state.users;
@@ -60,7 +59,6 @@ export default {
          * @constructor
          */
         async FETCH_FILTERED_USERS(context, page) {
-            console.log('page => ', page);
                 let url = '/api/user?';
 
                 if (page > 0) {
@@ -71,8 +69,9 @@ export default {
 
                 if (context.state.filter.search) {
                     url += "&search=" + context.state.filter.search;
-                }{
-                if (context.state.filter.type)
+                }
+
+                if (context.state.filter.type) {
                     url += "&type=" + context.state.filter.type;
                 }
 
@@ -80,6 +79,11 @@ export default {
                 context.commit('SET_ALL_USERS', user.data);
         },
 
+        /**
+         * clear user filter
+         * @param context
+         * @constructor
+         */
         CLEAR_USER_FILTERS(context) {
             context.commit('RESET_USER_FILTERS');
         },
@@ -141,10 +145,9 @@ export default {
         /**
          * create a new user
          */
-        async DELETE_USER({state}) {
-            await axios.delete("/api/user/" + state.user.id);
-            this.state.userStateChanged = true;
-            // commit('USER_CHANGED');
+        DELETE_USER({state}) {
+            axios.delete("/api/user/" + state.user.id);
+            state.userStateChanged = true;
         },
 
         /**

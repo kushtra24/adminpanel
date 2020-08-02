@@ -26,7 +26,7 @@ Route::middleware('auth:api')->group( function(){
     Route::get('category', 'API\CategoryController@index');
 
     Route::post('article', 'API\ArticleController@store');
-    Route::put('article/{slug}', 'API\ArticleController@update');
+    Route::put('article/{id}', 'API\ArticleController@update');
     Route::delete('article/{slug}', 'API\ArticleController@destroy');
     Route::get('article', 'API\ArticleController@index');
 });

@@ -2090,8 +2090,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     if (this.$gate.isAdmin()) {
-      console.log('1'); // this.getResults();
-
+      // this.getResults();
       this.fetchCategories();
     } else {
       this.$router.push({
@@ -3316,6 +3315,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
+     * reset state if there is not an id in the url
+     */
+    resetState: function resetState() {
+      // if the id exists in the url parameters get the selected user data
+      if (!this.id) {
+        // reset state of user
+        this.$store.dispatch("RESET_STATE");
+      }
+    },
+
+    /**
      * update profile photo
      * @param event
      */
@@ -3338,12 +3348,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["user"])),
-  beforeDestroy: function beforeDestroy() {
-    // if the id exists in the url parameters get the selected user data
-    if (!this.id) {
-      // reset state of user
-      this.$store.dispatch("RESET_STATE");
-    }
+  created: function created() {
+    this.resetState();
   }
 });
 
@@ -3521,23 +3527,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /**
-     * Fetch paginated Data
-     */
-    // fetchPaginatedData(page = 1) {
-    //     this.searchLoading = true;
-    //     this.$store.dispatch('FETCH_FILTERED_USERS', page)
-    //         .then(() => {
-    //             // if (data.data.length === 0) {
-    //             this.searchLoading = false
-    //             // }
-    //         }).catch(() => {
-    //             this.searchLoading = false
-    //             console.log('Fetching Filtered users in users component failed')
-    //         }
-    //     );
-    // },
-
-    /**
      * FetchFilteredUSers
      */
     fetchFilteredUsers: function fetchFilteredUsers() {
@@ -3546,13 +3535,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.searchLoading = true;
       this.$store.dispatch('FETCH_FILTERED_USERS', page).then(function () {
-        // if (data.data.length === 0) {
-        _this2.searchLoading = false; // }
+        _this2.searchLoading = false;
       })["catch"](function () {
         _this2.searchLoading = false;
         console.log('Fetching Filtered users in users component failed');
       });
     },
+
+    /**
+     * clear user filters
+     */
     clearFilters: function clearFilters() {
       this.$store.dispatch('CLEAR_USER_FILTERS');
     },
@@ -3649,6 +3641,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3669,10 +3684,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     /**
      * fetch all users
      */
-    fetchAllArticles: function fetchAllArticles(context) {
+    fetchAllArticles: function fetchAllArticles() {
       var _this = this;
 
-      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
       this.$store.dispatch('FETCH_ALL_ARTICLES', page).then(function () {
         return _this.loading = false;
@@ -3691,16 +3706,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.searchLoading = true;
       this.$store.dispatch('FETCH_FILTERED_ARTICLES', page).then(function () {
-        // if (data.data.length === 0) {
-        _this2.searchLoading = false; // }
+        _this2.searchLoading = false;
       })["catch"](function () {
         _this2.searchLoading = false;
         console.log('Fetching Filtered Articles failed');
       });
     },
-    // clearFilters() {
-    //     this.$store.dispatch('CLEAR_USER_FILTERS');
-    // },
+
+    /**
+     * fetch all users
+     */
+    fetchCategories: function fetchCategories() {
+      var _this3 = this;
+
+      this.loading = true;
+      this.$store.dispatch('FETCH_CATEGORIES').then(function () {
+        return _this3.loading = false;
+      })["catch"](function () {
+        _this3.loading = false;
+        console.log('Fetching categories failed');
+      });
+    },
+
+    /**
+     * clear article filters
+     */
+    clearArticleFilters: function clearArticleFilters() {
+      this.$store.dispatch('CLEAR_ARTICLE_FILTERS');
+    },
 
     /**
      * navigate to Edit
@@ -3711,11 +3744,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["articles"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["articles", "articleFilter", "categories"])),
   created: function created() {
     if (this.$gate.isAdmin()) {
       // this.getResults();
       this.fetchAllArticles();
+      this.fetchCategories();
     } else {
       this.$router.push({
         path: "/dashboard"
@@ -3879,12 +3913,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   beforeDestroy: function beforeDestroy() {
     // Always destroy your editor instance when it's no longer needed
-    this.editor.destroy(); // if the id exists in the url parameters get the selected user data
-
-    if (this.id) {
-      // reset state of user
-      this.$store.dispatch("RESET_ARTICLE_STATE");
-    }
+    this.editor.destroy();
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE'])), {}, {
     /**
@@ -3995,12 +4024,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         Swal.fire('Error!', 'oops... file too big, make sure it is less then 2MB', 'warning');
       }
+    },
+
+    /**
+     * reset state if there is not an id in the url
+     */
+    resetArticleState: function resetArticleState() {
+      // if the id exists in the url parameters get the selected user data
+      // reset state of user
+      this.$store.dispatch("RESET_ARTICLE_STATE");
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["article", "category"])),
   created: function created() {
     if (this.id) {
-      this.setEditorContent();
+      this.setEditorContent(); // reset state of user
+    }
+
+    if (!this.id) {
+      this.resetArticleState();
     }
   },
   watch: {
@@ -4030,11 +4072,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4131,6 +4168,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       })["catch"](function () {
         console.log('Article not deleted');
+
+        _this2.$router.push({
+          path: '/articles'
+        });
       });
     }
   },
@@ -99040,6 +99081,156 @@ var render = function() {
                       "div",
                       { attrs: { id: "users-container" } },
                       [
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.fetchFilteredArticles($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "form-filters row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "input-group col-sm-3" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.articleFilter.search,
+                                        expression: "articleFilter.search"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "search",
+                                      placeholder: "Search",
+                                      "aria-label": "Search"
+                                    },
+                                    domProps: {
+                                      value: _vm.articleFilter.search
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.articleFilter,
+                                          "search",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group col-sm-2" },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.articleFilter.category,
+                                          expression: "articleFilter.category"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: "type",
+                                        id: "type",
+                                        type: "type"
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.articleFilter,
+                                            "category",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("option", { domProps: { value: 0 } }, [
+                                        _vm._v("Choose Category")
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.categories, function(
+                                        category
+                                      ) {
+                                        return _c(
+                                          "option",
+                                          { domProps: { value: category.id } },
+                                          [_vm._v(_vm._s(category.name))]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        _vm.articleFilter.category !== 0 ||
+                                        _vm.articleFilter.search,
+                                      expression:
+                                        "articleFilter.category !== 0 || articleFilter.search"
+                                    }
+                                  ],
+                                  staticClass: "clear-filters-button"
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger",
+                                      on: { click: _vm.clearArticleFilters }
+                                    },
+                                    [_vm._v("Clear")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
                         _vm.searchLoading
                           ? _c("Spinner", {
                               staticClass: " spinner-color-black"
@@ -99054,7 +99245,7 @@ var render = function() {
                                   "table",
                                   { staticClass: "table table-striped" },
                                   [
-                                    _vm._m(0),
+                                    _vm._m(1),
                                     _vm._v(" "),
                                     _c(
                                       "tbody",
@@ -99087,16 +99278,16 @@ var render = function() {
                                               _vm._v(_vm._s(article.title))
                                             ]),
                                             _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm._f("str_limit")(
+                                            _c("td", {
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  _vm.$options.filters.str_limit(
                                                     article.content,
-                                                    15
+                                                    50
                                                   )
                                                 )
-                                              )
-                                            ]),
+                                              }
+                                            }),
                                             _vm._v(" "),
                                             _c("td", [
                                               _vm._v(
@@ -99172,6 +99363,18 @@ var render = function() {
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "submit-button margin-small-right" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -99787,27 +99990,29 @@ var render = function() {
                 _vm._v(
                   " " +
                     _vm._s(_vm._f("euDate")(_vm.article.created_at)) +
-                    ",\n                        "
+                    ",\n                    "
                 ),
                 _c("b", [_vm._v("Updated at: ")]),
                 _vm._v(
                   _vm._s(_vm._f("euDate")(_vm.article.updated_at)) +
-                    ",\n                        "
+                    ",\n                    "
                 ),
                 _c("b", [_vm._v("Public: ")]),
                 _vm._v(
                   _vm._s(_vm._f("bool")(_vm.article.public)) +
-                    "\n                    "
+                    "\n                "
                 )
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("img", {
-                staticClass: "img-fluid",
-                attrs: { src: _vm.article.photo, alt: "article photo" }
-              })
-            ])
+            _vm.article.photo
+              ? _c("div", { staticClass: "col-md-6" }, [
+                  _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: _vm.article.photo, alt: "article photo" }
+                  })
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "article-content" }, [
@@ -117849,11 +118054,20 @@ function initialArticleState() {
   };
 }
 
+function initialArticleFilters() {
+  return {
+    articleFilter: {
+      search: '',
+      category: 0
+    }
+  };
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: _objectSpread(_objectSpread({}, initialArticleState()), {}, {
     articleStateChanged: false,
     articles: {}
-  }),
+  }, initialArticleFilters()),
   actions: {
     /**
      * get all articles
@@ -117908,15 +118122,30 @@ function initialArticleState() {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                url = '/api/article?page=' + page;
-                _context2.next = 3;
+                url = '/api/article?';
+
+                if (page > 0) {
+                  url += "page=" + page;
+                } else {
+                  url += "page=1";
+                }
+
+                if (context.state.articleFilter.search) {
+                  url += "&search=" + context.state.articleFilter.search;
+                }
+
+                if (context.state.articleFilter.category > 0) {
+                  url += "&cat=" + context.state.articleFilter.category;
+                }
+
+                _context2.next = 6;
                 return axios.get(url);
 
-              case 3:
+              case 6:
                 article = _context2.sent;
                 context.commit('SET_ALL_ARTICLES', article.data);
 
-              case 5:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -117926,7 +118155,16 @@ function initialArticleState() {
     },
 
     /**
-     * get article detaild data
+     * reset article filters
+     * @param context
+     * @constructor
+     */
+    CLEAR_ARTICLE_FILTERS: function CLEAR_ARTICLE_FILTERS(context) {
+      context.commit('RESET_ARTICLE_FILTERS');
+    },
+
+    /**
+     * get article detailed data
      * @param context
      * @param slug
      * @returns {Promise<void>}
@@ -117964,19 +118202,20 @@ function initialArticleState() {
      */
     CREATE_ARTICLE: function CREATE_ARTICLE(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var state;
+        var state, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 state = _ref.state;
-                _context4.next = 3;
-                return axios.post('/api/article', state.article);
-
-              case 3:
-                state.articleStateChanged = true;
+                url = '/api/article/';
+                _context4.next = 4;
+                return axios.post(url, state.article);
 
               case 4:
+                state.articleStateChanged = true;
+
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -117984,16 +118223,30 @@ function initialArticleState() {
         }, _callee4);
       }))();
     },
-    DELETE_ARTICLE: function DELETE_ARTICLE(context, slug) {
+
+    /**
+     * update article
+     * @param state
+     * @param id
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    UPDATE_ARTICLE: function UPDATE_ARTICLE(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var state, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
-                return axios["delete"]("/api/article/" + slug);
+                state = _ref2.state;
+                url = '/api/article/';
+                _context5.next = 4;
+                return axios.put(url + state.article.id, state.article);
 
-              case 2:
+              case 4:
+                state.articleStateChanged = true;
+
+              case 5:
               case "end":
                 return _context5.stop();
             }
@@ -118003,12 +118256,42 @@ function initialArticleState() {
     },
 
     /**
+     * delete article
+     * @param context
+     * @param slug
+     * @returns {Promise<void>}
+     * @constructor
+     */
+    DELETE_ARTICLE: function DELETE_ARTICLE(_ref3, slug) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var state;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                state = _ref3.state;
+                _context6.next = 3;
+                return axios["delete"]("/api/article/" + slug);
+
+              case 3:
+                state.articleStateChanged = true;
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+
+    /**
      * Set content in store
      * @param state
      * @param content
      */
-    SET_CONTENT_IN_STORE: function SET_CONTENT_IN_STORE(_ref2, content) {
-      var state = _ref2.state;
+    SET_CONTENT_IN_STORE: function SET_CONTENT_IN_STORE(_ref4, content) {
+      var state = _ref4.state;
       state.article.content = content;
     },
 
@@ -118018,9 +118301,9 @@ function initialArticleState() {
      * @constructor
      * @param context
      */
-    UPDATE_ARTICLE_PHOTO: function UPDATE_ARTICLE_PHOTO(context, _ref3) {
-      var _ref4 = _slicedToArray(_ref3, 1),
-          reader = _ref4[0];
+    UPDATE_ARTICLE_PHOTO: function UPDATE_ARTICLE_PHOTO(context, _ref5) {
+      var _ref6 = _slicedToArray(_ref5, 1),
+          reader = _ref6[0];
 
       context.commit('SET_ARTICLE_PHOTO', reader);
     },
@@ -118038,8 +118321,8 @@ function initialArticleState() {
     /**
      * reset state
      */
-    RESET_ARTICLE_STATE: function RESET_ARTICLE_STATE(_ref5) {
-      var commit = _ref5.commit;
+    RESET_ARTICLE_STATE: function RESET_ARTICLE_STATE(_ref7) {
+      var commit = _ref7.commit;
       commit('ARTICLE_RESET_STATE');
     }
   },
@@ -118093,6 +118376,9 @@ function initialArticleState() {
      */
     ARTICLE_RESET_STATE: function ARTICLE_RESET_STATE(state) {
       Object.assign(state, initialArticleState());
+    },
+    RESET_ARTICLE_FILTERS: function RESET_ARTICLE_FILTERS(state) {
+      Object.assign(state, initialArticleFilters());
     }
   },
   getters: {
@@ -118101,6 +118387,9 @@ function initialArticleState() {
     },
     article: function article(state) {
       return state.article;
+    },
+    articleFilter: function articleFilter(state) {
+      return state.articleFilter;
     }
   }
 });
@@ -118158,14 +118447,21 @@ function initialCategoryState() {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log('categories length -> ', context.state.categories.length);
+
+                if (context.state.categories.length) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 4;
                 return axios.get("/api/category");
 
-              case 2:
+              case 4:
                 categories = _context.sent;
                 context.commit('SET_CATEGORY', categories.data);
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -118519,7 +118815,6 @@ function initialUserFilters() {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log('page => ', page);
                 url = '/api/user?';
 
                 if (page > 0) {
@@ -118532,15 +118827,18 @@ function initialUserFilters() {
                   url += "&search=" + context.state.filter.search;
                 }
 
-                if (context.state.filter.type) url += "&type=" + context.state.filter.type;
-                _context2.next = 7;
+                if (context.state.filter.type) {
+                  url += "&type=" + context.state.filter.type;
+                }
+
+                _context2.next = 6;
                 return axios.get(url);
 
-              case 7:
+              case 6:
                 user = _context2.sent;
                 context.commit('SET_ALL_USERS', user.data);
 
-              case 9:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -118548,6 +118846,12 @@ function initialUserFilters() {
         }, _callee2);
       }))();
     },
+
+    /**
+     * clear user filter
+     * @param context
+     * @constructor
+     */
     CLEAR_USER_FILTERS: function CLEAR_USER_FILTERS(context) {
       context.commit('RESET_USER_FILTERS');
     },
@@ -118666,28 +118970,9 @@ function initialUserFilters() {
      * create a new user
      */
     DELETE_USER: function DELETE_USER(_ref5) {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                state = _ref5.state;
-                _context6.next = 3;
-                return axios["delete"]("/api/user/" + state.user.id);
-
-              case 3:
-                _this2.state.userStateChanged = true; // commit('USER_CHANGED');
-
-              case 4:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
+      var state = _ref5.state;
+      axios["delete"]("/api/user/" + state.user.id);
+      state.userStateChanged = true;
     },
 
     /**
@@ -118698,25 +118983,25 @@ function initialUserFilters() {
      * @constructor
      */
     FETCH_SELECTED_USER: function FETCH_SELECTED_USER(context, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var user;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context7.next = 2;
+                _context6.next = 2;
                 return axios.get("/api/user/" + id);
 
               case 2:
-                user = _context7.sent;
+                user = _context6.sent;
                 context.commit('SET_SELECTED_USER', user.data);
 
               case 4:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }))();
     },
 

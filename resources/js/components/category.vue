@@ -45,7 +45,6 @@ name: "category",
     },
     created() {
         if (this.$gate.isAdmin()) {
-            console.log('1');
             // this.getResults();
             this.fetchCategories();
         } else {

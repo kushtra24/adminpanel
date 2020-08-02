@@ -152,11 +152,6 @@ export default {
     beforeDestroy() {
         // Always destroy your editor instance when it's no longer needed
         this.editor.destroy()
-        // if the id exists in the url parameters get the selected user data
-        if(this.id){
-            // reset state of user
-            this.$store.dispatch("RESET_ARTICLE_STATE");
-        }
     },
     methods: {
         ...mapActions(['CREATE_ARTICLE', 'UPDATE_ARTICLE', 'UPDATE_ARTICLE_PHOTO', 'SET_CONTENT_IN_STORE']),
@@ -257,6 +252,16 @@ export default {
                     'warning'
                 )
             }
+        },
+
+        /**
+         * reset state if there is not an id in the url
+         */
+        resetArticleState() {
+            // if the id exists in the url parameters get the selected user data
+
+                // reset state of user
+                this.$store.dispatch("RESET_ARTICLE_STATE");
         }
     },
     computed: {
@@ -264,9 +269,13 @@ export default {
         ...mapGetters(["article", "category"]),
     },
     created() {
-      if (this.id) {
+        if (this.id) {
           this.setEditorContent();
-      }
+          // reset state of user
+        }
+        if(!this.id){
+            this.resetArticleState();
+        }
     },
     watch: {
         newContent() {

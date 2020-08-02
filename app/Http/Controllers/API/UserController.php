@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -72,7 +73,8 @@ class UserController extends Controller
      */
     private function checkSearch(&$query, $search) {
 
-        if (!isset($query)) { return $query; }
+
+        $this->checkIfQueryIsNotSet($query);
 
         if (!is_null($search)) {
             $searchTerms = $this->stringToArray($search, ' ');
@@ -96,7 +98,8 @@ class UserController extends Controller
      * @return mixed
      */
     private function filterUserType(&$query, $type) {
-        if (!isset($query)) { return $query; }
+
+        $this->checkIfQueryIsNotSet($query);
 
         if (!is_null($type)) {
             $query = $query->where( 'type', $type);
@@ -176,6 +179,7 @@ class UserController extends Controller
         if ($requestedPhoto != $currentPhoto && $requestedPhoto != '' && !Str::contains($requestedPhoto, 'storage') ) {
             $this->updatePhoto($request, $requestedPhoto, 'user', $currentPhoto);
         }
+
         // check if password is empty
         if (!empty($request->password)) {
             // hash the password
@@ -207,6 +211,9 @@ class UserController extends Controller
 
         // gelete user
         $user->delete();
+
+        // delete the old photo from the storage
+        $this->deleteStoragePhoto('user', $user->photo);
 
         // return json response with user
         return response()->json($user, 200);

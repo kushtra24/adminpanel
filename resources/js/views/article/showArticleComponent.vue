@@ -18,13 +18,8 @@
                         <b>Updated at: </b>{{ article.updated_at | euDate}},
                         <b>Public: </b>{{ article.public | bool}}
                     </p>
-<!--                    <ul>-->
-<!--                        <li v-for="cat in category">-->
-<!--                            -->
-<!--                        </li>-->
-<!--                    </ul>-->
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" v-if="article.photo">
                     <img :src="article.photo" alt="article photo" class="img-fluid">
                 </div>
             </div>
@@ -96,6 +91,7 @@ export default {
             })
             .catch(() => {
                 console.log('Article not deleted');
+                this.$router.push({path: '/articles'})
             });
         }
     },

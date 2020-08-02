@@ -30,10 +30,28 @@ class Controller extends BaseController
         Storage::disk($storagePath)->put($imageName, base64_decode($image));
         $request->merge(['photo' => $imageName]);
         // delete the old photo from the storage
+        $this->deleteStoragePhoto($storagePath, $currentPhoto);
+    }
+
+    /**
+     * delete current storage photo
+     * @param $storagePath
+     * @param string $currentPhoto
+     */
+    public function deleteStoragePhoto($storagePath, $currentPhoto = '') {
         $currentDBPhoto = storage_path('app/public/' . $storagePath . "/").$currentPhoto;
         if (file_exists($currentDBPhoto)) {
             @unlink($currentDBPhoto);
         }
+    }
+
+    /**
+     * check if query is set
+     * @param $query
+     * @return mixed
+     */
+    public function checkIfQueryIsNotSet($query) {
+        if (!isset($query)) { return null; }
     }
 
     /**
@@ -64,7 +82,7 @@ class Controller extends BaseController
 
     protected function executeQuery(&$query = null, $page = null, $limit = null, $orderByArr = null, $orderType = 'asc') {
         $result = null;
-        if(!isset($query)) { return $result; }
+        if(!isset($query)) { return null; }
 
 //        Log::info('HERE: ' . var_export($query, true));
 

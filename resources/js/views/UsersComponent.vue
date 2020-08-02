@@ -98,37 +98,23 @@ export default {
                 }  );
         },
         /**
-         * Fetch paginated Data
-         */
-        // fetchPaginatedData(page = 1) {
-        //     this.searchLoading = true;
-        //     this.$store.dispatch('FETCH_FILTERED_USERS', page)
-        //         .then(() => {
-        //             // if (data.data.length === 0) {
-        //             this.searchLoading = false
-        //             // }
-        //         }).catch(() => {
-        //             this.searchLoading = false
-        //             console.log('Fetching Filtered users in users component failed')
-        //         }
-        //     );
-        // },
-        /**
          * FetchFilteredUSers
          */
         fetchFilteredUsers(page = 1) {
             this.searchLoading = true;
             this.$store.dispatch('FETCH_FILTERED_USERS', page)
                 .then(() => {
-                    // if (data.data.length === 0) {
                     this.searchLoading = false
-                    // }
                 }).catch(() => {
                     this.searchLoading = false
                     console.log('Fetching Filtered users in users component failed')
                 }
             );
         },
+
+        /**
+         * clear user filters
+         */
         clearFilters() {
             this.$store.dispatch('CLEAR_USER_FILTERS');
         },

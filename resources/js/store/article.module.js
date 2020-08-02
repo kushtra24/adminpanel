@@ -15,11 +15,21 @@ function initialArticleState() {
     }
 }
 
+function initialArticleFilters() {
+    return {
+        articleFilter: {
+            search: '',
+            category: 0
+        }
+    }
+}
+
 export  default {
     state: {
         ...initialArticleState(),
         articleStateChanged: false,
-        articles: {}
+        articles: {},
+            ...initialArticleFilters()
     },
     actions: {
 
@@ -46,20 +56,44 @@ export  default {
          * @param page
          */
         async FETCH_FILTERED_ARTICLES(context, page) {
-            let url = '/api/article?page=' + page;
+            let url = '/api/article?';
+
+            if (page > 0) {
+                url += "page=" + page;
+            } else {
+                url += "page=1"
+            }
+
+            if (context.state.articleFilter.search) {
+                url += "&search=" + context.state.articleFilter.search;
+            }
+            if (context.state.articleFilter.category > 0) {
+                url += "&cat=" + context.state.articleFilter.category
+            }
+
             const article = await axios.get(url);
             context.commit('SET_ALL_ARTICLES', article.data);
         },
 
+
         /**
-         * get article detaild data
+         * reset article filters
+         * @param context
+         * @constructor
+         */
+        CLEAR_ARTICLE_FILTERS(context) {
+            context.commit('RESET_ARTICLE_FILTERS');
+        },
+
+        /**
+         * get article detailed data
          * @param context
          * @param slug
          * @returns {Promise<void>}
          * @constructor
          */
         async FETCH_ARTICLE_DATA(context, slug) {
-          let url = '/api/article/';
+          const url = '/api/article/';
           const article = await axios.get(url + slug);
           context.commit('SET_ARTICLE_DATA', article.data);
         },
@@ -71,12 +105,34 @@ export  default {
          * @constructor
          */
         async CREATE_ARTICLE({state}) {
-            await axios.post('/api/article', state.article);
+            const url = '/api/article/';
+            await axios.post(url, state.article);
             state.articleStateChanged = true;
         },
 
-        async DELETE_ARTICLE(context, slug) {
+        /**
+         * update article
+         * @param state
+         * @param id
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        async UPDATE_ARTICLE({state}) {
+            const url = '/api/article/';
+            await axios.put(url + state.article.id, state.article);
+            state.articleStateChanged = true;
+        },
+
+        /**
+         * delete article
+         * @param context
+         * @param slug
+         * @returns {Promise<void>}
+         * @constructor
+         */
+        async DELETE_ARTICLE({state}, slug) {
             await axios.delete("/api/article/" + slug);
+            state.articleStateChanged = true;
         },
 
         /**
@@ -166,8 +222,12 @@ export  default {
          * @constructor
          */
         ARTICLE_RESET_STATE: (state) => {
-            Object.assign(state, initialArticleState())
+            Object.assign(state, initialArticleState());
         },
+
+        RESET_ARTICLE_FILTERS: (state) => {
+            Object.assign(state, initialArticleFilters());
+        }
 
     },
     getters: {
@@ -177,5 +237,8 @@ export  default {
         article: (state) => {
             return state.article;
         },
+        articleFilter: (state) => {
+            return state.articleFilter;
+        }
     }
 };

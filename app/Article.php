@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Article extends Model
 {
@@ -11,7 +13,7 @@ class Article extends Model
 
     /**
      * belongs to user
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user() {
         return $this->belongsTo(User::class);
@@ -19,7 +21,7 @@ class Article extends Model
 
     /**
      * many to many with category
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function category() {
         return $this->belongsToMany(Category::class, 'category_article');
