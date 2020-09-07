@@ -2,7 +2,7 @@
     <div class="wrapper" v-if="$gate.isAdmin()">
         <!-- Content Header (Page header) -->
         <pageHeader title="Users" :pages="['Dashboard']" />
-        <router-link to="/users-create" type="a" class="btn btn-success margin-small">Create User</router-link>
+        <router-link :to="{name: 'createUser'}" type="a" class="btn btn-success margin-small">Create User</router-link>
 
         <div class="container-fluid">
 
@@ -66,8 +66,8 @@
 
 <script>
 import {mapGetters} from "vuex";
-import Spinner from "../components/Spinner";
-import pageHeader from "../components/PageHeader";
+import Spinner from "../../components/Spinner";
+import pageHeader from "../../components/PageHeader";
 import pagination from "laravel-vue-pagination"
 export default {
     components: {
@@ -122,7 +122,7 @@ export default {
          * navigate to Edit
          */
         navigateToEdit(id) {
-            this.$router.push({path: `/users-details/${id}` });
+            this.$router.push({name: `showUser`, params: {id} });
         }
     },
     computed: {

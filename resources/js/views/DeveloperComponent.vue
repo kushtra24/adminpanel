@@ -16,6 +16,7 @@
 <script>
 import PageHeader from "../components/PageHeader";
 export default {
+    name: "DeveloperComponent",
     components: {
         PageHeader
     },

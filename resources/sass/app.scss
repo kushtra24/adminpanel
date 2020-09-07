@@ -207,3 +207,14 @@ $fa-font-path: "../webfonts";
     border: 1px solid;
     padding: 12px;
 }
+
+.locale-wrapper {
+    ul {
+        li {
+            display: inline-block;
+            list-style: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    }
+}

@@ -57,9 +57,9 @@
 
 <script>
 import {mapActions, mapGetters, mapState} from "vuex";
-import ErrorsList from "../components/ErrorsList";
-import Spinner from "../components/Spinner";
-import PageHeader from "../components/PageHeader";
+import ErrorsList from "../../components/ErrorsList";
+import Spinner from "../../components/Spinner";
+import PageHeader from "../../components/PageHeader";
 export default {
     name: 'createUser',
     components: {

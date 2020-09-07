@@ -2,7 +2,7 @@
 <div class="wrapper" v-if="$gate.isAdmin()">
     <!-- Content Header (Page header) -->
     <pageHeader title="Articles" :pages="['Dashboard']" />
-    <router-link to="/articles-create" type="a" class="btn btn-success margin-small">Create Article</router-link>
+    <router-link :to="{name: 'createArticles'}" type="a" class="btn btn-success margin-small">Create Article</router-link>
 
     <div class="container-fluid">
         <div class="box margin-top-medium">
@@ -141,7 +141,7 @@ import pagination from "laravel-vue-pagination"
              * navigate to Edit
              */
             navigateToEdit(slug) {
-                this.$router.push({path: `/articles/${slug}` });
+                this.$router.push({name: `showArticles`, params: {slug} });
             }
         },
         computed: {

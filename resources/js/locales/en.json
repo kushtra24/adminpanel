@@ -1,0 +1,14 @@
+{
+    "main": {
+      "message": "hello i18n {company}!!",
+      "new_message": "no messages | one message | {count} messages"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "blog": "Blog",
+        "about": "Me"
+    },
+    "blog": {
+        "title": "about"
+    }
+}

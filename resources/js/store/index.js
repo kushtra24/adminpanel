@@ -6,7 +6,8 @@ Vue.use(Vuex);
 import user from "./user.module";
 import profile from "./profile.module";
 import article from "./article.module";
-import category from "./category.module"
+import category from "./category.module";
+import logout from "./logout.module";
 
 export default new Vuex.Store({
     modules: {
@@ -14,5 +15,6 @@ export default new Vuex.Store({
         profile,
         article,
         category,
+        logout
     }
 });

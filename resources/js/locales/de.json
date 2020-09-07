@@ -1,0 +1,14 @@
+{
+    "main": {
+        "message": "Wie gehts wlcomen {company}!!",
+        "new_message": "kenie Nachricht | eine Nachricht | {count} Narichten"
+    },
+    "nav": {
+        "dashboard": "Armaturenbrett",
+        "blog": "Blog",
+        "about": "Ich"
+    },
+    "blog": {
+        "title": "about"
+    }
+}

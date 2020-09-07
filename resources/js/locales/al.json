@@ -1,0 +1,14 @@
+{
+    "main": {
+        "message": "pershendetje prej {company}!!",
+        "new_message": "ska mesazh | nje mesazh | {count} mesazhe"
+    },
+    "nav": {
+        "dashboard": "Paneli",
+        "blog": "Bllogu",
+        "about": "Une"
+    },
+    "blog": {
+        "title": "about"
+    }
+}

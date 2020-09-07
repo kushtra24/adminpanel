@@ -4,7 +4,7 @@
         <PageHeader title="User Details" :pages="['Dashboard', 'Users']" />
 
         <div class="container">
-            <!-- loading spinner-->
+            <!-- loading Spinner-->
             <Spinner v-if="loading" />
 
             <div class="info-container" v-if="!loading">
@@ -33,7 +33,7 @@
                         <h6 class="text-secondary">Created at</h6>
                         <p><b>{{ user.created_at | euDate }}</b></p>
 
-                        <a href="#" @click="navigateToEdit(user.id)" class="btn btn-info"><i class="fas fa-user-edit fa-fw"></i> Edit User</a>
+                        <router-link :to="{name: 'editUser', params: {id}}" type="a" class="btn btn-info margin-small">Edit User</router-link>
                         <a href="#" @click="deleteUser(user.id)" class="btn btn-danger float-right"><i class="fas fa-user-slash fa-fw "></i> Delete User</a>
                     </div>
                 </div>
@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import Spinner from "../components/Spinner";
+import Spinner from "../../components/Spinner";
 import {mapActions, mapGetters} from "vuex";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../../components/PageHeader";
 export default {
     components: {
         Spinner,
@@ -111,8 +111,8 @@ export default {
          * navigate to edit page
          * @param id
          */
-        navigateToEdit(id) {
-            this.$router.push({path: `/users-edit/${id}` });
+        navigateToEdit() {
+            this.$router.push({path: `/users-edit/${this.id}` });
         },
     },
     computed: {

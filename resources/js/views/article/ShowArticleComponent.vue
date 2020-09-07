@@ -6,7 +6,7 @@
         <div class="container">
             <!-- loading Spinner-->
             <Spinner v-if="loading" />
-            <button class="btn btn-warning" @click="editArticle"><i class="fas fa-edit fa-fw"></i>Edit</button>
+            <router-link :to="{name: 'editArticles', params: {slug}}" type="a" class="btn btn-warning"><i class="fas fa-edit fa-fw"></i>Edit</router-link>
             <button class="btn btn-danger float-right" @click="deleteArticle"><i class="fas fa-trash-alt fa-fw"></i>Delete</button>
             <hr>
             <div class="row">
@@ -74,12 +74,6 @@ export default {
         //     })
         // },
 
-        /**
-         * Edit an article
-         */
-        editArticle() {
-            this.$router.push({path: `/articles-edit/${this.slug}` });
-        },
         /**
          * Delete an article
          */

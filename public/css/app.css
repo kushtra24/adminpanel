@@ -48402,3 +48402,10 @@ readers do not read off random characters that represent icons */
   padding: 12px;
 }
 
+.locale-wrapper ul li {
+  display: inline-block;
+  list-style: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
